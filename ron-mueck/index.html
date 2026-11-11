@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ron Mueck en mimesis</title>
+<meta name="description" content="Mensfiguren van huid en haar, op de verkeerde schaal">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#inleiding-wie-is-ron-mueck">Inleiding: wie is Ron Mueck?</a></li><li><a href="#1-1-mimesis-de-geschiedenis-van-de-nabootsing">1.1 Mimesis: de geschiedenis van de nabootsing</a><ol><li><a href="#a-de-griekse-oudheid">a. De Griekse oudheid</a></li><li><a href="#b-fotografie-en-het-loslaten-van-de-nabootsing">b. Fotografie en het loslaten van de nabootsing</a></li><li><a href="#c-hyperrealisme">c. Hyperrealisme</a></li></ol></li><li><a href="#1-2-mimesis-bij-mueck-schaal-en-de-vier-elementen">1.2 Mimesis bij Mueck: schaal en de vier elementen</a><ol><li><a href="#a-echt-en-toch-niet-echt">a. Echt en toch niet echt</a></li><li><a href="#b-schaal">b. Schaal</a></li><li><a href="#c-de-vier-elementen-in-een-beeld">c. De vier elementen in een beeld</a></li><li><a href="#d-kijken-met-een-tweede-blik">d. Kijken met een tweede blik</a></li></ol></li><li><a href="#1-3-werkwijze-van-klei-tot-huid">1.3 Werkwijze: van klei tot huid</a></li><li><a href="#1-4-analyse-van-belangrijke-werken">1.4 Analyse van belangrijke werken</a><ol><li><a href="#1-4-1-dead-dad-1996-1997">1.4.1 Dead Dad (1996-1997)</a></li><li><a href="#1-4-2-boy-1999">1.4.2 Boy (1999)</a></li><li><a href="#1-4-3-in-bed-2005">1.4.3 In Bed (2005)</a></li><li><a href="#1-4-4-drift-2009">1.4.4 Drift (2009)</a></li><li><a href="#1-4-5-youth-2009">1.4.5 Youth (2009)</a></li><li><a href="#kunsthistorische-verwijzing-de-ongelovige-thomas">Kunsthistorische verwijzing: De ongelovige Thomas</a></li><li><a href="#1-4-6-young-couple-2013">1.4.6 Young Couple (2013)</a></li><li><a href="#1-4-7-woman-with-shopping-2013">1.4.7 Woman with Shopping (2013)</a></li><li><a href="#1-4-8-couple-under-an-umbrella-2013">1.4.8 Couple under an Umbrella (2013)</a></li></ol></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, vanaf 1996</p>
+  <h1>Ron Mueck en mimesis</h1>
+  <p class="onder">Mensfiguren van huid en haar, op de verkeerde schaal</p>
+</header>
+
+<div class="kijkfilter" role="group" aria-label="Volg één element"><span>Volg één element</span><button type="button" data-focus="" aria-pressed="true">Alles</button><button type="button" data-focus="lichaam" aria-pressed="false">Lichaam</button><button type="button" data-focus="ruimte" aria-pressed="false">Ruimte</button><button type="button" data-focus="object" aria-pressed="false">Object</button><button type="button" data-focus="tijd" aria-pressed="false">Tijd</button></div><div id="werken"><h2 id="inleiding-wie-is-ron-mueck">Inleiding: wie is Ron Mueck?</h2>
+<figure class="beeld"><figcaption>Ron Mueck (1958)<br>Portretfoto van de kunstenaar.</figcaption></figure>
+<p>Ron Mueck werd in 1958 geboren in Melbourne, Australië, in een gezin van Duitse afkomst. Zijn moeder maakte poppen, en zo leerde hij al jong hoe je een figuur opbouwt en een oppervlak levendig laat lijken. Een kunstopleiding volgde hij nooit.</p>
+<p>Van 1978 tot 1983 werkte hij als creatief leider voor de Australische kindertelevisie. Daarna trok hij naar de Verenigde Staten en Groot-Brittannië om poppen en modellen te maken voor film en televisie, onder meer voor <i>The Muppets</i>. In de film <i>Labyrinth</i> (1986) van Jim Henson bespeelde hij de reusachtige pop Ludo en sprak hij ook diens stem in. Vanaf 1986 woonde hij in Londen, waar hij een eigen bedrijf had dat modellen bouwde voor film, televisie en reclame.</p>
+<figure class="beeld"><figcaption>Ron Mueck (1958)<br>Mueck met het hoofd van de pop Ludo op de set van <i>Labyrinth</i> (1986) van Jim Henson.</figcaption></figure>
+<p>De stap naar de beeldende kunst kwam in 1996. Zijn schoonmoeder, de schilder Paula Rego, vroeg hem een figuur van Pinocchio te maken voor haar bijdrage aan de tentoonstelling <i>Spellbound: Art and Film</i> in de Hayward Gallery in Londen. De verzamelaar Charles Saatchi zag dat beeld en bestelde drie sculpturen, waaronder <i>Dead Dad</i> (zie 1.4.1). Toen dat werk in 1997 te zien was in de tentoonstelling <i>Sensation</i> in de Royal Academy in Londen, werd Mueck in één klap bekend. In 1998 volgde zijn eerste solotentoonstelling en van 2000 tot 2002 was hij gastkunstenaar in de National Gallery in Londen.</p>
+<p>Mueck werkt traag en maakt weinig: in 2024 telde zijn oeuvre 48 werken. Ze gaan allemaal over het menselijk lichaam. Hij woont en werkt in Groot-Brittannië, geeft bijna nooit interviews en spreekt niet over zijn bedoelingen. Zijn beelden moeten het zelf doen.</p>
+<p>Wie voor een beeld van Mueck staat, twijfelt soms even of er een echt mens ligt. Daarmee sluit hij aan bij een van de oudste thema’s uit de kunstgeschiedenis: het nabootsen van de werkelijkheid, wat de Grieken mimesis noemden. We volgen dat begrip eerst van de oudheid tot vandaag en kijken daarna hoe Mueck er iets nieuws mee doet.</p>
+<h2 id="1-1-mimesis-de-geschiedenis-van-de-nabootsing">1.1 Mimesis: de geschiedenis van de nabootsing</h2>
+<h3 id="a-de-griekse-oudheid" class="sub">a. De Griekse oudheid</h3>
+<figure class="beeld"><figcaption>Naar Praxiteles, <i>Capitolijnse Venus</i> (Romeinse kopie naar een Grieks origineel uit de 4de eeuw v.Chr.)<br>Musei Capitolini, Rome. Marmer, 193 cm hoog. Het beeld volgt het voorbeeld van de verloren <i>Aphrodite van Knidos</i>.</figcaption></figure>
+<p>In de 4de eeuw v.Chr. maakte de Griekse beeldhouwer Praxiteles een marmeren beeld van de liefdesgodin Aphrodite voor de stad Knidos. Het origineel is verloren, maar de Romeinen hebben het zo vaak gekopieerd dat we het goed kennen. De <i>Capitolijnse Venus</i> in Rome is zo’n latere versie. De verhoudingen zijn berekend, huid en spieren zacht uitgewerkt. De godin bedekt met haar handen haar borst en schoot. Die houding kreeg later de naam Venus pudica, de “schaamachtige Venus”. Het kleine gebaar maakt het beeld levensecht, want de godin lijkt te weten dat er iemand naar haar kijkt.</p>
+<figure class="beeld"><figcaption>Toegeschreven aan Praxiteles, <i>Hermes met de kleine Dionysos</i> (4de eeuw v.Chr. of later)<br>Archeologisch Museum van Olympia. Marmer. Of het beeld echt van Praxiteles is, staat ter discussie.</figcaption></figure>
+<p>Ook de <i>Hermes</i> uit Olympia toont dat streven naar echtheid. Hermes staat in contrapposto: zijn gewicht rust op één been, het andere been is ontspannen en licht gebogen. Daardoor kantelen heupen en schouders in tegengestelde richting, zoals bij een mens die echt staat.</p>
+<p>In de Griekse oudheid bestond ons woord “kunst” in die betekenis nog niet. Wie een beeld maakte, beheerste technè (τέχνη): vakmanschap, maar ook kennis van hoe je iets maakt. Een beeldhouwer moest de bouw van het lichaam, de verhoudingen en de beweging begrijpen om de indruk van leven te kunnen wekken.</p>
+<p>Die technè hing nauw samen met epistèmè (ἐπιστήμη), de theoretische kennis van hoe de dingen in elkaar zitten. Schoonheid, to kalon (τὸ καλόν), werd begrepen als uitdrukking van metron (maat), harmonia (samenklank) en taxis (orde). Een goed beeld bracht maat en orde in de ruwe materie.</p>
+<p>Het werk dat uit de handen van de maker kwam, noemden de Grieken een mimèma (μίμημα): het nagebootste. Wat wij vandaag een Grieks kunstwerk noemen, is dus een mimèma. Het maken zelf, de handeling van het nabootsen, heette mimesis (μίμησις). Mimesis was meer dan kopiëren. Een goed beeld toonde het ideale lichaam: een samenvatting van vele waarnemingen tot één volmaakte vorm. We noemen dat idealisering.</p>
+<p>Over de waarde van mimesis waren de Griekse filosofen het niet eens. Plato vond haar gevaarlijk. Volgens hem is alles wat we zien al een onvolmaakte afspiegeling van een eeuwige, ware Idee (eidos), en is een kunstwerk dus een kopie van een kopie. Aristoteles dacht er positiever over: nabootsen doen mensen van nature en ze leren ervan. Een goede nabootsing geeft inzicht in menselijke gevoelens en in wat algemeen geldt.</p>
+<h4>Zeuxis en Parrhasios</h4>
+<p>De Romeinse schrijver Plinius de Oudere vertelt in zijn <i>Naturalis Historia</i> (boek 35) over een wedstrijd tussen twee Griekse schilders. Zeuxis schilderde druiven die zo echt leken dat vogels ernaar kwamen pikken. Daarop vroeg hij Parrhasios het doek weg te schuiven dat voor diens schilderij hing. Dat doek bleek zelf geschilderd te zijn. Zeuxis gaf zich gewonnen: hij had vogels misleid, Parrhasios had een schilder misleid.</p>
+<p>Het verhaal toont hoe hoog de oudheid de nabootsing waardeerde. De grootste lof voor een kunstenaar was dat zijn werk voor de werkelijkheid werd aangezien. Een schildering die het oog zo bedriegt, noemen we sinds de 17de eeuw een trompe-l’oeil (Frans voor “bedrieg het oog”).</p>
+<h3 id="b-fotografie-en-het-loslaten-van-de-nabootsing" class="sub">b. Fotografie en het loslaten van de nabootsing</h3>
+<p>Eeuwenlang konden alleen geschoolde kunstenaars beelden van de werkelijkheid maken. De grote breuk kwam in 1839 met de fotografie: voortaan kon een toestel dat automatisch.</p>
+<figure class="beeld"><figcaption>Robert Cornelius, <i>Zelfportret</i> (1839)<br>Daguerreotypie, gemaakt in een achtertuin in Philadelphia. Library of Congress, Washington. Het geldt als de oudste bewaarde Amerikaanse portretfoto.</figcaption></figure>
+<p>De Amerikaan Robert Cornelius maakte dat jaar met een zelfgebouwde camera een foto van zichzelf, soms de eerste selfie genoemd. Als een camera de zichtbare wereld kon vastleggen, hoefde een schilder dat niet meer te doen. Kunstenaars gingen op zoek naar andere manieren om te tonen wat ze zagen en voelden.</p>
+<figure class="beeld"><figcaption>Edvard Munch, <i>De schreeuw</i> (1893)<br>Nasjonalmuseet, Oslo.</figcaption></figure>
+<p>In <i>De schreeuw</i> van Edvard Munch (1893) of <i>De goudvissen</i> van Henri Matisse (1912) herkennen we nog een figuur, een brug, een vissenkom. Zulke kunst heet figuratief en is dus nog gedeeltelijk mimetisch. Toch is natuurgetrouwheid hier niet het doel. Munch maakt angst zichtbaar met golvende lijnen en een bloedrode lucht. Hoe die evolutie van het realisme tot de abstracte kunst verloopt, zie je in hoofdstuk 5.</p>
+<h3 id="c-hyperrealisme" class="sub">c. Hyperrealisme</h3>
+<p>Vanaf het einde van de jaren 1960 kwam het nabootsen terug, op een nieuwe manier. Gewoon naschilderen wat je ziet, kon een camera ook. Kunstenaars dreven de natuurgetrouwe weergave daarom zo ver door dat het resultaat echter lijkt dan echt. Dat noemen we hyperrealisme.</p>
+<p>Realisme is in de kunstgeschiedenis de naam van een 19de-eeuwse stroming rond Gustave Courbet (zie hoofdstuk 5). Wat hyperrealisten tot het uiterste drijven, is eigenlijk naturalisme: de weergave van iets zoals het er in de natuur uitziet, tot in het kleinste detail.</p>
+<p>Amerikaanse schilders als Chuck Close, Audrey Flack en Richard Estes schilderden naar foto’s, met een scherpte die het oog overtreft. In de beeldhouwkunst maakten Duane Hanson en John De Andrea levensechte mensfiguren uit polyester, glasvezel en echte kleren. Ron Mueck zet die lijn verder, met één groot verschil: hij speelt met de schaal.</p>
+<h2 id="1-2-mimesis-bij-mueck-schaal-en-de-vier-elementen">1.2 Mimesis bij Mueck: schaal en de vier elementen</h2>
+<h3 id="a-echt-en-toch-niet-echt" class="sub">a. Echt en toch niet echt</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Woman with Shopping</i> (2013), detail<br>Poriën, wallen onder de ogen, losse haartjes: elk detail is met de hand gemaakt.</figcaption></figure>
+<p>Poriën, rimpels, adertjes, haartjes en plooien van kleren bouwt Mueck met grote precisie op in siliconen, hars en textiel. Toch voelt de kijker meteen dat er iets niet klopt. Dat komt vooral door de schaal: zijn mensen zijn te groot of te klein. Je herkent het lichaam en tegelijk vervreemdt het.</p>
+<figure class="beeld"><figcaption>Masahiro Mori, grafiek bij <i>The Uncanny Valley</i> (1970)<br>Hoe meer iets op een mens lijkt, hoe sympathieker we het vinden, tot vlak voor “volledig menselijk”. Daar keldert het gevoel: de vallei. Engelstalige versie van de grafiek.</figcaption></figure>
+<p>De Japanse robotbouwer Masahiro Mori beschreef dat gevoel in 1970 als de uncanny valley, letterlijk de “griezelige vallei”. Hoe menselijker een robot wordt, hoe meer sympathie we voelen, tot hij bijna menselijk is en toch net niet: dan slaat de sympathie om in onbehagen. Muecks beelden bevinden zich bewust in die zone tussen herkenning en vervreemding. In het Duits heet dat gevoel unheimlich: iets vertrouwds dat plots vreemd en onrustig aanvoelt.</p>
+<p>De psychiater Sigmund Freud schreef in 1919 een beroemd essay over dat gevoel, <i>Das Unheimliche</i>. Hij gaf als voorbeeld wassen beelden en poppen waarvan je niet zeker weet of ze levend zijn of niet.</p>
+<h3 id="b-schaal" class="sub">b. Schaal</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Youth</i> (2009)<br>De kunstenaar naast zijn beeld, dat 65 cm hoog is.</figcaption></figure>
+<p>Mueck maakt zijn mensen bijna nooit op ware grootte. Sommige beelden zijn reusachtig: een gehurkte jongen van ongeveer 4,5 meter hoog (<i>Boy</i>), een pasgeboren baby van vijf meter lang (<i>A Girl</i>, 2006). Andere zijn klein: een tiener van 65 cm (<i>Youth</i>), een dode vader van één meter (<i>Dead Dad</i>).</p>
+<p>Schaal is bij Mueck nooit toevallig. Ze bepaalt hoe je als kijker met je eigen lichaam tegenover het beeld staat. Een reusachtige figuur komt dichtbij en overweldigt je, maar je kan haar niet aanraken of omvatten: ze blijft ontoegankelijk. Een kleine figuur kijk je van boven aan. Je voelt je groter en sterker, en de figuur wordt kwetsbaar. Dezelfde houding of hetzelfde gezicht lees je dus anders naargelang de maat.</p>
+<h3 id="c-de-vier-elementen-in-een-beeld" class="sub">c. De vier elementen in een beeld</h3>
+<p>In de inleiding van deze cursus maakte je kennis met de vier elementen lichaam, ruimte, object en tijd. In hoofdstuk 2 pas je ze toe op performance, waar een levend lichaam in real time handelt. Bij Mueck werken ze anders, omdat een beeld niet beweegt.</p>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is Muecks enige onderwerp, zonder grote gebaren, in zijn gewone, kwetsbare vorm: rimpels, een wonde, vermoeide ogen. Ook het lichaam van de kijker speelt mee. Door de schaal voel je je eigen lichaam groter of kleiner worden.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Mueck kiest precies hoe zijn werk in de zaal staat: op een sokkel, op de vloer, rechtop aan een muur. Vaak zet hij zijn beelden in een lege, witte ruimte onder een gerichte lamp. Je deelt de ruimte met de figuur en moet zelf kiezen hoe dicht je komt.</p></div>
+<div class="el object"><h5>Object</h5><p>Een beeld van Mueck is een object dat eruitziet als een lichaam. Dat maakt het zo vreemd: hoe echter het lijkt, hoe sterker je beseft dat het een ding is. Vaak komt er een tweede object bij dat het lichaam beschermt of omhult: een bed, een jas, een luchtmatras, een parasol. Soms wordt het lichaam zelf een omhulsel, zoals bij <i>Boy</i>.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Muecks figuren zitten vast in een moment zonder handeling, een seconde tussen twee gedachten. Die stilgezette tijd maakt hun gevoelens intenser en tegelijk onduidelijker. Daarnaast is er de tijd van de kijker. Een beeld van Mueck vraagt dat je blijft kijken, want veel details zie je pas na een tijd.</p></div>
+<h3 id="d-kijken-met-een-tweede-blik" class="sub">d. Kijken met een tweede blik</h3>
+<p>De titels van Mueck zijn kaal: <i>Boy</i>, <i>Drift</i>, <i>Youth</i>, <i>Young Couple</i>. Ze geven geen uitleg, en ook rond de figuren is er nauwelijks een verhaal. Je moet het beeld zelf lezen: een blik, de stand van een hand, een gespannen schouder, een plooi in de huid.</p>
+<p>Veel werken tonen eerst iets gewoons of teders. Pas bij een tweede blik zie je een detail dat de hele scène doet kantelen: een greep om een pols, een bloedende wonde.</p>
+<p>Muecks figuren zijn bovendien afgesloten in hun eigen wereld. Je ziet alles van heel dichtbij en toch blijf je een buitenstaander, een voyeur die kijkt naar iemand die niet weet dat hij bekeken wordt. Nabijheid en afstand gaan bij Mueck altijd samen.</p>
+<p>Soms herken je in een houding een oud beeld uit de christelijke kunst: Christus aan het kruis, de wonde in zijn zij, Maria met het kind. Mueck gebruikt die motieven zonder heiligenschijn of symbolen, in een gewone, hedendaagse omgeving. Hoe je zulke beeldtradities herkent en verklaart, leer je in hoofdstuk 3 (iconografie en iconologie).</p>
+<p>Al dat vakmanschap dient bij Mueck om een innerlijk of relationeel moment tastbaar te maken: eenzaamheid, twijfel, zorg, ouderdom.</p>
+<h2 id="1-3-werkwijze-van-klei-tot-huid">1.3 Werkwijze: van klei tot huid</h2>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Young Couple</i> (2013), in wording<br>Het atelier in Londen: de twee figuren in klei, aan hun voeten een kleine maquette, aan de muur een enorm gezicht. Foto: Gautier Deblonde.</figcaption></figure>
+<p>Mueck begint met schetsen en referentiefoto’s. Daarna boetseert hij een maquette, een klein schaalmodel in klei of gips (voor <i>Boy</i> 40 cm hoog), waarin hij houding en verhoudingen zoekt.</p>
+<p>Op de uiteindelijke maat bouwt hij dan een armatuur, een stevig geraamte van metaal en hout dat het beeld zal dragen. Daarover boetseert hij in dikke lagen klei het lichaam, met spieren, plooien en poriën. Die kleifase is de langste en de belangrijkste: alles wat het beeld levend maakt, moet hier al in zitten.</p>
+<p>Over het kleibeeld maakt hij een gietvorm of mal, in delen, zodat hij die later kan openen. De klei gaat daarbij verloren. In de mal giet hij siliconen voor de huid, versterkt met polyesterhars of glasvezel. Voor recente grote werken laat hij de ingescande maquette ook door een computergestuurde machine uitfrezen.</p>
+<p>Daarna volgt de afwerking. Met penselen en een verfspuit brengt hij roodheid, adertjes en vlekken aan. Elk haar, ook wimpers en wenkbrauwen, wordt afzonderlijk met een naald in de siliconen geprikt: dat werk kan weken duren. Kleren koopt hij soms in de winkel en past hij aan de maat van de figuur aan. Tot slot bepaalt hij de opstelling en de belichting in de zaal.</p>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Couple under an Umbrella</i> (2013), in wording<br>Mueck werkt met een vergrootbril de huid van de man bij. Foto: Gautier Deblonde.</figcaption></figure>
+<h4>Mueck aan het werk: de film van Gautier Deblonde</h4>
+<p>Mueck laat bijna nooit iemand toe in zijn atelier. Voor de fotograaf Gautier Deblonde, een vriend, maakte hij een uitzondering. Twee jaar lang filmde Deblonde enkele dagen per week hoe Mueck drie nieuwe beelden maakte voor zijn tentoonstelling in de Fondation Cartier in Parijs (2013): <i>Young Couple</i>, <i>Woman with Shopping</i> en <i>Couple under an Umbrella</i>. Er mocht geen interview bij en Deblonde ensceneerde niets. Het werd de film <i>Still Life: Ron Mueck at Work</i> (2013, 48 minuten, zonder gesproken tekst).</p>
+<p>Mueck werkt in stilte. Hij praat niet, luistert naar de radio en naar de geluiden van de straat. Het lange werk in klei doet hij alleen; zijn twee assistenten helpen pas als de mal gegoten is. De film toont hoe uit een klomp klei, door tijd en inspanning, langzaam een mens verschijnt.</p>
+<h2 id="1-4-analyse-van-belangrijke-werken">1.4 Analyse van belangrijke werken</h2>
+<p>Elke analyse volgt dezelfde opbouw: een feitenfiche, een beschrijving van wat je ziet, de vier elementen (lichaam, ruimte, object, tijd) en ten slotte de betekenis. De werken staan in chronologische volgorde.</p>
+<h3 id="1-4-1-dead-dad-1996-1997" class="sub">1.4.1 Dead Dad (1996-1997)</h3>
+<dl class="fiche"><dt>Jaar</dt><dd>1996-1997</dd><dt>Materiaal</dt><dd>siliconen en acryl</dd><dt>Afmetingen</dt><dd>20 x 38 x 102 cm</dd><dt>Collectie</dt><dd>Stefan T. Edlis Collection (privécollectie, Verenigde Staten)</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een naakte oudere man ligt op zijn rug, de armen langs het lichaam, de ogen gesloten. Het is de vader van de kunstenaar, kort na zijn dood. Elk detail klopt: de bleke, wat vlekkerige huid, de nagels, de lichaamsbeharing. Voor het haar gebruikte Mueck zijn eigen haar. Alleen de maat klopt niet: het lichaam is amper één meter lang.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is volledig passief. Er is geen leven meer in, en toch lijkt het zo echt dat je verwacht dat de borst zal bewegen.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het beeld ligt laag, zonder bed of kist. Je kijkt van bovenaf neer op het lichaam, zoals bij een opgebaarde dode.</p></div>
+<div class="el object"><h5>Object</h5><p>Hier valt alles samen: een lichaam dat object geworden is, uitgebeeld door een object dat op een lichaam lijkt. De kunstenaar geeft een deel van zichzelf mee, zijn haar.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het moment na de dood is stilgezet. De tijd van het leven is voorbij; wat overblijft, kan niet meer veranderen.</p></div>
+<h4>Betekenis</h4>
+<p>Door de verkleining wordt de vader, die voor een kind altijd groot en sterk was, plots klein en breekbaar. Je kan hem bijna in je armen nemen. Het werk gaat over rouw en over het besef dat ouders sterfelijk zijn. Tegelijk is het een vreemde nabootsing: Mueck maakt een volmaakte kopie van iemand die er niet meer is.</p>
+<h3 id="1-4-2-boy-1999" class="sub">1.4.2 Boy (1999)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Boy</i> (1999)<br>ARoS Aarhus Kunstmuseum, Denemarken. De bezoekers links tonen de schaal. Van september 2026 tot februari 2027 in bruikleen in Museum Voorlinden, Wassenaar.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1999</dd><dt>Materiaal</dt><dd>glasvezel en gemengde technieken</dd><dt>Afmetingen</dt><dd>ongeveer 4,5 m hoog</dd><dt>Collectie</dt><dd>ARoS Aarhus Kunstmuseum, Aarhus (aangekocht in 2001)</dd><dt>Eerst getoond</dt><dd>Millennium Dome, Londen (2000), daarna Biënnale van Venetië (2001)</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een jongen in een korte broek zit gehurkt, de knieën hoog opgetrokken, de armen gekruist boven zijn hoofd. Hij gluurt schuin over zijn arm naar de wereld. De huid toont adertjes en haarwortels, de short plooit precies zoals stof plooit bij een hurkzit.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De houding is er een van terugtrekking: iemand die zich klein maakt en wil verdwijnen. Volgens het museum is de pose geïnspireerd op Aboriginals die over de vlakte uitkijken naar wild.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het beeld vult de zaal. Je kan er rondlopen, maar je kijkt altijd naar boven.</p></div>
+<div class="el object"><h5>Object</h5><p>Het lichaam wordt een soort gebouw, een omhulsel of uitkijkpost van waaruit de jongen naar buiten kijkt zonder zelf gezien te willen worden.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het is een moment van wachten en loeren. Er gebeurt niets, maar je voelt dat de jongen elk ogenblik kan opspringen of zich nog verder kan terugtrekken.</p></div>
+<h4>Betekenis</h4>
+<p><i>Boy</i> toont hoe schaal een houding verandert. Een kleine, verborgen pose wordt door de vergroting iets waar je niet omheen kan. Daar zit de spanning: een lichaam van vier en een halve meter kan zich niet verstoppen. De schuilplaats is te groot om bescherming te bieden en te zichtbaar om zich in te verbergen. Zo wordt de jongen een beeld van kwetsbaarheid.</p>
+<h3 id="1-4-3-in-bed-2005" class="sub">1.4.3 In Bed (2005)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>In Bed</i> (2005)<br>Queensland Art Gallery | Gallery of Modern Art, Brisbane. Het gezicht hangt op ooghoogte van de kijker.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2005</dd><dt>Materiaal</dt><dd>gemengde technieken</dd><dt>Afmetingen</dt><dd>162 x 650 x 395 cm</dd><dt>Collectie</dt><dd>Queensland Art Gallery \</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een vrouw van middelbare leeftijd ligt in bed, half rechtop tegen een kussen. Haar knieën zijn onder het witte laken opgetrokken. Van haar lichaam zie je alleen het hoofd en de armen. Ze houdt een hand voor haar mond en kijkt opzij, in gedachten verzonken. Het bed is ruim zes en een halve meter lang.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam spreekt via kleine signalen: de hand bij de mond, de gefronste wenkbrauwen, de blik die nergens op gericht is. Twijfel, angst of vermoeidheid: het beeld laat het open.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het bed staat in een lege zaal, zonder slaapkamer eromheen. Toch voel je dat je in een privéruimte staat die niet voor jou bedoeld is.</p></div>
+<div class="el object"><h5>Object</h5><p>Het laken is een groot, wit vlak dat het lichaam bedekt en beschermt. Bed en laken vormen een cocon waarin de vrouw zich heeft teruggetrokken.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>De vrouw doet niets. Ze is bevroren tussen twee gedachten. Wat er net gebeurde of wat nog komt, weten we niet.</p></div>
+<h4>Betekenis</h4>
+<p><i>In Bed</i> werkt als een close-up in film: zoals een camera een gezicht zo dichtbij brengt dat je de kleinste emotie ziet, zo vergroot Mueck de vrouw tot je elk detail van nabij moet ervaren (over de close-up meer in hoofdstuk 4). Omdat er geen verhaal of context is, wordt de figuur een spiegel. Je vult zelf in wie zij is en waarom ze zo kijkt. Het werk is intiem en tegelijk ontregelend: dichtbij en toch ongrijpbaar.</p>
+<h3 id="1-4-4-drift-2009" class="sub">1.4.4 Drift (2009)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Drift</i> (2009)<br>Installatiezicht: het beeld hangt rechtop tegen een blauwgroene wand.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2009</dd><dt>Materiaal</dt><dd>gemengde technieken</dd><dt>Afmetingen</dt><dd>118 x 96 x 21 cm</dd><dt>Collectie</dt><dd>privécollectie (John en Amy Phelan)</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een volwassen man in een zwembroek met bloemenprint ligt op een groene luchtmatras. Hij draagt een zonnebril en heeft zijn armen wijd opzij gestrekt. Hij is kleiner dan levensgroot en tot in de details uitgewerkt, tot de glans van zweet op zijn huid. Het beeld hangt verticaal aan de muur, tegen een wand in de kleur van zwembadwater.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is volledig ontspannen. De man laat zich drijven en geeft zich over aan de zon.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Door de verticale presentatie wordt de muur een wateroppervlak waar je van bovenaf op neerkijkt. Tegelijk lijkt de man te zweven, los van de aarde.</p></div>
+<div class="el object"><h5>Object</h5><p>De luchtmatras draagt het lichaam. Rechtop tegen de wand krijgt ze iets van een paneel of een kruis.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het is een moment van nietsdoen, een zomerse middag die eindeloos lijkt te duren. De titel <i>Drift</i> (drijven, afdrijven) suggereert ook dat de man zonder het te merken wegdrijft.</p></div>
+<h4>Betekenis</h4>
+<p>Door de opgerichte presentatie en de gespreide armen roept het beeld de houding op van Christus aan het kruis. Er is geen kruis, geen wonde, geen religieus symbool: alleen een houding die in de westerse beeldtraditie een lange voorgeschiedenis heeft. Mueck plaatst die houding in een alledaagse, seculiere situatie, een man op vakantie. Zo blijft de betekenis open: ontspanning en vrijheid, maar ook overgave en verlorenheid.</p>
+<h3 id="1-4-5-youth-2009" class="sub">1.4.5 Youth (2009)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Youth</i> (2009)<br>Het beeld was in 2020 te zien in de tentoonstelling <i>Sin</i> in de National Gallery, Londen.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2009</dd><dt>Materiaal</dt><dd>gemengde technieken</dd><dt>Afmetingen</dt><dd>65 x 28 x 16 cm</dd><dt>Collectie</dt><dd>de kunstenaar</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een jonge zwarte tiener staat blootsvoets op een sokkel, in een jeansbroek en een wit T-shirt. Hij tilt zijn shirt op en kijkt naar een bloedende wonde in zijn zij. Op het shirt zit een bloedvlek. Zijn mond staat een beetje open, zijn blik is helemaal naar binnen gericht.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is gewond. De jongen onderzoekt zijn wonde met een mengeling van verbazing en ongeloof.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Doordat de figuur klein is en op een sokkel staat, kijk je op hem neer. Je observeert iemand die zich niet bewust is van jouw aanwezigheid.</p></div>
+<div class="el object"><h5>Object</h5><p>De kleren zijn gewoon en herkenbaar, zoals een tiener ze elke dag draagt. Het opgetilde shirt maakt de wonde zichtbaar.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het is het moment net na een gebeurtenis die we niet zien. Wat er gebeurd is, raad je alleen.</p></div>
+<h4>Betekenis</h4>
+<p>De wonde in de zij verwijst naar een bekend motief uit de christelijke kunst: de wonde die een Romeinse soldaat met een lans toebracht aan Christus aan het kruis. Na de verrijzenis toont Christus die wonde aan zijn leerlingen. Mueck laat het kruis, de lichtval en alle symboliek weg. Er blijft alleen een jongen over die verbaasd naar zijn eigen lichaam kijkt. Tegelijk doet de houding denken aan nieuwsbeelden van jongeren die na een steek- of schietpartij hun shirt optillen om een verwonding te bekijken. Twee beeldtradities, een eeuwenoude religieuze en een hedendaagse maatschappelijke, schuiven over elkaar. Mueck velt geen oordeel. De verkleinde maat versterkt de kwetsbaarheid: de jongen is geen martelaar of held, alleen een kind dat niet begrijpt wat hem overkomt.</p>
+<h3 id="kunsthistorische-verwijzing-de-ongelovige-thomas" class="verwijzing">Kunsthistorische verwijzing: De ongelovige Thomas</h3>
+<figure class="beeld"><figcaption>Caravaggio, <i>De ongelovige Thomas</i> (ca. 1601)<br>Bildergalerie Sanssouci, Potsdam (Stiftung Preußische Schlösser und Gärten). Olieverf op doek, 107 x 146 cm.</figcaption></figure>
+<p>Caravaggio schildert een scène uit het evangelie van Johannes. De apostel Thomas wil niet geloven dat Christus uit de dood is opgestaan, tot hij de wonden met zijn eigen handen kan voelen. Thomas buigt zich voorover en steekt zijn vinger in de wonde in de zij van Christus. Christus leidt zelf zijn hand.</p>
+<p>Caravaggio toont dat moment zonder idealisering: je ziet hoe de huid plooit onder de vinger, en twijfel slaat om in geloof via een aanraking. Dat beeld van de wonde in de zij keert, ontdaan van alle religie, terug in <i>Youth</i>.</p>
+<h3 id="1-4-6-young-couple-2013" class="sub">1.4.6 Young Couple (2013)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Young Couple</i> (2013)<br>Gemaakt voor de tentoonstelling in de Fondation Cartier, Parijs (2013). Vooraanzicht.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2013</dd><dt>Materiaal</dt><dd>gemengde technieken</dd><dt>Afmetingen</dt><dd>kleiner dan levensgroot</dd><dt>Collectie</dt><dd>niet bekend</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een jongen en een meisje staan dicht naast elkaar. Hij buigt zijn hoofd naar haar toe, zijn mond vlak bij haar haar, alsof hij iets in haar oor fluistert. Zij kijkt opzij en naar beneden, haar mond gespannen. Op het eerste gezicht zie je een jong koppel, misschien een moment van troost of tederheid.</p>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Young Couple</i> (2013), achteraanzicht<br>Achter haar rug houdt de jongen de pols van het meisje vast.</figcaption></figure>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De lichaamstaal is dubbelzinnig. De jongen staat dichterbij dan comfortabel is en dringt haar persoonlijke ruimte binnen. Het meisje is licht afgewend en gespannen.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het beeld staat vrij in de zaal. Wie eromheen loopt, ziet achter haar rug wat vooraan verborgen blijft: de jongen grijpt de pols van het meisje vast. De betekenis hangt af van waar je staat.</p></div>
+<div class="el object"><h5>Object</h5><p>Hun kleren zijn heel gewoon: een polo, een gestreept topje, een korte broek, teenslippers. Niets wijst op een drama.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het is een ingehouden seconde, net na of net voor iets wat we niet zien. Je weet niet of een ruzie begint, eindigt of net wordt bijgelegd.</p></div>
+<h4>Betekenis</h4>
+<p><i>Young Couple</i> is een schoolvoorbeeld van de tweede blik. Wat eerst een beeld van jonge liefde lijkt, kantelt door één klein gebaar. De greep om de pols voegt controle, spanning en misschien bezitsdrang toe. Mueck benoemt niets en suggereert alles via een detail. Intimiteit en dreiging bestaan hier ongemakkelijk dicht naast elkaar.</p>
+<h3 id="1-4-7-woman-with-shopping-2013" class="sub">1.4.7 Woman with Shopping (2013)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Woman with Shopping</i> (2013)<br>Museum of Fine Arts, Houston (het werk bestaat in meer dan één exemplaar).</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2013</dd><dt>Materiaal</dt><dd>gemengde technieken</dd><dt>Afmetingen</dt><dd>113 x 46 x 30 cm</dd><dt>Collectie</dt><dd>Museum of Fine Arts, Houston (aangekocht in 2021)</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een jonge vrouw met een paardenstaart staat op een witte sokkel. Ze draagt een lange tweedjas en heeft in elke hand een oranje plastic boodschappenzak van de supermarkt. Onder haar dichtgeknoopte jas zit een baby, alleen het hoofdje komt boven. Het kind kijkt naar haar op. Zelf kijkt ze voor zich uit, ernstig en moe, met lege ogen. Ze is iets meer dan een meter hoog.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam draagt tegelijk een kind en de boodschappen. De vermoeidheid lees je af aan de wallen onder haar ogen en de afhangende schouders.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Ze staat alleen op haar sokkel, zonder iemand rondom haar die helpt.</p></div>
+<div class="el object"><h5>Object</h5><p>De jas omhult het kind als een tweede huid, een beschermende cocon. De plastic zakken plaatsen het beeld onmiskenbaar in het dagelijkse leven van vandaag.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Ze lijkt even stil te staan, onderweg tussen de winkel en thuis, in een pauze die geen rust is.</p></div>
+<h4>Betekenis</h4>
+<p>Moeder en kind is een van de oudste motieven uit de christelijke kunst: Maria met het kindje Jezus, een beeld van tederheid en heilig moederschap. Mueck neemt dat motief over en ontdoet het van alle heiligheid. Deze vrouw is geen Madonna. Ze staat er alleen voor en draagt naast haar kind ook het gewicht van verplichtingen en routine: moederschap als onzichtbare arbeid. Mueck behoudt de iconografie en brengt ze terug tot een gewoon menselijk moment.</p>
+<h3 id="1-4-8-couple-under-an-umbrella-2013" class="sub">1.4.8 Couple under an Umbrella (2013)</h3>
+<figure class="beeld"><figcaption>Ron Mueck, <i>Couple under an Umbrella</i> (2013)<br>Museum Voorlinden, Wassenaar. De bezoekers tonen de schaal: het koppel is ongeveer twee keer levensgroot.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2013</dd><dt>Materiaal</dt><dd>gemengde technieken</dd><dt>Afmetingen</dt><dd>ongeveer 300 x 400 x 350 cm</dd><dt>Collectie</dt><dd>Museum Voorlinden (Caldic Collectie), Wassenaar</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een ouder koppel rust op de vloer onder een grote strandparasol in rood, geel, blauw en oranje. De vrouw, in een donkerblauw badpak, zit rechtop en kijkt naar beneden. De man, in een geruite zwembroek, ligt op zijn rug met zijn hoofd tegen haar dij en een arm over zijn voorhoofd. Haar hand rust op zijn bovenarm. Je ziet alle sporen van ouderdom: rimpels, ouderdomsvlekken, losse huid, tenen die zich krommen, een trouwring die in een vinger is weggezakt.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De lichamen zijn oud, zwaar en eerlijk getoond. Ze zeggen niets, en toch voel je een verbondenheid van vele jaren.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het koppel ligt zonder sokkel op de museumvloer. Er is geen strand, geen zand, geen zee, alleen het licht van de zaal. Door de enorme maat kan je heel dichtbij komen en toch blijft het koppel in zichzelf gekeerd.</p></div>
+<div class="el object"><h5>Object</h5><p>De parasol beschermt tegen de zon en vormt een cocon rond het koppel. De vrolijke kleuren roepen herinneringen op aan vakanties en samen zijn zonder haast.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Er gebeurt niets. Het is een pauze in het leven, een moment waarin alleen samen zijn telt. Tegelijk toont elk detail van de huid hoeveel tijd er al voorbij is.</p></div>
+<h4>Betekenis</h4>
+<p>Door een gewoon tafereel monumentaal te vergroten, krijgt Mueck een dubbel effect. Je komt heel dicht bij het intieme en herkenbare, en tegelijk blijft het vreemd en ongrijpbaar, als een herinnering die te groot geworden is om nog gewoon te zijn. Hoe de twee zich tot elkaar verhouden, laat Mueck open: hun blikken kunnen liefdevol zijn, maar ook verveeld of bitter. Het beeld gaat over ouderdom, nabijheid en vergankelijkheid, en ook over rust.</p></div>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Armatuur", "Het stevige geraamte, meestal uit metaal en hout, dat binnenin een beeld zit en het gewicht en de vorm draagt."], ["Contrapposto", "Houding van een staande figuur waarbij het gewicht op één been rust en het andere ontspannen is, zodat heupen en schouders in tegengestelde richting kantelen."], ["Gietvorm (mal)", "Holle vorm die over een model gemaakt wordt en waarin een ander materiaal, zoals siliconen of hars, gegoten wordt om een afdruk te krijgen."], ["Hyperrealisme", "Kunststroming vanaf het einde van de jaren 1960 waarin de natuurgetrouwe weergave zo ver wordt doorgedreven dat het werk echter lijkt dan echt."], ["Idealisering", "Het weergeven van een lichaam of ding in een volmaakte vorm, als samenvatting van vele waarnemingen, eerder dan zoals het toevallig is."], ["Maquette", "Klein schaalmodel waarin een kunstenaar de houding, verhoudingen en compositie van een groter werk uitprobeert."], ["Mimesis", "Grieks woord voor de nabootsing van de werkelijkheid in de kunst; voor de Grieken een actieve weergave van de essentie van wat men ziet."], ["Mimèma", "Grieks woord voor het nagebootste: het werk dat uit de handen van de maker komt."], ["Naturalisme", "Weergave van iets zoals het er in de natuur uitziet, tot in het detail; te onderscheiden van het Realisme als 19de-eeuwse stroming."], ["Schaal", "De verhouding tussen de maat van een voorstelling en de maat van wat voorgesteld wordt; bij Mueck bijna altijd groter of kleiner dan ware grootte."], ["Seculier", "Niet religieus, behorend tot het gewone, wereldlijke leven."], ["Technè", "Grieks woord voor vakmanschap en de kennis van het maken; wat wij een kunstenaar noemen, was voor de Grieken iemand die technè beheerste."], ["Trompe-l'oeil", "Frans voor \"bedrieg het oog\": een voorstelling die zo echt lijkt dat de kijker ze even voor de werkelijkheid aanziet."], ["Tweede blik", "Het moment waarop een klein detail in een werk van Mueck de betekenis van de hele scène doet kantelen."], ["Uncanny valley", "Begrip van Masahiro Mori (1970): het onbehagen dat ontstaat wanneer iets bijna menselijk lijkt, maar net niet helemaal."], ["Unheimlich", "Duits woord voor het gevoel dat iets vertrouwds plots vreemd en verontrustend wordt."], ["Venus pudica", "Houding van een naakte vrouwenfiguur die met haar handen borst en schoot bedekt, naar het voorbeeld van de Aphrodite van Knidos."], ["Voyeur", "Iemand die kijkt naar een ander die zich niet bewust is dat hij bekeken wordt."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Leg uit wat de Grieken bedoelden met mimesis en waarom dat voor hen meer was dan kopiëren.</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Leg het verschil uit tussen de opvatting van Plato en die van Aristoteles over mimesis.</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Wat toont het verhaal van Zeuxis en Parrhasios over de waardering voor nabootsing in de oudheid?</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Leg uit waarom de uitvinding van de fotografie de rol van de mimesis in de kunst veranderde.</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Wat is hyperrealisme, en waarin verschilt Ron Mueck van eerdere hyperrealistische beeldhouwers?</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Leg het begrip uncanny valley uit en toon aan hoe het van toepassing is op de beelden van Mueck.</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Leg uit hoe vergroting en verkleining bij Mueck de verhouding tussen kijker en beeld veranderen. Gebruik telkens een voorbeeld.</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Beschrijf de belangrijkste stappen in de werkwijze van Mueck en leg uit waarom de kleifase zo bepalend is.</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Wat bedoelen we met de “tweede blik” bij Mueck? Leg uit aan de hand van <i>Young Couple</i>.</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Leg uit hoe Mueck in <i>Drift</i>, <i>Youth</i> en <i>Woman with Shopping</i> christelijke beeldmotieven gebruikt zonder religieuze symbolen.</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Vergelijk de <i>Hermes</i> van Praxiteles met <i>Boy</i> van Mueck: hoe streven beide naar echtheid, en waar verschillen ze in hun omgang met idealisering en schaal?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Analyseer een werk van Mueck dat niet in hoofdstuk 1 besproken wordt aan de hand van de vier elementen lichaam, ruimte, object en tijd.</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Vergelijk de rol van tijd in een beeld van Mueck met de rol van tijd in een performance uit hoofdstuk 2.</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3"><i>Dead Dad</i> is klein, <i>Couple under an Umbrella</i> is groot. Leg uit hoe de schaal in beide werken de betekenis mee bepaalt.</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Vergelijk <i>De ongelovige Thomas</i> van Caravaggio met <i>Youth</i> van Mueck. Wat nemen beide werken van elkaar over en wat verandert er?</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Mueck geeft zijn werken kale titels zoals <i>Boy</i> of <i>Youth</i>. Bedenk een titel die meer uitleg geeft voor een van zijn werken en leg uit wat er dan verloren gaat.</label></li><li><input type="checkbox" id="v1-6" data-vraag="1-6"><label for="v1-6">Zou Plato de beelden van Mueck waarderen? Argumenteer met wat je weet over zijn opvatting van mimesis.</label></li><li><input type="checkbox" id="v1-7" data-vraag="1-7"><label for="v1-7">In veel werken van Mueck omhult een object het lichaam (bed, jas, parasol). Kies twee werken en vergelijk hoe dat object de betekenis beïnvloedt.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../rineke-dijkstra/"><span>Vorig onderwerp</span>&larr; Rineke Dijkstra, het portret</a><a href="../film/" style="text-align:right"><span>Volgend onderwerp</span>Film als tijdskunst &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-ron-mueck",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

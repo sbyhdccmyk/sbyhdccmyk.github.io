@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rococo</title>
+<meta name="description" content="Watteau en Fragonard: spel, verleiding en melancholie">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#antoine-watteau">Antoine Watteau</a><ol><li><a href="#pelerinage-a-l-ile-de-cithere">Pèlerinage à l&#x27;île de Cithère</a></li><li><a href="#pierrot">Pierrot</a></li></ol></li><li><a href="#jean-honore-fragonard">Jean Honoré Fragonard</a><ol><li><a href="#les-hasards-heureux-de-l-escarpolette">Les Hasards heureux de l&#x27;escarpolette</a></li><li><a href="#la-lettre">La Lettre</a></li></ol></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, 1715-1780</p>
+  <h1>Rococo</h1>
+  <p class="onder">Watteau en Fragonard: spel, verleiding en melancholie</p>
+</header>
+
+<p>De rococo ontstond in de vroege achttiende eeuw, omstreeks 1720, als een elegante en lichtvoetige reactie op de strikte monumentaliteit van de barok (bijv. Carravagio).</p>
+<p>Historisch gezien markeert deze periode de overgang na de dood van de Franse Zonnekoning Lodewijk XIV. Waar de macht voorheen gecentraliseerd was in het formele Versailles, trok de adel zich nu terug in de intieme stadspaleizen van Parijs. Deze maatschappelijke verschuiving zorgde voor een cultuur waarin de strenge hofetiquette* plaatsmaakte voor persoonlijke vrijheid en de verfijnde sfeer van de salon. In deze salons vloeiden de idealen van de vroege Verlichting* en de behoefte aan intellectueel vermaak naadloos in elkaar over, waarbij invloedrijke vrouwen vaak het middelpunt vormden van het sociale en culturele leven.</p>
+<p>Economisch gezien werd de rococo gedragen door een periode van groeiende welvaart, niet alleen binnen de aristocratie maar ook bij de opkomende burgerij. De bloeiende koloniale handel bracht enorme rijkdommen voort, wat leidde tot een explosieve vraag naar luxeartikelen en een fascinatie voor het exotische, zoals de Chinoiserie*. Deze rijkdom vertaalde zich artistiek in een ongekende aandacht voor het interieur en de decoratieve kunsten. De term zelf, afgeleid van het Franse &#x27;rocaille&#x27;, verwijst naar de asymmetrische schelpvormen die de kern vormden van deze stijl.</p>
+<p>Artistiek brak de rococo radicaal met de zware, religieuze en heroïsche thema&#x27;s van de voorgaande eeuw. Men koos voor een palet van zachte pastelkleuren* en een overvloed aan spiegels, goud en sierlijk stucwerk* om een gevoel van luchtigheid en licht te creëren. De onderwerpen in de schilderkunst verschoven naar de &#x27;fêtes galantes&#x27;<i>: </i>idyllische* scènes van verliefde aristocraten in weelderige tuinen. Hiermee fungeerde de rococo als een vlucht uit de realiteit, waarbij kunst, architectuur en mode samensmolten tot een harmonieus spektakel van oppervlakkige schoonheid en zorgeloos genot, vlak voordat de Franse Revolutie de fundamenten van deze wereld zou doen schudden.</p>
+<h2 id="antoine-watteau">Antoine Watteau</h2>
+<p>Antoine Watteau wordt beschouwd als de wegbereider van de rococo, de man die de Franse kunst bevrijdde van de loodzware grandeur van de zeventiende eeuw.</p>
+<p>Geboren in 1684 in Valenciennes, een stad in het graafschap Henegouwen die slechts zes jaar daarvoor door de Spaanse Nederlanden aan Frankrijk was afgestaan, bracht hij een unieke synthese van de Rubensiaanse* kleurkracht en Parijse elegantie naar het doek. Hoewel zijn carrière kort was door zijn vroege dood aan tuberculose op 36-jarige leeftijd, was zijn impact op de Europese kunstgeschiedenis heel groot.</p>
+<p>Watteau was een complexe en introverte persoonlijkheid, wat in schril contrast stond met de vrolijke taferelen die hij schilderde. Tijdgenoten omschreven hem als een rusteloze, melancholische* en uiterst kritische man die zelden tevreden was met zijn eigen werk. Hij was een scherpe observator van menselijk gedrag en sociale rituelen, maar bleef zelf vaak aan de zijlijn staan. Deze innerlijke melancholie is voelbaar in zijn oeuvre; achter de glimlach van zijn figuren schuilt vaak een zweem van eenzaamheid of het besef van de vergankelijkheid van het moment.</p>
+<p>Zijn artistieke ambitie was even vernieuwend als gedurfd. In een tijd waarin de Koninklijke Academie* vasthield aan strikte hiërarchieën, dwong Watteau de kunstwereld om een nieuwe categorie te creëren: de fêtes galantes. Hij wilde niet de grote historische of religieuze verhalen vertellen, maar de subtiele psychologie van de verleiding en het theater van het dagelijks leven vangen. Zijn ambitie lag in het weergeven van de &#x27;poëzie van het vluchtige&#x27;. Door zijn losse, atmosferische* toets en zijn vermogen om licht en textuur te laten versmelten, creëerde hij een droomwereld die weliswaar kunstmatig was, maar waarin de menselijke emotie echter aanvoelde dan ooit tevoren.</p>
+<h3 id="pelerinage-a-l-ile-de-cithere" class="sub">Pèlerinage à l&#x27;île de Cithère</h3>
+<p>Antoine Watteau’s &quot;Pèlerinage à l&#x27;île de Cithère&quot; (1717) is niet alleen zijn meesterwerk, maar ook het officiële startschot van de rococo binnen de Franse kunstwereld. Het schilderij was zo grensverleggend dat het de gevestigde kunstorde dwong hun regels aan te passen.</p>
+<p>Ontstaan, Datum en Opdrachtgever</p>
+<p>Watteau schilderde dit werk in 1717 als zijn zogenaamde <i>morceau de réception </i>(receptiestuk) voor de Académie Royale de Peinture et de Sculpture. Hij was al in 1712 genomineerd, maar nam ongebruikelijk lang de tijd (vijf jaar) om het te voltooien.</p>
+<p>In tegenstelling tot veel werken uit die tijd was er geen externe opdrachtgever; Watteau schilderde dit om toegelaten te worden tot de hoogste rangen van de kunstwereld. Omdat het schilderij niet paste in de traditionele categorieën (zoals geschiedschilderkunst of portret), creëerde de Academie speciaal voor hem de titel &quot;Peintre des fêtes galantes&quot;.</p>
+<p>Hiermee werd een nieuw genre officieel erkend: scènes van aristocraten die zich vermaken in een poëtische natuur.</p>
+<p></p>
+<p>Het werk moet worden gezien tegen de achtergrond van de Régence* (1715-1723). Na de dood van de Zonnekoning (1715) heerste er in Parijs een sfeer van opluchting en hedonisme*. De loodzware morele druk van het hof verdween en maakte plaats voor een cultuur van plezier, verleiding en theater. Cythera, het eiland uit de Griekse mythologie waar de godin Venus (Aphrodite) aan land kwam, was het ultieme symbool voor dit amoureuze utopia*.</p>
+<p>Watteau breekt in dit werk met de strakke lijnen van het classicisme en kiest voor een dromerige, atmosferische aanpak:</p>
+<ul class="lijst"><li>Compositie en Ritme: De figuren vormen een golvende lijn die van rechtsvoor naar linksachter beweegt, als een soort dansende processie*. Rechts zie je koppeltjes in verschillende stadia van verleiding: van een zittend paar dat in gesprek is, tot een paar dat opstaat om naar de wachtende boot te gaan.</li><li>Kleur en Licht: Watteau was een groot bewonderaar van Rubens* en Titiaan*. Dit zie je terug in het warme, gouden licht en de rijke, glanzende kleuren van de zijden kleding. De achtergrond, met zijn mistige bergen en vage waterpartijen, lijkt bijna op te lossen in de lucht, wat de dromerige sfeer versterkt.</li><li>Symboliek: Aan de rechterkant staat een buste van Venus, versierd met rozen, wat bevestigt dat we ons op gewijde grond van de liefde bevinden. Cupido zit op zijn pijlkoker, eveneens een verwijzing naar het amoureuze thema.</li><li>Melancholie: Ondanks het onderwerp hangt er een zweem* van weemoed* over het werk. Het is onduidelijk of de pelgrims net aankomen of juist vertrekken. De neerwaartse blikken en de zachte overgangen suggereren dat elk moment van geluk vluchtig is (een typisch kenmerk van Watteau’s eigen persoonlijkheid).</li></ul>
+<p>Koppeling naar de Rococo</p>
+<ul class="lijst"><li>Fête Galante: Het werk is het schoolvoorbeeld van dit genre, waarbij de aristocratie zich onttrekt aan de realiteit in een kunstmatige, parkachtige natuur.</li><li>Anti-Heroïsch: In plaats van grote veldslagen of Bijbelse drama&#x27;s, viert de rococo de kleine, persoonlijke emotie en de kunst van het geflirt*.</li><li>Penseelvoering: De losse, schetsmatige toets van Watteau is een directe voorloper van de latere rococo-stijlen van Boucher en Fragonard. Het gaat om de suggestie van textuur en sfeer, niet om de fotografische precisie.</li><li>Escapisme*: De rococo was een vlucht uit de werkelijkheid. <i>Inscheping naar Cythera </i>biedt de kijker een venster naar een wereld waarin alleen schoonheid en liefde ertoe doen, ver weg van de politieke en sociale beslommeringen van de 18e eeuw.</li></ul>
+<p>Het schilderij bevindt zich tegenwoordig in het Louvre in Parijs (er bestaat ook een tweede, iets latere versie in Berlijn), waar het nog steeds wordt bewonderd als het meest poëtische testament van de Franse achttiende eeuw.</p>
+<h3 id="pierrot" class="sub">Pierrot</h3>
+<p>Antoine Watteau’s &quot;Pierrot&quot; (voorheen vaak &quot;Gilles&quot; genoemd), geschilderd  rond 1718-1719, is een van de meest raadselachtige en aangrijpende werken uit de hele achttiende eeuw.</p>
+<p>Waar de meeste rococo-kunstwerken bruisen van beweging, biedt dit schilderij een monumentale, bijna verstilde aanblik.</p>
+<p>een bevriende acteur of theaterdirecteur.</p>
+<p>Het werk ontstond vlak voor de vroege dood van Watteau. In tegenstelling tot zijn <i>Pelgrimstoct naar Cythera</i>, was dit waarschijnlijk bedoeld als een uithangbord of een specifieke opdracht voor</p>
+<ul class="lijst"><li>De Theorie: Men vermoedt dat het geschilderd is voor Belloni, een beroemde acteur uit de <i>Commedia dell&#x27;arte* </i>die een café opende in Parijs. Het schilderij zou gediend hebben om publiek te trekken naar zijn nieuwe onderneming.</li><li>Context: Het theater, en specifiek de Italiaanse <i>Commedia dell&#x27;arte</i>, was mateloos populair tijdens de Régence. Nadat deze theatergroepen onder Lodewijk XIV waren verbannen, mochten ze onder de nieuwe regent weer optreden. Watteau was</li></ul>
+<p>6 geobsedeerd door de grens tussen realiteit en toneelspel; voor hem was het leven zelf een vorm van theater.</p>
+<p>Het schilderij breekt met veel conventies van de vroege achttiende eeuw door zijn ongebruikelijke compositie:</p>
+<ul class="lijst"><li>Monumentaliteit: Pierrot staat frontaal en levensgroot in het midden van het verticale canvas. Hij neemt bijna de volledige ruimte in beslag, wat hem een waardigheid geeft die normaal gesproken was voorbehouden aan koningen of heiligen,een schril contrast met zijn rol als de &quot;domme clown&quot;.</li><li>De Figuur: Hij draagt het typische witte satijnen* kostuum van de clown, dat hem net iets te groot lijkt (de mouwen zijn te lang, de broek valt ruim). Zijn houding is passief: zijn armen hangen slap langs zijn lichaam en zijn gezichtsuitdrukking is afwezig, bijna melancholisch. Hij kijkt ons aan, maar lijkt tegelijkertijd in zijn eigen gedachten verzonken.</li><li>De Achtergrond: Aan de voeten van Pierrot, in een lager gelegen deel van de</li></ul>
+<p>compositie, zien we zijn medespelers (zoals de piraat, de dokter en de minnaars op een ezel). Zij zijn druk in de weer, vol actie en emotie, wat de eenzaamheid en de stilte van de centrale Pierrot-figuur alleen maar versterkt.</p>
+<ul class="lijst"><li>Schilderstijl: Watteau toont hier zijn technisch meesterschap in het schilderen van de</li></ul>
+<p>witte stof. Het wit is niet simpelweg wit, maar een complex weefsel van grijze, roze en blauwe schaduwen, waardoor het satijn een tastbare glans krijgt.</p>
+<p>Hoewel <i>Pierrot </i>statischer is dan veel andere rococo-werken, is het diep geworteld in de stroming:</p>
+<ul class="lijst"><li>Theatraliteit*: De rococo hield van maskers en rollenspel. In dit werk wordt de mens achter het masker (de acteur achter de clown) getoond, wat past bij de interesse in de menselijke psychologie en het individu.</li><li>Melancholie in het Plezier: Een kenmerkend element van de rococo (vooral bij Watteau) is de ondertoon van droefheid. Te midden van een vrolijk theatergezelschap staat een eenzame figuur. Het herinnert de toeschouwer eraan dat achter de zwierige buitenkant van de achttiende eeuw ook eenzaamheid en vergankelijkheid* schuilen.</li><li>Ambivalentie: De rococo vermijdt vaak eenduidige* antwoorden. Is Pierrot een personage of een echt persoon? Is hij gelukkig of verdrietig? Die gelaagdheid* en het ontbreken van een zware morele les zijn typerend voor de artistieke vrijheid van de periode.</li><li>Kleursensitiviteit: Het subtiele palet en de focus op de lichtinval op luxueuze stoffen zijn puur rococo. De verfijning van de uitvoering staat centraal, niet de grootsheid van de actie.</li></ul>
+<p>7</p>
+<p>Vandaag de dag hangt dit indrukwekkende portret in het Louvre in Parijs. Het blijft een van de meest besproken werken uit de kunstgeschiedenis, mede omdat het Pierrot transformeert van een simpele grappenmaker tot een symbool van de menselijke conditie*.</p>
+<h2 id="jean-honore-fragonard">Jean Honoré Fragonard</h2>
+<p>Jean-Honoré Fragonard was een van de meest productieve en veelzijdige kunstenaars van de achttiende eeuw, wiens werk de ultieme belichaming vormde van de Franse rococo. Geboren in 1732 in Grasse en later gevormd in het bruisende Parijs onder grootmeesters als Boucher en Chardin, ontwikkelde hij een stijl die even virtuoos als onbevangen* was. Zijn leven kenmerkte zich door een opmerkelijke onafhankelijkheid; hoewel hij de prestigieuze <i>Prix de Rome* </i>won en toegelaten werd tot de Koninklijke Academie, koos hij er bewust voor om de officiële staatsopdrachten de rug toe te keren. In plaats daarvan richtte hij zich op een particuliere clientèle van rijke verzamelaars en hovelingen, wat hem de artistieke vrijheid gaf om zijn eigen koers te varen.</p>
+<p>De persoonlijkheid van Fragonard door tijdgenoten vaak omschreven als &quot;le bon Frago&quot; was even levendig en charmant als zijn schilderijen. Hij stond bekend als een vrolijke, optimistische man met een enorme levenslust, eigenschappen die direct doorsijpelden in zijn losse penseelvoering en warme kleurgebruik. Hij had een afkeer van de strikte academische* regels en de zware ernst van de geschiedschilderkunst*. Voor Fragonard was het schilderen een viering van het moment, waarbij hij met een schijnbaar moeiteloze snelheid figuren en landschappen op het doek zette, vaak met een ondeugende of erotische ondertoon die paste bij de libertijnse* geest van zijn tijd.</p>
+<p>Zijn artistieke ambitie lag niet in het bereiken van morele* verheffing of historische accuraatheid, maar in het vangen van de zintuiglijke ervaring en de dynamiek van de emotie. Fragonard wilde de toeschouwer verleiden en betoveren. Hij experimenteerde voortdurend met lichtinval en textuur*, waarbij hij de grenzen tussen schets en voltooid werk vaak liet vervagen om de spontaniteit te behouden. Hoewel hij aan het eind van zijn leven uit de mode raakte door de opkomst van het strakke neoclassicisme en de Franse Revolutie, blijft zijn ambitie om &quot;het geluk te schilderen&quot; een unieke prestatie in de kunstgeschiedenis, die de toeschouwer nog steeds uitnodigt in een wereld van tijdloze elegantie en speelsheid.</p>
+<p>8</p>
+<h3 id="les-hasards-heureux-de-l-escarpolette" class="sub">Les Hasards heureux de l&#x27;escarpolette</h3>
+<p>Jean-Honoré Fragonards meesterwerk <i>Les Hasards heureux de l&#x27;escarpolette </i>(De gelukkige toevalligheden van de schommel), geschilderd in 1767, geldt als het ultieme symbool van de rococo. Het werk is niet alleen een technisch hoogstandje, maar ook een venster naar de verborgen zeden van de achttiende-eeuwse Franse elite.</p>
+<p>Het schilderij ontstond uit een nogal pikante anekdote. De opdracht kwam oorspronkelijk van de Baron de Saint-Julien, een invloedrijke hoveling die de financiën van de Franse geestelijkheid beheerde. Hij benaderde eerst de historieschilder*</p>
+<p>Gabriel-François Doyen met een zeer specifiek verzoek: hij wilde een schilderij van zijn maîtresse* op een schommel, die geduwd werd door een bisschop, terwijl hijzelf (de baron) zo gepositioneerd was dat hij onder de rokken van de dame kon kijken.</p>
+<p>Doyen vond het verzoek te lichtzinnig* en schoof de opdracht door naar Fragonard. Deze laatste accepteerde het met plezier, maar verving de bisschop door een burgerlijk figuur (mogelijk de echtgenoot) om directe spot met de kerk te vermijden, terwijl hij het ondeugende karakter van de scène juist versterkte.</p>
+<p>Fragonard hanteert in dit werk een virtuoze techniek die de zintuigen prikkelt:</p>
+<ul class="lijst"><li>Compositie en Beweging: De compositie is gebaseerd op een diagonale as (de schommel) die de dynamiek van de beweging accentueert. De dame vormt het lichte middelpunt, terwijl haar vluchtige beweging wordt benadrukt door de schoen die ze in de lucht schopt richting een standbeeld van Cupido.</li></ul>
+<p>9</p>
+<ul class="lijst"><li>Licht en Kleur: Het schilderij baadt in een zacht, gefilterd licht dat door een dicht bladerdek valt. Fragonard gebruikt een rijk palet van verzadigde* groentinten voor de tuin, waardoor de pastelroze jurk van de vrouw er bijna lichtgevend uitspringt. De schuimige textuur van haar kleding, geschilderd met snelle en trefzekere penseelstreken, geeft het geheel een luchtig en tastbaar karakter.</li><li>Symboliek: Niets in de tuin is toevallig. Het standbeeld van Cupido* (links) houdt zijn</li></ul>
+<p>vinger voor zijn lippen (<i>shh</i>), wat wijst op het geheime karakter van de affaire. De twee putti* (rechtsonder) kijken geamuseerd toe bij een dolfijn. De tuin zelf is geen strakke Franse tuin, maar een overwoekerde, bijna koortsachtige wildernis die de ongetemde passie en de &quot;natuurlijke&quot; driften van de personages weerspiegelt.</p>
+<p><i>De Schommel </i>integreert alle kernwaarden van de rococo-stroming:</p>
+<ul class="lijst"><li>Frivoliteit en Erotiek: Het schilderij verruilt de serieuze, moralistische* thema&#x27;s voor een speelse &#x27;joie de vivre&#x27;*. De voyeuristische* insteek en de subtiele erotiek waren typisch voor de libertijnse cultuur van de Parijse aristocratie.</li><li>Natuur als Decor: De natuur wordt niet als iets ontzagwekkends (zoals in de latere Romantiek) maar als een sensueel, decoratief toevluchtsoord gepresenteerd.</li><li>Vluchtigheid: De rococo draait om het bevriezen van een moment van puur genot. De vliegende schoen, de opbollende rokken en de zwevende beweging van de schommel vangen dat vluchtige &#x27;nu&#x27; perfect.</li><li>Anti-Academisch: Door te focussen op decoratie, kleur en emotie in plaats van op een intellectuele of historische boodschap, belichaamt Fragonard de artistieke rebellie tegen de zware barokke traditie.</li></ul>
+<p>Vandaag de dag hangt het werk in de Wallace Collection in Londen, waar het nog steeds bewonderd wordt als het hoogtepunt van een tijdperk dat luxe en verleiding tot kunstvorm verhief.</p>
+<h3 id="la-lettre" class="sub">La Lettre</h3>
+<p>Het schilderij De Brief (ook bekend als <i>La Lettre </i>of <i>Het Meisje met de Brief</i>), geschilderd rond 1770, is een van de meest intieme en technisch indrukwekkende werken van Jean-Honoré Fragonard. Hoewel het op het eerste gezicht een eenvoudig portret lijkt, herbergt het de volledige essentie van de late rococo.</p>
+<p>10</p>
+<p>In tegenstelling tot <i>De Schommel</i>, dat een specifieke aristocratische opdracht was, schilderde Fragonard <i>De Brief </i>waarschijnlijk voor de vrije markt of een particuliere verzamelaar uit de hogere burgerij.</p>
+<ul class="lijst"><li>De Opkomst van de Bourgeoisie: Rond 1770 verschoof de smaak in Frankrijk langzaam. Naast de overdadige scènes van buitenfeesten was er een groeiende vraag naar meer huiselijke, intieme taferelen. Dit werk sluit aan bij de cultuur van de sensibilité* (gevoeligheid): de fascinatie voor de innerlijke belevingswereld en persoonlijke emoties.</li><li>Literatuur en Brieven: De achttiende eeuw was de eeuw van de briefschrijfkunst. De</li></ul>
+<p>brief was hét symbool voor geheime verlangens, vriendschap en liefde, populair gemaakt door romans zoals die van Jean-Jacques Rousseau*.</p>
+<ul class="lijst"><li>Wat dit schilderij zo</li></ul>
+<p>bijzonder maakt, is niet zozeer het onderwerp, maar de baanbrekende wijze waarop Fragonard de verf heeft aangebracht.</p>
+<ul class="lijst"><li>Techniek (De &quot;Fa</li></ul>
+<p>Presto*&quot;): Fragonard staat bekend om zijn ongelooflijk snelle werkwijze. In <i>De Brief </i>zie je dit terug in de weergave van de jurk en de kanten kraag. Met brede, pasteuze* verfstreken suggereert hij textuur zonder elk detail uit te werken. Van een afstand ziet de kraag er ragfijn* uit; van dichtbij zie je de abstracte, krachtige toets van het penseel.</p>
+<ul class="lijst"><li>Compositie en Blik: De</li></ul>
+<p>jonge vrouw zit aan een kleine schrijftafel. Ze kijkt de toeschouwer recht in de ogen met een mengeling van verbazing en een glimlach. Ze lijkt te worden onderbroken terwijl ze een brief vasthoudt of net heeft gelezen. Deze directe blik creëert een onmiddellijke band tussen het kunstwerk en de kijker.</p>
+<ul class="lijst"><li>Licht en Kleur: Het werk wordt gedomineerd door warme, gouden en bruine tinten,</li></ul>
+<p>wat een sfeer van geborgenheid* en luxe creëert. Het licht valt van de zijkant in op haar gezicht en de poederwitte kraag, waardoor het model bijna lijkt te gloeien tegen de donkere achtergrond.</p>
+<p>11</p>
+<p><i>De Brief </i>is een perfect voorbeeld van hoe de rococo evolueerde van uiterlijke decoratie naar innerlijke beleving:</p>
+<ul class="lijst"><li>Intimiteit: De rococo ruilde de grote, publieke ruimtes in voor de &#x27;boudoir&#x27;* en de salon*. Dit schilderij vangt precies dat private moment van een individu in haar eigen kamer.</li><li>Psychologisch Spel: Typerend voor de rococo is de zweem van mysterie. Is de brief van een geliefde? Is ze betrapt? De kijker wordt uitgenodigd om zelf het verhaal in te vullen, wat past bij de speelse en verhalende aard van de stroming.</li><li>Virtuositeit boven naturalisme*: In de rococo was de handtekening van de kunstenaar belangrijk. De losse, zwierige stijl van Fragonard in dit werk is een ode aan de artistieke vrijheid en het plezier van het schilderen zelf, ver weg van de strakke, bijna onzichtbare penseelvoering die de latere neoclassicisten zouden eisen.</li></ul>
+<p>Vandaag de dag bevindt dit werk zich in de Metropolitan Museum of Art (The Met) in New York, waar het nog steeds wordt geprezen als een voorloper van het latere impressionisme vanwege de vrije en snelle schilderstijl.</p>
+
+
+
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../caravaggio/"><span>Vorig onderwerp</span>&larr; Caravaggio en de barok</a><a href="../neoclassicisme/" style="text-align:right"><span>Volgend onderwerp</span>Neoclassicisme &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-rococo",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

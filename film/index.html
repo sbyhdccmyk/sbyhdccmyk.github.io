@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Film als tijdskunst</title>
+<meta name="description" content="Montage en filmtaal, aan de hand van de kortfilm Swimmer">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#inleiding-film-als-tijdskunst">Inleiding: film als tijdskunst</a></li><li><a href="#4-1-een-film-lezen-maker-en-context">4.1 Een film lezen: maker en context</a><ol><li><a href="#4-1-1-de-maker-als-context">4.1.1 De maker als context</a></li><li><a href="#4-1-2-lynne-ramsay">4.1.2 Lynne Ramsay</a></li><li><a href="#4-1-3-de-culturele-olympiade">4.1.3 De Culturele Olympiade</a></li></ol></li><li><a href="#4-2-analyse-van-swimmer">4.2 Analyse van Swimmer</a><ol><li><a href="#4-2-1-swimmer-2012">4.2.1 Swimmer (2012)</a></li></ol></li><li><a href="#4-3-montage-en-filmtaal">4.3 Montage en filmtaal</a><ol><li><a href="#4-3-1-arthur-lipsett-en-de-experimentele-film">4.3.1 Arthur Lipsett en de experimentele film</a></li><li><a href="#4-3-2-alfred-hitchcock-en-drie-montageprincipes">4.3.2 Alfred Hitchcock en drie montageprincipes</a></li><li><a href="#4-3-3-film-als-constructie">4.3.3 Film als constructie</a></li></ol></li><li><a href="#4-4-film-en-tijdsfilosofie">4.4 Film en tijdsfilosofie</a><ol><li><a href="#4-4-1-henri-bergson-la-duree">4.4.1 Henri Bergson: la durée</a></li><li><a href="#4-4-2-gilles-deleuze-image-mouvement-en-image-temps">4.4.2 Gilles Deleuze: image-mouvement en image-temps</a></li></ol></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, 2012</p>
+  <h1>Film als tijdskunst</h1>
+  <p class="onder">Montage en filmtaal, aan de hand van de kortfilm Swimmer</p>
+</header>
+
+<div class="kijkfilter" role="group" aria-label="Volg één element"><span>Volg één element</span><button type="button" data-focus="" aria-pressed="true">Alles</button><button type="button" data-focus="lichaam" aria-pressed="false">Lichaam</button><button type="button" data-focus="ruimte" aria-pressed="false">Ruimte</button><button type="button" data-focus="object" aria-pressed="false">Object</button><button type="button" data-focus="tijd" aria-pressed="false">Tijd</button></div><div id="werken"><h2 id="inleiding-film-als-tijdskunst">Inleiding: film als tijdskunst</h2>
+<p>Film is een tijdskunst (<i>time based art</i>): het werk bestaat pas doordat het zich in de tijd ontvouwt. Wat dat begrip precies inhoudt, zag je al in hoofdstuk 2 (2.5), waar duur en real time als materiaal van de performance aan bod kwamen. Dat leggen we hier niet opnieuw uit.</p>
+<p>Film gaat wel op een eigen manier met tijd om. Een performance gebeurt in real time: de tijd van de performer is ook de tijd van het publiek. Een film wordt eerst opgenomen, daarna geknipt en opnieuw samengesteld. De filmmaker kan tijd versnellen, vertragen, herhalen, onderbreken of laten verspringen. De tijd die je in de filmzaal beleeft, is dus gemaakte tijd.</p>
+<p>Daaruit volgt een eenvoudig uitgangspunt: films ontstaan niet vanzelf, zoals regen of een zonsondergang. Elke film is het resultaat van bewuste keuzes van een maker, binnen een bepaalde culturele, historische en maatschappelijke context. Wie film als kunstvorm wil begrijpen, moet die context mee in rekening brengen.</p>
+<p>In dit hoofdstuk lezen we één film grondig: <i>Swimmer</i> (2012) van de Schotse regisseur Lynne Ramsay. Eerst situeren we de maker en de ontstaanscontext (4.1). Daarna analyseren we de film zelf (4.2). Vervolgens bekijken we het gereedschap waarmee film tijd bouwt: de montage (4.3). Tot slot lezen we de film met twee Franse filosofen die nadachten over tijd en beweging, Henri Bergson en Gilles Deleuze (4.4).</p>
+<h2 id="4-1-een-film-lezen-maker-en-context">4.1 Een film lezen: maker en context</h2>
+<p>Wie een film analyseert, kijkt naar twee soorten context. De eerste is de maker: wie heeft de film gemaakt en hoe werkt die persoon? De tweede is de ontstaanscontext: wanneer, waarvoor en in wiens opdracht ontstond de film? Bij <i>Swimmer</i> zijn dat de regisseur Lynne Ramsay en de Olympische Spelen van Londen in 2012.</p>
+<h3 id="4-1-1-de-maker-als-context" class="sub">4.1.1 De maker als context</h3>
+<p>Een werk komt altijd van de hand van een maker. Soms is die hand letterlijk zichtbaar, zoals de penseelstreek van een schilder. Meestal is ze figuurlijk aanwezig, als een herkenbare manier van werken. Je herkent een schilderij van Frida Kahlo, een roman van Hugo Claus of een film van Steven Spielberg aan keuzes, thema’s en vormen die steeds terugkeren. Je zou het de handtekening van de maker kunnen noemen.</p>
+<p>Het geheel van werken dat iemand tijdens een carrière maakt, heet het oeuvre. Die handtekening binnen het oeuvre vormt een context voor elk afzonderlijk werk: wie de andere films van een regisseur kent, ziet meer in de nieuwe. Een werk waarin de typische kenmerken van de maker nauwelijks terug te vinden zijn, noemen we atypisch binnen dat oeuvre.</p>
+<h3 id="4-1-2-lynne-ramsay" class="sub">4.1.2 Lynne Ramsay</h3>
+<figure class="beeld"><figcaption>Lynne Ramsay (1969)<br>De regisseur op de set, met koptelefoon en een draaiboek op de knieën.</figcaption></figure>
+<p>Lynne Ramsay werd in 1969 geboren in Glasgow. Ze werd eerst aangetrokken door fotografie en ging daarna naar de National Film and Television School in Engeland, waar ze begon als cameravrouw en overschakelde naar regie. Haar afstudeerfilm, de kortfilm <i>Small Deaths</i>, won in 1996 de juryprijs voor kortfilm op het filmfestival van Cannes. Sindsdien groeide ze uit tot een van de meest eigenzinnige stemmen in de hedendaagse cinema. Ze schrijft haar scenario’s zelf en wordt geprezen om haar consequente auteurschap: elke film draagt duidelijk haar stempel.</p>
+<p>Wat maakt een film van Ramsay herkenbaar? Ten eerste vertelt ze vooral met beelden. Haar films bevatten weinig uitleg of verklarende dialoog. Betekenis ontstaat via compositie, licht en kadrering, en de kijker moet zelf verbanden leggen. Haar achtergrond in de fotografie is daarin goed zichtbaar: elk beeld is zorgvuldig opgebouwd en draagt op zichzelf informatie en emotie.</p>
+<p>Ten tweede is geluid bij haar even belangrijk als beeld. Het geluidsontwerp, de bewuste keuze en bewerking van alle geluiden in een film, werkt rechtstreeks in op het lichaam van de kijker. Geluiden zijn vaak intens en soms desoriënterend. Zo wordt de innerlijke toestand van een personage voelbaar zonder dat iemand die moet benoemen.</p>
+<p>Ten derde keren dezelfde thema’s terug: trauma, schuld, rouw en eenzaamheid. Haar personages dragen een last die zelden uitgesproken wordt, maar die je ziet in stiltes, lichaamstaal en sfeer.</p>
+<p>Ten vierde werkt Ramsay vanuit het detail. Ze filmt veel close-ups van voorwerpen en lichaamsdelen en vermijdt brede, overzichtelijke shots. Dat geeft een gevoel van intimiteit, soms ook van beklemming: je zit heel dicht op de ervaring van het personage.</p>
+<p>Ten slotte is haar montage fragmentarisch en associatief. Beelden volgen elkaar op volgens een emotionele of zintuiglijke logica, eerder dan volgens een strikte chronologie. Je ervaart de wereld zoals het personage die beleeft, als een innerlijke stroom.</p>
+<p>Belangrijkste langspeelfilms van Lynne Ramsay: <i>Ratcatcher</i> (1999), een sociaal-realistisch en poëtisch portret van een jongen in het Glasgow van de jaren zeventig; <i>Morvern Callar</i> (2002), over rouw en vervreemding; <i>We Need to Talk About Kevin</i> (2011), een beklemmende film over moederschap en geweld, in competitie in Cannes; <i>You Were Never Really Here</i> (2017), een fragmentarische thriller die in Cannes de prijs voor het beste scenario won en Joaquin Phoenix de prijs voor beste acteur opleverde; <i>Die My Love</i> (2025), met Jennifer Lawrence, eveneens in competitie in Cannes.</p>
+<p>Ramsay is dus een gelauwerde filmmaker. Filmprijzen zijn meer dan kwaliteitslabels. Ze bepalen welke films zichtbaar worden, welke in bioscopen en op streamingplatformen terechtkomen en welke later herinnerd worden. Een prijs of selectie op een groot festival kan een film canoniseren: hem opnemen in de groep van erkende, blijvend belangrijke werken. Elk festival heeft daarbij een eigen profiel en dus een eigen smaak.</p>
+<p>De Academy Awards (Oscars) zijn de meest mediagenieke en commercieel invloedrijke filmprijzen. Ze focussen sterk op de Amerikaanse filmindustrie en belonen vaak verhalende films met grote productiewaarde en een breed publiek. Het filmfestival van Cannes (hoogste prijs: de Gouden Palm) geldt als het belangrijkste festival voor auteurscinema, waar de visie van de regisseur centraal staat. Venetië, het oudste filmfestival ter wereld, reikt de Gouden Leeuw uit en vormt vaak een brug naar het prijzenseizoen van de Oscars. De Berlinale (Gouden Beer) heeft een uitgesproken politiek en maatschappelijk profiel. De BAFTA’s zijn de belangrijkste Britse filmprijzen. Daarnaast zijn er gespecialiseerde prijzen, zoals die van het Sundance Film Festival voor onafhankelijke film of de prijzen van de internationale filmkritiek (FIPRESCI), die vernieuwende films vaak signaleren voor een breed publiek ze kent.</p>
+<h3 id="4-1-3-de-culturele-olympiade" class="sub">4.1.3 De Culturele Olympiade</h3>
+<p>Londen 2012, logo’s van de Olympische en Paralympische Spelen en van de Culturele Olympiade</p>
+<p>Huisstijl van het organisatiecomité van de Spelen van Londen 2012.</p>
+<p><i>Swimmer</i> werd gemaakt in het kader van de Olympische Spelen van Londen in 2012. Rond die Spelen liep een groot cultureel programma: de Culturele Olympiade. Die bestreek vier jaar (2008-2012), speelde zich af in het hele Verenigd Koninkrijk en mondde uit in het London 2012 Festival, van juni tot september 2012. Volgens de officiële evaluatie ging het om meer dan 170.000 activiteiten: tentoonstellingen, concerten, theater, dans en film, met ruim 5000 nieuwe werken van meer dan 40.000 kunstenaars.</p>
+<p>Binnen dat programma gaven BBC Films, Film4 en het organisatiecomité van de Spelen samen opdracht voor vier kortfilms van Britse regisseurs, onder wie Mike Leigh (<i>A Running Jump</i>), Asif Kapadia (<i>The Odyssey</i>) en Lynne Ramsay (<i>Swimmer</i>). De opdracht was ruim: de Spelen mochten een inspiratie zijn, maar geen van de films moest er rechtstreeks over gaan.</p>
+<p>Dat maakt <i>Swimmer</i> tot een autonoom kunstwerk. Autonoom betekent hier dat de film niet gemaakt is om iets te promoten, uit te leggen of te illustreren. Ramsay hoefde geen reclame te maken voor de Spelen, geen verslag te brengen en geen publieksvriendelijk verhaal te vertellen. Zwemmen is weliswaar een olympische discipline, maar <i>Swimmer</i> is geen sportfilm. Er is geen wedstrijd, geen tegenstander, geen chronometer en geen medaille. De film functioneert als een zelfstandig filmisch object: zonder klassieke plot, zonder psychologische uitleg en zonder afgerond verhaal. De betekenis ontstaat uit de manier waarop beeld, geluid, montage en tijdsverloop op elkaar inwerken.</p>
+<h2 id="4-2-analyse-van-swimmer">4.2 Analyse van Swimmer</h2>
+<p>De analyse volgt dezelfde opbouw als bij de performances in hoofdstuk 2: een feitenfiche, een beschrijving van wat er gebeurt, de vier elementen en ten slotte de betekenis. Omdat geluid in deze film een eigen rol speelt, krijgt het een apart onderdeel.</p>
+<h3 id="4-2-1-swimmer-2012" class="sub">4.2.1 Swimmer (2012)</h3>
+<figure class="beeld"><figcaption>Lynne Ramsay, <i>Swimmer</i> (2012)<br>BBC Films en Film4, London 2012 Festival. Filmstill: de zwemmer tussen het riet, met de ogen net boven het wateroppervlak.</figcaption></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2012</dd><dt>Regie en scenario</dt><dd>Lynne Ramsay</dd><dt>Duur</dt><dd>ongeveer 18 minuten</dd><dt>Productie</dt><dd>Warp Films, voor BBC Films en Film4, in samenwerking met het organisatiecomité van Londen 2012</dd><dt>Camera</dt><dd>Natasha Braier</dd><dt>Vorm</dt><dd>zwart-wit, 35 mm, zonder dialoog</dd><dt>Zwemmer</dt><dd>Tom Litten</dd><dt>Prijs</dt><dd>BAFTA voor beste korte film (2013)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p><i>Swimmer</i> volgt een jonge man die in zijn eentje door het water van Groot-Brittannië zwemt: rivieren, meren, kanalen en een stuwmeer. De film opent in open water, met de camera op ooghoogte, net boven het oppervlak. Je kijkt naar de horizon, tot het water langzaam over het beeld kruipt. Uit het troebele water verschijnt een gestalte, eerst bijna als een waterdier, daarna als een atletische zwemmer die met een krachtige dolfijnslag op de camera afkomt.</p>
+<p>Hij zwemt door een landelijke rivier, terwijl een liefdeslied uit de jaren dertig klinkt. Verderop worden de oevers steil en rotsachtig. Op smalle uitsprongen zitten jongens in camouflagekleren, met zelfgemaakte bogen en speren. Ze vallen de zwemmer aan, op het ritme van de trommels uit de Britse film <i>Lord of the Flies</i> (1963). Zijn lichaam zakt levenloos naar de bodem, het beeld wordt zwart, en dan duikt hij toch weer op.</p>
+<p>In de tweede helft wordt de film losser en sprongsgewijzer. De zwemmer loopt te voet door een bos, komt in de buurt van een kermis, zwemt door een stedelijke waterweg en ten slotte in een rechte borstcrawl over een stuwmeer. Aan het einde verdwijnt hij onder het oppervlak en komt het water tot rust. Tijdens de aftiteling verschijnt hij opnieuw en zwemt verder.</p>
+<h4>Echt koud water</h4>
+<p>De zwemmer wordt gespeeld door Tom Litten, een zwemmer die zich had voorbereid op de Spelen maar net niet geselecteerd werd voor het Britse team. Hij had nooit eerder in open water gezwommen. Er werd in oktober en november gefilmd, in water van ongeveer 9 °C. Litten kon telkens maar zo’n tweeënhalve minuut zwemmen en moest daarna lang opwarmen. Elk shot moest daarom vooraf precies gepland worden en meestal in één keer lukken.</p>
+<h4>De vier elementen</h4>
+<p>De vier elementen uit de inleiding van deze cursus, die je in hoofdstuk 2 op performance toepaste, helpen ook om film te lezen. In <i>Swimmer</i> lopen ze nog sterker in elkaar over dan in een performance: wat je ziet, is tegelijk ruimte, object, lichaam en tijd.</p>
+<div class="el tijd"><h5>Tijd</h5><p>De film begint en eindigt bij stilstaand water. Zolang het water stil ligt, lijkt de tijd nog niet te stromen. Zodra de zwemmer zich in beweging zet, gaat ook de film vooruit: elke slag en elke ademhaling duwen de camera verder door het water en dus door de film. Het lichaam is de motor van de filmtijd. Hoe die tijd beleefd wordt en wat het stille water aan het einde betekent, bekijken we in 4.4.</p></div>
+<figure class="beeld"><figcaption>Lynne Ramsay, <i>Swimmer</i> (2012)<br>Filmstill: het hoofd van de zwemmer verdwijnt in een wolk van opspattend water.</figcaption></figure>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte verandert voortdurend, maar zonder duidelijke overgangen. We blijven steeds in of bij het water. Het landschap is soms landelijk, soms stedelijk of industrieel, maar water is de constante. Rivieren en kanalen verbinden de plekken met elkaar en met hun geschiedenis: het Groot-Brittannië van de velden, de steden en de fabrieken. De camera verheerlijkt het landschap niet als een postkaart. Plaatsen worden doorkruist en weer losgelaten, zoals het lichaam door het water schuift.</p></div>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam van de zwemmer is voertuig en maatstaf tegelijk. Het draagt de film vooruit, en de toeschouwer ziet, hoort en voelt de wereld vanuit dit lichaam. Dit lichaam wil niets winnen. Het voelt, ademt en beweegt zich door weerstand heen: koude, stroming en de aanval van de jongens. Ook die jongens zijn lichamen die de ruimte bezetten. Ze maken van de oever een bedreigende plek.</p></div>
+<div class="el object"><h5>Object</h5><p>Het belangrijkste object is het water zelf. Ramsay behandelt het als een beeldhouwmateriaal. Door het zwart-wit worden transparantie, reflectie en lichtschittering bijna tastbaar. Het water buigt rond het lichaam, breekt het beeld en vervormt de ruimte. De camera registreert het water niet alleen, ze vormt het ook door kadrering, licht en beweging. In die zin is de film fotografisch en beeldhouwkundig tegelijk. De bogen en speren van de jongens zijn de enige andere voorwerpen die opvallen: ze brengen geweld binnen in een wereld van water en licht.</p></div>
+<figure class="beeld"><figcaption>Lynne Ramsay, <i>Swimmer</i> (2012)<br>Filmstill: een van de jongens in zelfgemaakte vermomming, met een kap van pels en veren.</figcaption></figure>
+<h4>Geluid</h4>
+<p>In <i>Swimmer</i> wordt geen woord gesproken door de zwemmer. Toch is de film vol stemmen en klanken. De geluidsband bestaat uit drie lagen. De eerste laag zijn natuurgeluiden: het ruisen van riet, vogels, opspattend water en opnames die met een hydrofoon (een onderwatermicrofoon) gemaakt werden. De tweede laag zijn flarden van gesprekken langs de waterkant. De derde laag is bestaand materiaal: Britse muziek, van de klassieke componist Frederick Delius tot de popgroep The La’s, en fragmenten uit oudere films, zoals de trommels van <i>Lord of the Flies</i> of een zin uit <i>Walkabout</i> van Nicolas Roeg: “We’re lost.”</p>
+<p>Het geluid illustreert het beeld niet. Wat je hoort, hoort niet bij wat je ziet: een liefdeslied uit de jaren dertig klinkt boven een rivier in 2012. Zo opent het geluid een culturele ruimte die naast de fysieke tocht loopt. Terwijl het lichaam door water en landschap beweegt, beweegt de film ook door de lagen van het Britse collectieve geheugen. Waar die werkwijze vandaan komt, zie je in 4.3.1.</p>
+<h4>Betekenis</h4>
+<p><i>Swimmer</i> toont hoe film kan werken als een autonome ervaring, los van verhaal, uitleg of reclame. De film is gemaakt voor een feestelijk, nationaal evenement, maar geeft een dubbelzinnig beeld van Groot-Brittannië. Het land verschijnt via zijn waterwegen en via zijn muziek- en filmgeschiedenis, met schoonheid en melancholie, maar ook met de minder fraaie kanten: de groep jongens die een buitenstaander opjaagt, rechtstreeks verwijzend naar <i>Lord of the Flies</i>, waarin kinderen op een eiland tot wreedheid vervallen.</p>
+<p>Het olympische lichaam verschijnt hier zonder prestatie en spektakel, als een lichaam dat kou, dreiging, uitputting en rust ervaart. Vanaf het eerste beeld zit je als kijker mee in het water. Er is geen plot die je leidt. De film vraagt een aandachtige, actieve manier van kijken en luisteren, en laat de betekenis open.</p>
+<h2 id="4-3-montage-en-filmtaal">4.3 Montage en filmtaal</h2>
+<p>Een film wordt niet in één keer opgenomen. Hij bestaat uit shots: stukken film die telkens zonder onderbreking gefilmd zijn. Montage is het samenstellen van die shots en van de geluidsfragmenten tot één geheel. Dat is meer dan knippen en plakken. In de montage beslist de maker welke beelden op elkaar volgen, hoe lang elk beeld duurt, wat weggelaten wordt en welke geluiden bij welk beeld komen. Montage is dus de plaats waar de tijd van een film gemaakt wordt.</p>
+<p>Twee filmmakers helpen om te begrijpen hoe Ramsay met montage werkt. De experimentele filmmaker Arthur Lipsett maakte de constructie van film zichtbaar. Alfred Hitchcock, de meester van de suspense, legde uit hoe montage de kijker stuurt.</p>
+<h3 id="4-3-1-arthur-lipsett-en-de-experimentele-film" class="sub">4.3.1 Arthur Lipsett en de experimentele film</h3>
+<figure class="beeld"><figcaption>Arthur Lipsett (1936-1986)<br>Canadese filmmaker, van 1958 tot 1970 verbonden aan het National Film Board of Canada.</figcaption></figure>
+<p>Arthur Lipsett werd in 1936 geboren in Montreal. Hij werkte bij het National Film Board of Canada, de Canadese openbare filmproducent, en was daar een van de weinigen die experimentele films maakten. Hij was een avant-gardekunstenaar. Avant-garde betekent dat hij bewust buiten de gangbare filmconventies werkte. Hij vertrok niet van een verhaal, herkenbare personages of een vlotte kijkervaring, maar van onderzoek en experiment. Film werd bij hem een laboratorium waarin nieuwe manieren van kijken en luisteren werden uitgeprobeerd.</p>
+<p>Lipsett werkte vooral met found footage: bestaand beeld- en geluidsmateriaal dat hij hergebruikte en opnieuw ordende. Door fragmenten uit hun oorspronkelijke context te halen en in een nieuwe samenhang te plaatsen, ontstaat een reeks associaties in plaats van een lineair verhaal. Zijn montage is snel, met abrupte overgangen die de kijker geen houvast geven. Zo toont hij hoe kunstmatig film is: betekenis ontstaat door selectie en ordening.</p>
+<figure class="beeld"><figcaption>Arthur Lipsett, <i>Very Nice, Very Nice</i> (1961)<br>National Film Board of Canada, 7 minuten. Titelbeeld van de film.</figcaption></figure>
+<p><i>Very Nice, Very Nice</i> (1961) was zijn eerste film. Het begon als een oefening in geluidsmontage: Lipsett verzamelde stukjes geluid die anderen hadden weggegooid, zoals fragmenten uit radio, reclame, toespraken, muziek en gesprekken, en monteerde ze tot een collage. Daaronder legde hij een snelle opeenvolging van stilstaande beelden: foto’s die hij zelf op straat in Parijs en New York nam, beelden uit tijdschriften en restmateriaal van het filmbord. Beweging ontstaat hier door de montage, niet door gefilmde actie. De film werd genomineerd voor een Oscar.</p>
+<p>Beeld en geluid lopen bij Lipsett niet synchroon en verklaren elkaar niet. Het zijn twee zelfstandige lagen die samen een overprikkelde, gelaagde tijdservaring oproepen. Betekenis ontstaat uit herhaling, botsing en juxtapositie, het naast elkaar plaatsen van dingen die niet bij elkaar horen.</p>
+<p>Die werkwijze herken je in <i>Swimmer</i>. Ook Ramsay bouwt haar geluidsband op uit bestaand materiaal in plaats van uit dialoog of speciaal gecomponeerde muziek, en ook bij haar vormen beeld en geluid twee aparte lagen (zie 4.2.1, Geluid). Het verschil zit in het effect. Lipsett gebruikt de techniek om te versnellen en te ontregelen. Ramsay gebruikt ze om een tweede, auditieve ruimte te openen die de trage, lichamelijke tocht verdiept en verbindt met de culturele geschiedenis van het land.</p>
+<p><i>Very Nice, Very Nice</i> had invloedrijke bewonderaars, onder wie de regisseurs Stanley Kubrick en George Lucas.</p>
+<h3 id="4-3-2-alfred-hitchcock-en-drie-montageprincipes" class="sub">4.3.2 Alfred Hitchcock en drie montageprincipes</h3>
+<figure class="beeld"><figcaption>Alfred Hitchcock (1899-1980)<br>Publiciteitsportret van de Britse regisseur.</figcaption></figure>
+<p>Alfred Hitchcock werd in 1899 in Londen geboren en overleed in 1980 in Los Angeles. In een carrière van ongeveer zestig jaar regisseerde hij meer dan vijftig langspeelfilms, eerst in Groot-Brittannië, later in Hollywood. Hij kreeg de bijnaam “Master of Suspense”. Suspense is spanning die voortkomt uit wat de kijker weet, vermoedt of vreest, eerder dan uit wat er werkelijk gebeurt. Hitchcock stuurde de emoties van zijn publiek nauwkeurig met montage, camerastandpunten, muziek en timing. Hij verscheen ook zelf heel kort in bijna al zijn films; die cameo’s werden een handelsmerk. Tot zijn bekendste films horen <i>North by Northwest</i> (1959), <i>Psycho</i> (1960) en <i>The Birds</i> (1963).</p>
+<p>In een televisie-interview uit 1964 legde Hitchcock uit dat montage niet gewoon “knippen” is. Het gaat om het assembleren van losse stukken film tot een betekenisvol geheel. Hij onderscheidde drie manieren waarop dat werkt.</p>
+<figure class="beeld"><figcaption>Alfred Hitchcock, <i>Psycho</i> (1960)<br>Reeks beelden uit de douchescène.</figcaption></figure>
+<h4>Impressionistische montage: een mozaïek van fragmenten</h4>
+<p>Bij de eerste vorm bouwt de montage een handeling op uit veel korte fragmenten die elkaar snel opvolgen, zonder ze letterlijk te tonen. In het hoofd van de kijker ontstaat zo een indruk die sterker is dan een rechtstreekse weergave. Hitchcocks voorbeeld is de beroemde douchescène uit <i>Psycho</i>. Het was onmogelijk om letterlijk te tonen hoe een naakte vrouw wordt neergestoken. Daarom werd de scène opgebouwd uit stukjes: een hoofd, een hand, delen van de romp, een schaduw achter het douchegordijn, de douchekop. Je ziet het mes nooit het lichaam binnendringen, en toch ervaar je een extreem gewelddadige moord. Hitchcock spreekt zelf van 78 stukjes film in ongeveer 45 seconden. Het geweld zit niet in het beeld, maar in de geest van de toeschouwer.</p>
+<h4>Orkestratie: montage als muziek</h4>
+<p>De tweede vorm vergelijkt Hitchcock met muziek. Het gaat hier minder om snelheid dan om de afwisseling van beeldgroottes, zoals een componist zachte en luide noten afwisselt. Zijn voorbeeld is de tweede moord in <i>Psycho</i>: een detective loopt een trap op. De scène begint rustig, met een middelgroot beeld van de man op de trap. De kijker weet dat er gevaar dreigt, maar niet wanneer. Dan plaatst Hitchcock de camera plots heel hoog, alsof we alles van bovenaf bekijken. Daarna volgt een klein, bijna abstract beeld van een hand met een mes. En meteen daarop een extreme close-up van het gezicht van de man op het moment dat het mes toeslaat. Het contrast tussen kleine en grote beelden werkt als een luid blazersakkoord na een stille passage: de kijker schrikt lichamelijk.</p>
+<h4>Zuiver cinematografisch denken: betekenis door volgorde</h4>
+<p>De derde vorm noemt Hitchcock zuiver cinematografisch. Een beeld heeft op zichzelf geen vaste betekenis; betekenis ontstaat door de volgorde van beelden. Hitchcock gaf een voorbeeld met zichzelf in de hoofdrol. Eerst zie je een close-up van een man die kijkt. Dan zie je wat hij ziet: een moeder met een baby. Dan zie je opnieuw zijn gezicht, en hij glimlacht. Je leest hem als een vriendelijke oude heer. Vervang je het middelste beeld door een meisje in bikini, terwijl de rest identiek blijft, dan lijkt dezelfde glimlach plots die van een viezerik. De man is niet veranderd, alleen het beeld ertussen. Op dezelfde manier zou een medaille in het middelste beeld van die glimlach trots maken.</p>
+<p>Film kan dus betekenis maken zonder dat er iets verandert aan het gezicht, het gedrag of de emotie van een personage. De kijker vult die betekenis in op basis van de volgorde.</p>
+<p>Dit verschijnsel heet ook het Koelesjov-effect, naar de Russische filmmaker Lev Koelesjov, die er in de jaren 1920 mee experimenteerde door hetzelfde neutrale gezicht van een acteur te combineren met telkens een ander beeld.</p>
+<h4>Toepassing op Ramsay</h4>
+<p>Ramsay gebruikt zelden de snelle, impressionistische montage van de douchescène. Haar shots duren langer en volgen het ritme van het lichaam. Iets van orkestratie herken je wel in de sprongen in schaal: van een close-up van een hoofd in opspattend water naar een wijd beeld van de zwemmer op een stuwmeer. Zo’n sprong laat je voelen hoe klein het lichaam is in het landschap. Vooral het derde principe is belangrijk, maar Ramsay past het toe op beeld én geluid. Een zwemmer in een rivier is op zichzelf neutraal. Klinkt er een liefdeslied uit de jaren dertig, dan wordt de tocht dromerig. Klinken de trommels uit <i>Lord of the Flies</i>, dan wordt hetzelfde water bedreigend. De betekenis ontstaat uit de combinatie.</p>
+<h3 id="4-3-3-film-als-constructie" class="sub">4.3.3 Film als constructie</h3>
+<p>Een film is een volledig gemaakte wereld: alles wat je ziet en hoort, is gekozen en samengesteld. Toch voelt die wereld meestal natuurlijk aan. Je vergeet dat je naar losse beelden kijkt, omdat montage, camerastandpunten en geluid zo op elkaar afgestemd zijn dat je de techniek niet opmerkt. Hitchcock was daar een meester in.</p>
+<p>Onder die vlotte kijkervaring zit dus een verborgen constructie van keuzes die bepalen wat je voelt en begrijpt. Experimentele filmmakers zoals Lipsett maken die constructie net zichtbaar. <i>Swimmer</i> zit daartussen: de film laat je onderdompelen in een ervaring, maar door de botsingen tussen beeld en geluid blijf je ook merken dat je naar iets gemaakts kijkt.</p>
+<h2 id="4-4-film-en-tijdsfilosofie">4.4 Film en tijdsfilosofie</h2>
+<p>Montage toont hoe film tijd bouwt. Maar wat is tijd eigenlijk, en welke soort tijd laat een film ons beleven? Twee Franse filosofen gaven daar een antwoord op dat voor film bijzonder bruikbaar is.</p>
+<h3 id="4-4-1-henri-bergson-la-duree" class="sub">4.4.1 Henri Bergson: la durée</h3>
+<figure class="beeld"><figcaption>Henri Bergson (1859-1941)<br>Portret op het omslag van een heruitgave van zijn boek <i>Durée et simultanéité</i> (1922).</figcaption></figure>
+<p>Henri Bergson (1859-1941) was een Franse filosoof en professor aan het Collège de France in Parijs. Hij kreeg de Nobelprijs voor Literatuur van 1927. Al in zijn eerste boek, <i>Essai sur les données immédiates de la conscience</i> (1889), stelde hij dat we tijd meestal verkeerd begrijpen.</p>
+<p>Wij denken bij tijd aan kloktijd: tijd die je kunt meten en indelen in seconden, minuten en uren, als punten op een lijn. Voor Bergson is die meetbare tijd een praktische afspraak, nuttig voor uurroosters en treinen, maar niet de tijd zoals we hem werkelijk leven. Kloktijd behandelt tijd als ruimte: als een lat met gelijke streepjes.</p>
+<p>Daartegenover plaatst Bergson la durée, de duur: de beleefde, innerlijke tijd. Die is een ononderbroken stroom, zonder losse momenten. Denk aan een melodie. Je hoort een geheel waarin elke noot de vorige nog meedraagt. Haal je de noten uit elkaar, dan is de melodie weg. Zo is het ook met beleefde tijd. Bovendien is die tijd elastisch: soms vliegt hij voorbij, soms lijkt hij eindeloos. Dat verschil zit niet in de klok, maar in het bewustzijn.</p>
+<p>Verleden en heden lopen in la durée voortdurend in elkaar over. Wat je nu ervaart, is altijd doordrongen van wat je eerder hebt meegemaakt. Herinneringen blijven actief aanwezig in het heden en kleuren hoe je het beleeft.</p>
+<h4>Bergson en de filmprojector</h4>
+<p>Bergson zelf was argwanend tegenover film. In <i>L’Évolution créatrice</i> (1907) vergeleek hij ons gewone denken met de cinematograaf: zoals een filmprojector een reeks stilstaande foto’s achter elkaar afspeelt om beweging na te bootsen, zo hakt ons verstand de stromende werkelijkheid in losse momentopnames en plakt die dan weer aan elkaar. De echte beweging, de durée, glipt daarbij weg. Later zou Gilles Deleuze (4.4.2) het omgekeerde verdedigen: juist film kan ons beweging en tijd rechtstreeks laten ervaren.</p>
+<p>Vanuit Bergsons begrip van tijd bestaat film zelf uit duur. Door vertraging, versnelling, herhaling en montage organiseert een film beleefde tijd, los van de klok.</p>
+<h4>Toepassing: de beleefde tijd van de zwemmer</h4>
+<figure class="beeld"><figcaption>Lynne Ramsay, <i>Swimmer</i> (2012)<br>Filmstill: de zwemmer in borstcrawl, in tegenlicht.</figcaption></figure>
+<p><i>Swimmer</i> volgt geen meetbare tijd. We weten niet hoe lang de tocht duurt, hoeveel kilometer de zwemmer aflegt of hoeveel tijd er tussen twee plaatsen verstrijkt. Wat telt, is de beleefde tijd van het lichaam. De herhaalde armbewegingen, het ritme van de ademhaling en het klotsen van het water dompelen de kijker onder in dezelfde tijdsstroom als de zwemmer.</p>
+<p>Ook verleden en heden lopen door elkaar, zoals Bergson het beschrijft. Een lied uit de jaren dertig en stemmen uit films van de jaren zestig dienen zich aan in het heden van de tocht, zonder duidelijke scheiding. Ze vertellen niets en verklaren niets. Ze werken als herinneringen die opduiken in het nu, als lagen van bewustzijn die tegelijk aanwezig zijn.</p>
+<p>Opvallend is hoe die stroom gemaakt werd. Tom Litten kon in het koude water telkens maar enkele minuten zwemmen. De kloktijd van de opnames bestond dus uit korte, losse stukjes, verspreid over weken. Pas in de montage werden die stukjes tot één doorlopende beweging gesmolten. Precies wat Bergson van de cinematograaf vreesde, losse momentopnames, wordt hier gebruikt om de kijker een ongebroken duur te laten voelen.</p>
+<h3 id="4-4-2-gilles-deleuze-image-mouvement-en-image-temps" class="sub">4.4.2 Gilles Deleuze: image-mouvement en image-temps</h3>
+<figure class="beeld"><figcaption>Gilles Deleuze, <i>Cinéma 1: L’image-mouvement</i> (1983)<br>Omslag van de Engelse vertaling, <i>Cinema 1: The Movement-Image</i>, Bloomsbury.</figcaption></figure>
+<p>De Franse filosoof Gilles Deleuze (1925-1995) schreef over filosofie, kunst, literatuur en politiek. Hij was vooral geïnteresseerd in hoe mensen denken, waarnemen en ervaren. Film nam daarbij een bijzondere plaats in. Voor Deleuze was cinema meer dan ontspanning: het is een medium dat ons kan tonen hoe tijd, beweging en bewustzijn werken. Hij bouwde daarvoor uitdrukkelijk voort op Bergson.</p>
+<p>Zijn ideeën over film werkte hij uit in twee boeken: <i>Cinéma 1: L’image-mouvement</i> (1983) en <i>Cinéma 2: L’image-temps</i> (1985). Daarin beschrijft hij twee fundamentele manieren waarop films met tijd omgaan: het bewegingsbeeld (image-mouvement) en het tijdbeeld (image-temps).</p>
+<h4>Image-mouvement</h4>
+<p>Het bewegingsbeeld is typisch voor de klassieke film van voor de Tweede Wereldoorlog en voor veel populaire cinema. Personages willen iets bereiken: ze handelen, botsen op obstakels en overwinnen die. Elke actie leidt logisch tot een volgende, en het verhaal beweegt voortdurend vooruit. Tijd zit verborgen in de handeling en wordt ervaren als voortgang. Veel avonturenfilms, actiefilms en klassieke Hollywoodfilms werken zo.</p>
+<h4>Image-temps</h4>
+<p>Het tijdbeeld ontstaat volgens Deleuze vooral na de Tweede Wereldoorlog. De oorlog had het vertrouwen in vooruitgang, heldendom en duidelijke oplossingen geschokt. Filmmakers begonnen te twijfelen aan verhalen waarin een held alle problemen oplost. Er verschenen films waarin personages vastlopen, twijfelen of niet weten wat te doen. De band tussen actie en gevolg wordt zwakker of verdwijnt, en beelden lijken soms losse momenten, herinneringen of indrukken.</p>
+<p>Wat dan overblijft, is tijd zelf. Tijd verschijnt rechtstreeks in het beeld, los van doelgericht handelen. Het gaat erom hoe een moment aanvoelt, eerder dan wat het oplevert. Lange shots, stiltes, trage bewegingen en herhaling zonder vooruitgang worden belangrijk. De kijker wordt uitgenodigd om te blijven kijken, en de tijd wordt voelbaar: soms traag, soms zwaar, soms leeg of vervreemdend. De film hoeft geen antwoorden te geven of alles af te ronden.</p>
+<div class="tabel"><table><tr><th></th><th>Image-mouvement</th><th>Image-temps</th></tr><tr><td>Motor van de film</td><td>Actie en beweging</td><td>Tijd, ervaring en sfeer</td></tr><tr><td>Personages</td><td>Hebben een doel en handelen</td><td>Twijfelen, blijven hangen, kijken</td></tr><tr><td>Oorzaak en gevolg</td><td>Duidelijk en logisch</td><td>Zwak of afwezig</td></tr><tr><td>Opbouw</td><td>Vooruitgang naar een oplossing</td><td>Losse momenten, herhaling, open einde</td></tr><tr><td>Tijd</td><td>Verborgen in de handeling, ervaren als voortgang</td><td>Rechtstreeks zichtbaar en voelbaar</td></tr><tr><td>Periode bij Deleuze</td><td>Vooral klassieke film van voor 1945</td><td>Vooral moderne film van na 1945</td></tr></table></div>
+<h4>De vaas bij Ozu</h4>
+<figure class="beeld"><figcaption>Yasujirō Ozu, <i>Late Spring</i> (1949)<br>Japanse titel <i>Banshun</i>. Filmstill: de vaas in de kamer van de herberg in Kyoto, met de schaduw van bamboe op het papieren venster.</figcaption></figure>
+<p>Een beroemd voorbeeld van een tijdbeeld vindt Deleuze in <i>Late Spring</i> (1949) van de Japanse regisseur Yasujirō Ozu. Noriko woont samen met haar vader, een weduwnaar, en staat op het punt te trouwen en het ouderlijk huis te verlaten. Vader en dochter maken een laatste reis samen naar Kyoto. ’s Avonds liggen ze in hun kamer in een herberg. Noriko praat nog wat, glimlacht, en kijkt dan zwijgend voor zich uit, terwijl haar vader lijkt te slapen. Ozu snijdt naar een vaas op de tatamimat, met de schaduw van bamboe op het venster. Er gebeurt niets. Niemand komt binnen, niemand handelt. Toch blijft het beeld staan. Daarna zien we Noriko opnieuw, haar gezicht nu bijna in tranen, en dan nog eens de vaas, nog langer.</p>
+<p>Volgens het bewegingsbeeld zou dat shot overbodig zijn: het legt niets uit en bereidt geen volgende actie voor. Voor Deleuze is het een zuiver tijdbeeld. Hij schrijft dat de vaas staat “tussen de halve glimlach van de dochter en het begin van haar tranen”. Rond de vaas verandert alles: de gevoelens van Noriko, de relatie met haar vader, haar hele leven. De vaas zelf verandert niet. Ze is de vaste vorm waarin je de verandering, en dus de tijd zelf, ziet verstrijken. De vaas hoeft daarbij niet symbolisch gelezen te worden; ze staat niet voor iets anders. Ze is het moment. De kijker voelt de stilte en het verstrijken van tijd, met ruimte voor gemis en aanvaarding, zonder dat iemand dat uitspreekt.</p>
+<h4>Toepassing: zwemmen zonder doel</h4>
+<figure class="beeld"><figcaption>Lynne Ramsay, <i>Swimmer</i> (2012)<br>Filmstill: de zwemmer te voet in het bos, in het tweede, losser gemonteerde deel van de film.</figcaption></figure>
+<p><i>Swimmer</i> doorbreekt de logica van het bewegingsbeeld. Er is wel voortdurend beweging, maar die leidt nergens heen. De zwemmer heeft geen doel, geen eindpunt en geen probleem dat opgelost moet worden. Neem de aanval van de jongens. In een klassieke film zou die een keerpunt zijn: dreiging, gevecht of vlucht, en een overwinning. Bij Ramsay zakt het lichaam weg, het beeld wordt zwart, en de zwemmer zwemt verder alsof er niets gebeurd is. Even later klinkt de zin “We’re lost”: de tocht wordt een dwalen zonder bestemming.</p>
+<p>Het einde werkt zoals de vaas bij Ozu. Wanneer de zwemmer onder het oppervlak verdwijnt, wordt het water stil. Er gebeurt niets meer, en net daardoor voel je de tijd. Dat stille water is het onveranderlijke beeld waarin de hele tocht naklinkt. Wanneer de zwemmer tijdens de aftiteling toch weer opduikt en verder zwemt, wordt duidelijk dat er geen afsluiting komt. Zo vertelt <i>Swimmer</i> minder een verhaal over een zwemmer dan dat de film je tijd laat ervaren: een tijdbeeld in de zin van Deleuze.</p></div>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Associatief", "Gebaseerd op verbanden die ontstaan door gevoel, herinnering of gedachte, in plaats van door logische uitleg of chronologie."], ["Atypisch", "Afwijkend van wat kenmerkend is voor het oeuvre van een maker."], ["Auteurschap", "Opvatting waarbij de regisseur als de eigenlijke maker van een film geldt, met een persoonlijke stijl die in al zijn of haar films herkenbaar is."], ["Autonoom kunstwerk", "Kunstwerk dat op zichzelf staat en niet bedoeld is om iets te promoten, uit te leggen of te illustreren."], ["Avant-garde", "Kunst of film die bewust breekt met de gangbare vormen en experimenteert met nieuwe manieren van maken, kijken en luisteren."], ["Canoniseren", "Een werk opnemen in de groep van erkende en blijvend belangrijke werken."], ["Close-up", "Shot waarin een gezicht, lichaamsdeel of voorwerp van heel dichtbij en groot in beeld komt."], ["Context", "Het geheel van omstandigheden waarin een werk ontstaat (maker, tijd, plaats, opdracht, maatschappij), dat mee bepaalt hoe het begrepen wordt."], ["Found footage", "Bestaand beeld- of geluidsmateriaal dat een filmmaker hergebruikt in een nieuwe samenhang."], ["Fragmentarisch", "Opgebouwd uit losse delen, zonder doorlopend of lineair verband."], ["Geluidsontwerp", "De bewuste keuze, opname en bewerking van alle geluiden in een film om sfeer, spanning en beleving te creëren."], ["Image-mouvement (bewegingsbeeld)", "Bij Deleuze: filmvorm waarin actie en doelgericht handelen de film vooruitstuwen en tijd ervaren wordt als voortgang."], ["Image-temps (tijdbeeld)", "Bij Deleuze: filmvorm waarin de band tussen actie en gevolg verzwakt en tijd zelf rechtstreeks zichtbaar en voelbaar wordt."], ["Impressionistische montage", "Bij Hitchcock: een handeling opbouwen uit veel korte fragmenten, zodat de indruk in het hoofd van de kijker ontstaat."], ["Juxtapositie", "Het naast of na elkaar plaatsen van beelden of geluiden die niet bij elkaar horen, zodat er een nieuwe betekenis ontstaat."], ["La durée", "Bij Bergson: de beleefde, innerlijke tijd, een ononderbroken stroom waarin verleden en heden in elkaar overlopen."], ["Montage", "Het samenstellen van shots en geluidsfragmenten tot een geheel, waarbij betekenis en tijd ontstaan door volgorde, duur en combinatie."], ["Oeuvre", "Het geheel van werken dat een kunstenaar of filmmaker tijdens zijn of haar carrière maakt."], ["Orkestratie", "Bij Hitchcock: montage die beeldgroottes afwisselt zoals zachte en luide noten in muziek, om spanning en schok te veroorzaken."], ["Shot", "Stuk film dat zonder onderbreking werd opgenomen; de kleinste eenheid van de montage."], ["Suspense", "Spanning die ontstaat uit wat de kijker weet, vermoedt of vreest, eerder dan uit wat er gebeurt."], ["Zintuiglijk", "Gericht op de zintuigen en op hoe iets lichamelijk ervaren wordt."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Waarom kan film niet beschouwd worden als een natuurlijk fenomeen? Wat betekent dat voor de manier waarop je een film analyseert?</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Leg uit wat bedoeld wordt met “de maker als context”. Gebruik de begrippen oeuvre en atypisch.</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Beschrijf de filmstijl van Lynne Ramsay. Leg bij elk kenmerk uit wat het effect is op de kijker.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Wat betekent het dat <i>Swimmer</i> gemaakt werd als autonoom kunstwerk binnen de Culturele Olympiade? Waarom is het geen sportfilm?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Welke rol speelt geluid in <i>Swimmer</i>? Leg uit waarom je kan zeggen dat het geluid het beeld niet illustreert.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Leg uit hoe Arthur Lipsett met found footage werkte in <i>Very Nice, Very Nice</i> en wat hij daarmee zichtbaar wilde maken.</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Leg de drie montageprincipes van Hitchcock uit, telkens met zijn voorbeeld.</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Wat bedoelt Bergson met la durée, en waarom verschilt die van kloktijd? Gebruik het voorbeeld van de melodie.</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Waarom stond Bergson zelf argwanend tegenover de filmprojector, en hoe keerde Deleuze die gedachte om?</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Leg het verschil uit tussen image-mouvement en image-temps, en verklaar waarom het tijdbeeld volgens Deleuze vooral na de Tweede Wereldoorlog opkwam.</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Analyseer <i>Swimmer</i> aan de hand van de vier elementen. Toon aan waar twee elementen in elkaar overgaan.</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Vergelijk de rol van tijd in <i>Swimmer</i> met die in een performance van Marina Abramović (hoofdstuk 2). Welk verschil maakt de montage?</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Vergelijk het gebruik van found sound in <i>Very Nice, Very Nice</i> en in <i>Swimmer</i>. Wat hebben ze gemeen, en waarom is het effect toch anders?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Pas het derde montageprincipe van Hitchcock toe op een scène uit <i>Swimmer</i>: hoe verandert de betekenis van hetzelfde beeld door het geluid dat erbij klinkt?</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Ramsay filmde de zwemmer in korte stukjes van enkele minuten. Leg uit hoe de film toch een ervaring van ononderbroken duur oproept, en betrek daarbij Bergson.</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Leg uit waarom de vaasscène uit <i>Late Spring</i> een tijdbeeld is. Welk moment in <i>Swimmer</i> werkt op een vergelijkbare manier, en waarom?</label></li><li><input type="checkbox" id="v1-6" data-vraag="1-6"><label for="v1-6">Kies een actie- of avonturenfilm die je kent. Toon aan dat hij werkt volgens de image-mouvement en beschrijf hoe één scène eruit zou zien als image-temps.</label></li><li><input type="checkbox" id="v1-7" data-vraag="1-7"><label for="v1-7"><i>Swimmer</i> werd gemaakt voor een feestelijk nationaal evenement. Leg uit waarom de film toch een dubbelzinnig beeld van Groot-Brittannië geeft.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../ron-mueck/"><span>Vorig onderwerp</span>&larr; Ron Mueck en mimesis</a><a href="../anouk-de-clercq/" style="text-align:right"><span>Volgend onderwerp</span>Anouk De Clercq &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-film",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

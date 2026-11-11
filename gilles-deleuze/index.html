@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gilles Deleuze</title>
+<meta name="description" content="De scheppende daad als verzet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#1-wie-was-gilles-deleuze">1 Wie was Gilles Deleuze?</a></li><li><a href="#2-de-kerngedachte">2 De kerngedachte</a></li><li><a href="#3-analyse-van-twee-werken">3 Analyse van twee werken</a><ol><li><a href="#3-1-francisco-de-goya-de-derde-mei-1808">3.1 Francisco de Goya, De derde mei 1808</a></li><li><a href="#3-2-kathe-kollwitz-nie-wieder-krieg">3.2 Käthe Kollwitz, Nie wieder Krieg!</a></li></ol></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Denken over kunst</p>
+  <h1>Gilles Deleuze</h1>
+  <p class="onder">De scheppende daad als verzet</p>
+</header>
+
+<p>Elke dag komen er duizenden beelden en berichten op ons af. Ze vertellen wat er gebeurd is, wat we moeten denken en wat we moeten kopen. Is een kunstwerk gewoon een bericht te midden van al die andere? De Franse filosoof Gilles Deleuze zei van niet. Volgens hem doet kunst iets wat informatie nooit kan: ze biedt verzet.</p>
+<p>In dit hoofdstuk lees je wat Deleuze daarmee bedoelde. Daarna bekijken we twee werken die op heel verschillende manieren verzet bieden: een schilderij van Francisco de Goya en een affiche van Käthe Kollwitz.</p>
+<h2 id="1-wie-was-gilles-deleuze">1 Wie was Gilles Deleuze?</h2>
+<p>Gilles Deleuze (1925-1995) was een van de belangrijkste Franse filosofen van de twintigste eeuw. Hij doceerde aan de universiteit van Vincennes, later Parijs VIII, en schreef niet alleen over filosofie, maar ook over literatuur, schilderkunst en film. Hij wijdde een boek aan de schilder Francis Bacon en twee boeken aan de film.</p>
+<p>Op 17 maart 1987 gaf Deleuze een lezing aan de Fémis, de nationale filmschool in Parijs. Een student had hem uitgenodigd om te reageren op een uitspraak die toen vaak klonk: kunst is communicatie. De lezing werd gefilmd en later uitgegeven onder de titel <i>Qu&#x27;est-ce que l&#x27;acte de création?</i> (Wat is de scheppende daad?).</p>
+<h2 id="2-de-kerngedachte">2 De kerngedachte</h2>
+<h4>Een idee hebben</h4>
+<p>Deleuze begint met een eenvoudige vaststelling: een idee hebben is zeldzaam. Een filosoof heeft een idee wanneer hij een nieuw begrip uitvindt. Een filmmaker heeft een idee wanneer hij beelden en tijd op een nieuwe manier samenbrengt. Een idee is dus altijd gebonden aan een vak en aan een materiaal. Wie schept, heeft niet zomaar een mening, maar maakt iets wat er nog niet was.</p>
+<h4>Informatie als ordewoord</h4>
+<p>Daartegenover staat informatie. Volgens Deleuze is informatie geen neutrale kennis. Ze bestaat uit ordewoorden: boodschappen die ons zeggen wat we moeten geloven, wat belangrijk is en hoe we ons moeten gedragen. Communiceren is die ordewoorden doorgeven. Daarom noemt Deleuze informatie en communicatie vormen van controle.</p>
+<p>Een kunstwerk communiceert in die zin niets. Het geeft geen bevelen en het verspreidt geen informatie. Wie een kunstwerk alleen als boodschap bekijkt, mist wat het eigenlijk doet.</p>
+<h4>Kunst en verzet</h4>
+<p>Wat doet een kunstwerk dan wel? Deleuze verwijst naar de Franse schrijver André Malraux, die zei dat kunst het enige is wat weerstand biedt aan de dood. Een kunstwerk overleeft de maker en de tijd waarin het ontstond. Deleuze trekt die gedachte door: er is een diepe verwantschap tussen het kunstwerk en de daad van verzet. Niet elk kunstwerk is een politieke daad, en niet elke daad van verzet is kunst. Maar beide weigeren zich neer te leggen bij wat ons opgelegd wordt.</p>
+<aside class="kader"><h4>Het volk dat ontbreekt</h4><p>In dezelfde lezing zegt Deleuze dat een kunstwerk zich richt tot een volk dat er nog niet is. Een kunstenaar maakt geen werk voor het publiek dat al bestaat en al weet wat het wil zien. Hij maakt het voor mensen die nog moeten komen, die het werk pas later zullen begrijpen. Zo kijkt kunst niet alleen terug, maar ook vooruit.</p></aside>
+<h2 id="3-analyse-van-twee-werken">3 Analyse van twee werken</h2>
+<h3 id="3-1-francisco-de-goya-de-derde-mei-1808" class="sub">3.1 Francisco de Goya, De derde mei 1808</h3>
+<figure class="beeld"><figcaption>Francisco de Goya, <i>De derde mei 1808</i> (1814)<br>Museo del Prado, Madrid. Olieverf op doek.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.museodelprado.es/en/the-collection/art-work/the-3-of-may-in-madrid-or-the-executions/5e177409-2993-4240-97fb-847a02c6496c">Bekijk bij Museo del Prado</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1814</dd><dt>Techniek</dt><dd>Olieverf op doek</dd><dt>Afmetingen</dt><dd>268 x 347 cm</dd><dt>Collectie</dt><dd>Museo del Prado, Madrid</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Het is nacht. Op een heuvel aan de rand van een stad staat een rij soldaten met hun geweren in de aanslag. We zien hen van achteren: geen gezichten, alleen ruggen, sjako&#x27;s en bajonetten. Tegenover hen staat een groep burgers. In het midden knielt een man in een wit hemd en een gele broek. Hij heeft zijn armen wijd gespreid. Een grote lantaarn op de grond zet hem in het licht. Rond hem bedekken anderen hun gezicht, bidden of kijken angstig op. Vooraan liggen de lichamen van wie al gedood is, in een plas bloed.</p>
+<h4>Verzet in verf</h4>
+<p>Op 2 mei 1808 kwamen de inwoners van Madrid in opstand tegen het Franse leger van Napoleon, dat Spanje bezette. De volgende dag werden honderden opstandelingen en willekeurige burgers gefusilleerd. Goya schilderde dit werk in 1814, nadat de Fransen verdreven waren, samen met een schilderij van de opstand zelf.</p>
+<p>Goya maakt van de executie geen heldenverhaal met een overwinning. De soldaten zijn een anonieme machine, de man in het wit is een gewone burger. Zijn gespreide armen doen denken aan een gekruisigde, maar hij is geen heilige: hij is een mens die weigert te buigen, ook al kan hij niets meer doen. Het verzet zit in dat gebaar.</p>
+<h4>Betekenis</h4>
+<p>Met Deleuze kan je zeggen dat dit schilderij geen informatie geeft over de oorlog. Een verslag zou het aantal doden vermelden en de schuldigen aanwijzen. Goya toont iets anders: het moment waarop een mens tegenover geweld blijft staan. Meer dan tweehonderd jaar later biedt de man in het wit nog altijd verzet, telkens iemand naar het schilderij kijkt. Zo weerstaat het werk aan de dood en aan het vergeten.</p>
+<h3 id="3-2-kathe-kollwitz-nie-wieder-krieg" class="sub">3.2 Käthe Kollwitz, Nie wieder Krieg!</h3>
+<aside class="kader"><h4>[Afbeelding invoegen]</h4><p>Käthe Kollwitz, <i>Nie wieder Krieg!</i> (1924)</p><p>Affiche voor een jongerenbijeenkomst in Leipzig. Lithografie.<sup class="bron"><a href="https://kollwitz.de/en/never-again-war-kn-205" title="Bron: Käthe Kollwitz Museum Köln">bron</a></sup></p></aside>
+<dl class="fiche"><dt>Jaar</dt><dd>1924</dd><dt>Techniek</dt><dd>Krijt- en penseellithografie</dd><dt>Afmetingen</dt><dd>Ongeveer 97 x 75 cm (blad)</dd><dt>Collectie</dt><dd>Onder meer Käthe Kollwitz Museum, Keulen</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een jonge man of jongen steekt zijn rechterhand hoog in de lucht, met twee vingers gestrekt, als bij een eed. Zijn linkerhand ligt op zijn borst. Zijn mond staat open: hij roept. De figuur is getekend met snelle, zware zwarte lijnen, zonder achtergrond. Erboven staat in grote, ruwe letters: Nie wieder Krieg! (Nooit meer oorlog!).</p>
+<h4>Een affiche als kunstwerk</h4>
+<p>Käthe Kollwitz (1867-1945) was een Duitse grafica en beeldhouwster. In de eerste maanden van de Eerste Wereldoorlog sneuvelde haar jongste zoon Peter als vrijwilliger. Dat verlies keert in haar hele latere werk terug. Ze maakte deze affiche in 1924 voor een jongerenbijeenkomst in Leipzig.</p>
+<p>Hier lijkt Deleuze in de problemen te komen. Een affiche is toch communicatie bij uitstek: een boodschap die zoveel mogelijk mensen moet bereiken. Maar kijk wat er van de affiche overblijft als je de woorden weglaat. Het gebaar van de jongen is geen informatie. Het is een lichaam dat zich verzet, met heel zijn kracht. Dat gebaar overtuigt niet met argumenten, maar met aanwezigheid.</p>
+<h4>Betekenis</h4>
+<p>De slogan Nie wieder Krieg! werd niet verhoord: vijftien jaar later brak een nieuwe oorlog uit. Als boodschap faalde de affiche. Als kunstwerk blijft ze werken. Het gebaar van de jongen spreekt tot een volk dat er in 1924 nog niet was, en tot elke generatie die het opnieuw ziet. Het verschil tussen de slogan en het gebaar is precies het verschil dat Deleuze maakt tussen informatie en kunst.</p>
+<aside class="kader"><h4>Opdracht</h4><p>Zoek in de krant of op sociale media een beeld van een gebeurtenis van deze week. Leg het naast een van de twee werken uit dit hoofdstuk. Schrijf op wat het nieuwsbeeld je vertelt en wat het kunstwerk met je doet. Waar zit voor jou het verschil tussen informatie en verzet?</p></aside>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Scheppende daad", "Bij Deleuze: het maken van iets nieuws binnen een vak en een materiaal, zoals een filosoof een begrip uitvindt of een filmmaker een nieuwe verbinding van beeld en tijd."], ["Informatie", "Bij Deleuze: een geheel van ordewoorden die ons zeggen wat we moeten geloven en hoe we ons moeten gedragen."], ["Ordewoord", "Boodschap die niet alleen iets meedeelt, maar ook een bevel of verwachting inhoudt."], ["Communicatie", "Bij Deleuze: het doorgeven van informatie, en daardoor een vorm van controle."], ["Verzet", "Weigeren zich neer te leggen bij wat opgelegd wordt; volgens Deleuze verwant aan de scheppende daad."], ["Het volk dat ontbreekt", "Bij Deleuze: het toekomstige publiek tot wie een kunstwerk zich richt en dat het werk pas later zal begrijpen."], ["Fusillade", "Terechtstelling door een vuurpeloton."], ["Lithografie", "Steendruk: grafische techniek waarbij met vettig krijt op een steen getekend wordt, die daarna afgedrukt wordt."], ["Affiche", "Gedrukte aankondiging of oproep die publiek wordt opgehangen."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Waarom is een idee hebben volgens Deleuze zeldzaam? Leg uit wat een idee is voor een filosoof en voor een filmmaker.</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Waarom noemt Deleuze informatie en communicatie vormen van controle?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Welke uitspraak van André Malraux gebruikt Deleuze, en hoe trekt hij die door?</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Wat bedoelt Deleuze met het volk dat ontbreekt?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Hoe toont Goya in <i>De derde mei 1808</i> verzet? Verwijs naar de compositie en naar de figuur in het wit.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Waarom lijkt de affiche <i>Nie wieder Krieg!</i> op het eerste gezicht in te gaan tegen de opvatting van Deleuze?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Vergelijk de soldaten en de man in het wit bij Goya. Hoe gebruikt Goya licht en compositie om het verschil tussen beide te tonen?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Vergelijk de slogan en het gebaar in de affiche van Kollwitz. Welk van beide is informatie, welk is kunst? Argumenteer met Deleuze.</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Kies een hedendaags kunstwerk dat je kent. Biedt het verzet in de zin van Deleuze? Waartegen?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Is elke daad van verzet kunst? Is elk kunstwerk verzet? Bespreek met voorbeelden.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../arthur-danto/"><span>Vorig onderwerp</span>&larr; Arthur Danto</a><a href="../tanizaki/" style="text-align:right"><span>Volgend onderwerp</span>Junichiro Tanizaki &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-gilles-deleuze",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

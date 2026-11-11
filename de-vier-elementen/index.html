@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De vier elementen</title>
+<meta name="description" content="Tijd, ruimte, lichaam en object: een manier van kijken die bij elk kunstwerk werkt">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#tijd">Tijd</a><ol><li><a href="#kloktijd-en-beleefde-tijd">Kloktijd en beleefde tijd</a></li><li><a href="#andere-vormen-van-tijd">Andere vormen van tijd</a></li><li><a href="#tijd-in-andere-culturen">Tijd in andere culturen</a></li><li><a href="#denkers-over-tijd">Denkers over tijd</a></li><li><a href="#tijd-in-kunst">Tijd in kunst</a></li></ol></li><li><a href="#ruimte">Ruimte</a><ol><li><a href="#fysieke-en-figuurlijke-ruimte">Fysieke en figuurlijke ruimte</a></li><li><a href="#publieke-en-private-ruimte">Publieke en private ruimte</a></li><li><a href="#denkers-over-ruimte">Denkers over ruimte</a></li><li><a href="#ruimte-als-ervaring">Ruimte als ervaring</a></li></ol></li><li><a href="#lichaam">Lichaam</a><ol><li><a href="#een-lichaam-hebben-of-een-lichaam-zijn">Een lichaam hebben of een lichaam zijn</a></li><li><a href="#denkers-over-het-lichaam">Denkers over het lichaam</a></li><li><a href="#het-lichaam-in-oosterse-tradities">Het lichaam in Oosterse tradities</a></li><li><a href="#lichaam-als-geheugen-en-als-gemeenschap">Lichaam als geheugen en als gemeenschap</a></li></ol></li><li><a href="#object">Object</a><ol><li><a href="#subject-en-object">Subject en object</a></li><li><a href="#denkers-over-het-object">Denkers over het object</a></li><li><a href="#het-object-in-het-boeddhisme">Het object in het boeddhisme</a></li></ol></li><li><a href="#samenhang">Samenhang</a></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Leren kijken</p>
+  <h1>De vier elementen</h1>
+  <p class="onder">Tijd, ruimte, lichaam en object: een manier van kijken die bij elk kunstwerk werkt</p>
+</header>
+
+<p>Wie naar kunst kijkt, kijkt altijd naar iets dat ergens bestaat, op een bepaald moment, en dat door mensen gemaakt en beleefd wordt. Een schilderij hangt in een zaal, is gemaakt van doek en verf en wordt bekeken door iemand die er even voor blijft staan. Een dansvoorstelling speelt zich een uur lang af op een podium, met lichamen die bewegen. In elk kunstwerk zitten dus vier elementen: lichaam, ruimte, object en tijd.</p>
+<p>Die vier elementen vormen de kapstok van dit jaar. Bij elk werk dat we bespreken, van een beeld van Ron Mueck tot een film of een schilderij van Manet, vragen we: welk lichaam is hier aanwezig, in welke ruimte, welk object staat centraal en hoe speelt tijd een rol? In deze inleiding bekijken we elk element algemeen: wat betekent het woord, hoe dachten filosofen erover en hoe komt het terug in kunst. In hoofdstuk 2 passen we de vier elementen toe op performance.</p>
+<h2 id="tijd">Tijd</h2>
+<h3 id="kloktijd-en-beleefde-tijd" class="sub">Kloktijd en beleefde tijd</h3>
+<p>Tijd kent iedereen, en toch is ze moeilijk te vatten. Een minuut in de tandartsstoel lijkt eindeloos, terwijl een minuut tijdens een spannend spel voorbijvliegt.</p>
+<p>De kloktijd is de objectieve, meetbare tijd van uren, minuten en seconden. Ze is altijd gelijk en voorspelbaar: een uur duurt voor iedereen zestig minuten. De beleefde tijd (of belevingstijd) is de tijd zoals wij die persoonlijk ervaren. Een uur kan voorbijvliegen of tergend traag aanvoelen. In meditatie lijkt de tijd soms stil te vallen.</p>
+<h3 id="andere-vormen-van-tijd" class="sub">Andere vormen van tijd</h3>
+<p>Naast kloktijd en beleefde tijd kunnen we nog andere dimensies van tijd onderscheiden.</p>
+<ul class="lijst"><li>De historische tijd is de tijd waarin mensen leefden. Ze laat sporen na in kunstwerken: elk werk draagt iets van zijn eigen periode in zich.</li><li>De cyclische tijd draait om herhaling, ritme en terugkeer, zoals de seizoenen, dag en nacht of rituelen die elk jaar terugkomen.</li><li>De gefragmenteerde tijd is typisch voor onze moderne samenleving. Onze dag wordt opgedeeld in kleine stukjes door meldingen, multitasking en korte impulsen.</li></ul>
+<p>We stellen ons tijd vaak voor als een rechte lijn van verleden naar toekomst. Cyclische en gefragmenteerde tijd tonen dat het ook anders kan.</p>
+<h3 id="tijd-in-andere-culturen" class="sub">Tijd in andere culturen</h3>
+<p>Hoe we tijd voorstellen, hangt ook af van taal en cultuur. In de westerse cultuur ligt de toekomst vóór ons en het verleden achter ons. Bij de Aymara, een volk in het Andesgebergte, is dat omgekeerd: het verleden ligt vóór je, want dat ken je en kan je “zien”, terwijl de toekomst achter je ligt, onzichtbaar en onbekend. Een gelijkaardig beeld bestaat in sommige Polynesische culturen. Het toont hoe sterk taal en ervaring bepalen hoe wij tijd begrijpen.</p>
+<h3 id="denkers-over-tijd" class="sub">Denkers over tijd</h3>
+<p>Al in de oudheid zochten filosofen naar een definitie van tijd. De Griekse filosoof Aristoteles (4de eeuw v.C.) noemde tijd de maat van beweging volgens “voor” en “na”: zonder verandering zouden we geen tijd opmerken.</p>
+<p>De kerkvader Augustinus (rond 400 n.C.) schreef in zijn <i>Belijdenissen</i> een beroemde zin over tijd: als niemand het hem vraagt, weet hij wat tijd is, maar als hij het iemand wil uitleggen, weet hij het niet. Hij zocht de tijd in de menselijke geest. Verleden, heden en toekomst bestaan volgens hem in ons als herinnering, aandacht en verwachting.</p>
+<p>De Franse filosoof Henri Bergson (1859-1941) zette de meetbare kloktijd tegenover de innerlijke, vloeiende tijdsbeleving, die hij <i>la durée</i> (de duur) noemde. Zijn ideeën werken we uit in hoofdstuk 4, waar we film als tijdskunst bespreken.</p>
+<p>De Duitse filosoof Martin Heidegger (1889-1976) zag tijd als de kern van het menselijk bestaan. In <i>Sein und Zeit</i> (1927) beschrijft hij de mens als een wezen dat altijd leeft tussen geboorte en dood. Ons leven krijgt betekenis doordat we ons voortdurend verhouden tot ons verleden, ons heden en onze toekomst, en vooral tot het besef dat ons leven eindig is.</p>
+<p>In de twintigste eeuw toonde de natuurkundige Albert Einstein (1879-1955) met zijn relativiteitstheorie dat tijd en ruimte niet los van elkaar bestaan. Samen vormen ze een ruimte-tijdcontinuüm. Tijd verloopt ook niet overal even snel: bij zeer hoge snelheden of in een sterke zwaartekracht gaat ze trager. Dat inzicht maakte van tijd iets elastisch en relatief, en het beïnvloedde ook kunstenaars en schrijvers.</p>
+<h3 id="tijd-in-kunst" class="sub">Tijd in kunst</h3>
+<p>Tijd is in elk kunstwerk aanwezig. Elk werk ontstaat in de tijd, wordt in de tijd bekeken en draagt de sporen van de periode waarin het gemaakt werd. Toch speelt tijd niet in elke kunstvorm dezelfde rol.</p>
+<p>Een schilderij legt één moment vast, maar kan een hele periode of een verhaal oproepen. Een foto bevriest een ogenblik, of toont met een lange sluitertijd juist beweging en duur. In andere kunstvormen is tijd de drager van het werk zelf: film, performance, dans en muziek bestaan alleen doordat ze zich ontvouwen. Muziek is misschien het meest tijdgebonden medium. Ritme, tempo en herhaling maken van luisteren een directe ervaring van tijd. Hoe performance met tijd werkt, zie je in hoofdstuk 2; hoe film tijd kan versnellen, vertragen of verknippen, in hoofdstuk 4.</p>
+<h2 id="ruimte">Ruimte</h2>
+<h3 id="fysieke-en-figuurlijke-ruimte" class="sub">Fysieke en figuurlijke ruimte</h3>
+<p>Bij het woord ruimte denk je misschien meteen aan een kamer, een lokaal of een plein. Dat is de fysieke ruimte: de concrete plaats waarin we ons bevinden. In kunst geven architecten die ruimte vorm, maar ook schilders die met perspectief diepte suggereren, beeldhouwers die volumes ordenen en choreografen die dansers over een podium verdelen.</p>
+<p>Een ruimte voelt nooit neutraal aan. Een gotische kathedraal met hoge gewelven roept verhevenheid op, een kleine kamer eerder intimiteit en geborgenheid.</p>
+<p>We gebruiken het woord ook figuurlijk. Wie vraagt of je nog ruimte hebt in je agenda, bedoelt tijd en energie. Wie zegt dat hij geen ruimte meer heeft in zijn hoofd, heeft geen rust of concentratie meer. Ruimte wordt dan een beeld voor aandacht, openheid en draagkracht. Kunst kan zo’n innerlijke ruimte scheppen: een minimalistisch schilderij, een zen-tuin of een installatie rond leegte brengt stilte en rust bij de kijker.</p>
+<h3 id="publieke-en-private-ruimte" class="sub">Publieke en private ruimte</h3>
+<p>Ruimte heeft ook een maatschappelijke kant. Publieke ruimte delen we allemaal: straten, pleinen, parken. Private ruimte is persoonlijk of beperkt toegankelijk, zoals je huis of je kamer. De grens tussen beide is niet altijd scherp en wordt bepaald door sociale en politieke afspraken.</p>
+<p>Kunstenaars spelen vaak met die grens. Street art en acties op een plein maken van de publieke ruimte een podium. Andere kunstenaars brengen juist iets intiems, zoals een bed of een slaapkamer, binnen in een museum, waar iedereen het kan zien.</p>
+<h3 id="denkers-over-ruimte" class="sub">Denkers over ruimte</h3>
+<p>Voor de Griekse filosoof Plato (5de-4de eeuw v.C.) was ruimte een <i>chôra</i>: een onzichtbare drager waarin de dingen kunnen verschijnen. Ruimte is volgens hem de voorwaarde waardoor vormen en lichamen zich kunnen tonen.</p>
+<p>De Engelse natuurkundige Isaac Newton (17de eeuw) zag ruimte als absoluut: een oneindig, leeg kader dat bestaat los van de dingen die erin staan. Ook als er niets in zou zijn, zou die ruimte er nog altijd zijn.</p>
+<p>Zijn tijdgenoot Gottfried Wilhelm Leibniz verzette zich daartegen. Voor hem bestaat ruimte enkel als een netwerk van verhoudingen tussen dingen: zonder dingen geen ruimte. Met Einsteins relativiteitstheorie (zie hierboven bij Tijd) werd ruimte ten slotte geen star kader meer: snelheid en zwaartekracht beïnvloeden de structuur van ruimte en tijd zelf.</p>
+<h3 id="ruimte-als-ervaring" class="sub">Ruimte als ervaring</h3>
+<p>Ruimte bestaat op verschillende schaalniveaus: de kamer waarin je zit, het plein voor de deur, de sterrenhemel boven je. Kunstenaars hebben vaak geprobeerd de onmetelijkheid van de kosmos te verbeelden, soms om onze nietigheid te tonen, soms uit verwondering.</p>
+<p>Ruimte is bovendien altijd iets wat we met ons lichaam beleven: door te bewegen, te kijken en te horen. De Japanse esthetiek heeft daarvoor het begrip <i>Ma</i>. Het betekent de betekenisvolle leegte of tussenruimte: de ruimte tussen de dingen, die even belangrijk is als de dingen zelf. Denk aan de stilte tussen twee muzieknoten of de lege plek in een Japanse tuin. <i>Ma</i> is zowel ruimtelijk als tijdelijk: het kan een afstand zijn, maar ook een pauze.</p>
+<h2 id="lichaam">Lichaam</h2>
+<h3 id="een-lichaam-hebben-of-een-lichaam-zijn" class="sub">Een lichaam hebben of een lichaam zijn</h3>
+<p>Iedereen heeft een lichaam en iedereen is een lichaam. Dat klinkt vanzelfsprekend, maar onze taal toont een dubbelzinnigheid. We zeggen “mijn lichaam”, alsof het een bezit is, zoals een jas of een fiets. Toch kunnen we ons lichaam nooit los van onszelf zien: zonder lichaam geen waarneming, geen ervaring en geen handelen. De vraag of we ons lichaam hebben of ons lichaam zijn, loopt als een rode draad door de filosofie.</p>
+<p>Concreet is het lichaam een biologisch organisme van botten, spieren, organen en zenuwen, dat de geneeskunde onderzoekt. Die benadering ziet het lichaam vaak als een machine: onderdelen die samenwerken en onderhoud nodig hebben.</p>
+<h3 id="denkers-over-het-lichaam" class="sub">Denkers over het lichaam</h3>
+<p>Voor Plato was het lichaam een hinderpaal. Het is veranderlijk en vergankelijk, en zijn verlangens leiden ons af van de ware werkelijkheid van de ideeën. Hij noemde het lichaam een gevangenis van de ziel.</p>
+<p>In de zeventiende eeuw beschreef de Franse filosoof René Descartes het lichaam als een soort machine die door de geest wordt aangestuurd. Lichaam en geest zijn bij hem twee aparte dingen. Die scheiding noemen we dualisme. Zijn tijdgenoot Baruch Spinoza verzette zich daartegen. Voor hem zijn lichaam en geest twee kanten van dezelfde werkelijkheid. Hij benadrukte ook dat een lichaam veel meer kan dan we doorgaans denken.</p>
+<p>In de twintigste eeuw keerde ook de Franse filosoof Maurice Merleau-Ponty zich tegen het dualisme. Hij behoort tot de fenomenologie, een stroming die vertrekt van hoe wij de wereld ervaren. Voor hem is het lichaam het subject van onze ervaring: alles wat we waarnemen en begrijpen, gebeurt via ons lichaam. Zien, horen, aanraken en bewegen zijn de manier waarop de wereld zich aan ons toont. Het lichaam is dus tegelijk iets wat je kan onderzoeken en de levende kern van wie je bent.</p>
+<p>De Franse denkers Gilles Deleuze en Félix Guattari spraken van een “lichaam zonder organen”. Daarmee bedoelden ze een manier om het lichaam te denken los van vaste functies en structuren. Het lichaam wordt dan een veld van krachten en mogelijkheden dat altijd in beweging is en nieuwe verbindingen kan aangaan.</p>
+<h3 id="het-lichaam-in-oosterse-tradities" class="sub">Het lichaam in Oosterse tradities</h3>
+<p>Ook buiten Europa staat het lichaam centraal. In het zenboeddhisme is het lichaam de basis van de beoefening. In de zitmeditatie, <i>zazen</i>, vallen lichaam en geest samen: de houding, de ademhaling en de stilte van het lichaam zijn tegelijk de stilte van de geest. Het lichaam is hier een poort tot inzicht.</p>
+<p>In het hindoeïsme en de yogatraditie spreekt men van een subtiel lichaam naast het fysieke lichaam, met energiebanen en energiecentra die chakra’s heten. Het lichaam wordt dan een gelaagd geheel van energie en bewustzijn.</p>
+<h3 id="lichaam-als-geheugen-en-als-gemeenschap" class="sub">Lichaam als geheugen en als gemeenschap</h3>
+<p>Een lichaam kan ook herinneren. Wie leert fietsen of piano spelen, slaat bewegingen op in het lichaam zelf: we spreken van spiergeheugen. Ook emoties en ingrijpende ervaringen kunnen zich in het lichaam vastzetten. Het lichaam herinnert zich soms wat het hoofd vergeten is.</p>
+<p>Ten slotte gebruiken we het woord ook figuurlijk. We spreken van een “politiek lichaam” of een “economisch lichaam” wanneer een samenleving of een groep mensen als één geheel optreedt. Het woord lichaam drukt dan uit dat veel delen samen als een eenheid functioneren.</p>
+<p>In kunst is het lichaam overal aanwezig: als onderwerp van een schilderij of beeld, als hand van de maker, als lichaam van een danser of performer, en als lichaam van de toeschouwer die voor het werk staat of erdoorheen wandelt.</p>
+<h2 id="object">Object</h2>
+<h3 id="subject-en-object" class="sub">Subject en object</h3>
+<p>Bij een object denken we meestal aan een ding: een stoel, een steen, een boek. Maar is je lichaam ook een object? En tijd? Het begrip is minder eenvoudig dan het lijkt.</p>
+<p>In het dagelijks taalgebruik is een object een tastbaar ding in de wereld. We stellen het tegenover het subject, de mens die waarneemt. Het object is wat bekeken of onderzocht wordt, het subject is wie kijkt of ervaart. Die grens is niet altijd duidelijk. Soms wordt de mens zelf als object behandeld, bijvoorbeeld in de geneeskunde of wanneer lichamen gemeten en gecontroleerd worden.</p>
+<p>In kunst speelt het object op twee niveaus. Een kunstwerk is vaak zelf een object, zoals een beeld of een schilderij. Daarnaast kan het objecten voorstellen: een vaas bloemen op een stilleven is een geschilderd object.</p>
+<h3 id="denkers-over-het-object" class="sub">Denkers over het object</h3>
+<p>Voor Plato waren de dingen die we zien slechts onvolmaakte afspiegelingen van eeuwige ideeën. Een stoel is een onvolmaakte kopie van het idee “stoel”. Een object is dus nooit helemaal echt.</p>
+<p>Descartes trok een scherpe grens tussen subject en object. Het denkende “ik” staat los van de wereld en bekijkt de dingen buiten zich. Zo bestudeert de moderne wetenschap de natuur en zelfs het lichaam van buitenaf.</p>
+<p>De Duitse filosoof Immanuel Kant (18de eeuw) gaf daar een nieuwe wending aan. Objecten zijn volgens hem verschijnselen die mee gevormd worden door onze waarneming en ons verstand. We zien alles binnen de vormen van ruimte en tijd. Hoe een ding op zichzelf is, los van ons (<i>das Ding an sich</i>), kunnen we nooit kennen. We kennen enkel het object zoals het aan ons verschijnt.</p>
+<p>De hedendaagse Amerikaanse filosoof Graham Harman keert de aandacht terug naar de dingen zelf. Zijn denken heet objectgeoriënteerde ontologie. Volgens hem valt een object nooit samen met zijn gebruik, zijn functie of de manier waarop wij het waarnemen. Elk ding, een steen, een computer of een wolk, heeft een verborgen kern en een eigen werkelijkheid, los van ons.</p>
+<h3 id="het-object-in-het-boeddhisme" class="sub">Het object in het boeddhisme</h3>
+<p>Het boeddhisme ziet dingen als tijdelijke verschijnselen zonder vaste kern. Een object ontstaat door oorzaken en omstandigheden en verdwijnt weer wanneer die veranderen. Dingen zijn dus eerder processen dan vaste entiteiten. Ze zijn leeg van een blijvende essentie. Wie zich aan dingen hecht alsof ze blijvend zijn, veroorzaakt volgens het boeddhisme lijden.</p>
+<p>Ook de wetenschap kijkt verschillend naar objecten. In de klassieke natuurkunde is een object een deeltje of systeem met massa, energie en een plaats, stabiel en voorspelbaar. De kwantumfysica heeft dat beeld op losse schroeven gezet. Op het kleinste niveau gedragen deeltjes zich als waarschijnlijkheidsgolven: een bundel mogelijkheden die pas een bepaalde toestand aanneemt wanneer ze gemeten wordt.</p>
+<h2 id="samenhang">Samenhang</h2>
+<p>De vier elementen staan nooit los van elkaar. We beleven ruimte met ons lichaam. Een object staat altijd ergens in een ruimte en verandert in de tijd. Tijd merken we op doordat lichamen en dingen bewegen. Een kunstwerk bevindt zich dus altijd op een bepaald moment (tijd), op een bepaalde plaats (ruimte), het heeft een materiële vorm (object) en het is verbonden met lichamen: die van de maker, de uitvoerder en de toeschouwer.</p>
+<p>De elementen kunnen ook in elkaar overgaan. Een lichaam kan als object behandeld worden, een ruimte kan geladen worden met tijd, duur kan zo zwaar worden dat ze bijna tastbaar is. In hoofdstuk 2 (2.2) zie je hoe dat in performance gebeurt.</p>
+<h4>De vier elementen als analyseraster</h4>
+<p>Je kan de vier elementen nog preciezer maken door er een bijvoeglijk naamwoord aan te koppelen: publiek, privaat, picturaal, sociaal of performatief. Zo ontstaan twintig combinaties, zoals publieke tijd, private ruimte, picturaal lichaam of performatief object. Sommige combinaties leggen de nadruk op een gedeelde ervaring (publieke tijd, sociale ruimte), andere op een persoonlijke beleving (private tijd, privaat lichaam), nog andere op vorm en voorstelling (picturale ruimte, picturaal object). De performatieve combinaties tonen kunst als een handeling die tijdelijk is, maar toch een blijvende betekenis kan hebben. Je kan het raster ook uitbreiden met woorden uit de kunstdisciplines: muzikale tijd, architecturale ruimte, filmisch lichaam, sculpturaal object. Het raster is een vrij hulpmiddel om een werk te bevragen; je hoeft het nooit volledig in te vullen.</p>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Beleefde tijd", "De tijd zoals je die persoonlijk ervaart; een uur kan voorbijvliegen of eindeloos lijken."], ["Chakra's", "Energiecentra in het subtiele lichaam volgens het hindoeïsme en de yogatraditie."], ["Chôra", "Bij Plato de onzichtbare drager waarin de dingen kunnen verschijnen; ruimte als voorwaarde voor vormen en lichamen."], ["Cyclische tijd", "Tijd die draait om herhaling, ritme en terugkeer, zoals de seizoenen of jaarlijkse rituelen."], ["Das Ding an sich", "Bij Kant het ding zoals het op zichzelf is, los van onze waarneming; we kunnen het nooit kennen."], ["Dualisme", "De opvatting dat lichaam en geest twee aparte dingen zijn, zoals bij Plato en Descartes."], ["Fenomenologie", "Filosofische stroming die vertrekt van hoe wij de wereld ervaren; bij Merleau-Ponty is het lichaam het subject van die ervaring."], ["Figuurlijke ruimte", "Ruimte als beeld voor aandacht, rust of draagkracht, zoals in \"ruimte in je agenda\" of \"ruimte in je hoofd\"."], ["Fysieke ruimte", "De concrete, tastbare plaats waarin we ons bevinden, zoals een lokaal, een straat of een landschap."], ["Gefragmenteerde tijd", "Tijd die opgedeeld wordt in kleine stukjes door meldingen, multitasking en korte impulsen."], ["Historische tijd", "De tijd waarin mensen leefden en die sporen nalaat in kunstwerken."], ["Kloktijd", "De objectieve, meetbare tijd van uren, minuten en seconden, die voor iedereen gelijk is."], ["Leegte (boeddhisme)", "Het inzicht dat dingen geen vaste, blijvende kern hebben, maar tijdelijke verschijnselen zijn die ontstaan en verdwijnen."], ["Ma", "Japans begrip voor de betekenisvolle leegte of tussenruimte tussen dingen, die even belangrijk is als de dingen zelf; zowel ruimtelijk als tijdelijk."], ["Object", "Datgene wat bekeken, gebruikt of onderzocht wordt, in tegenstelling tot het subject dat waarneemt."], ["Objectgeoriënteerde ontologie", "Hedendaagse filosofie (Graham Harman) die stelt dat elk object een eigen, verborgen werkelijkheid heeft los van ons gebruik en onze waarneming."], ["Private ruimte", "Persoonlijke of beperkt toegankelijke ruimte, zoals je huis of je kamer."], ["Publieke ruimte", "Ruimte die we allemaal delen, zoals straten, pleinen en parken."], ["Spiergeheugen", "Het vermogen van het lichaam om aangeleerde bewegingen op te slaan en automatisch uit te voeren."], ["Subject", "De mens die waarneemt, denkt of ervaart, tegenover het object dat waargenomen wordt."], ["Subtiel lichaam", "In het hindoeïsme en de yoga een lichaam naast het fysieke, opgebouwd uit energiebanen en energiecentra."], ["Zazen", "Zitmeditatie in het zenboeddhisme, waarin houding, ademhaling en stilte lichaam en geest samenbrengen."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Leg het verschil uit tussen kloktijd en beleefde tijd. Geef bij beleefde tijd een voorbeeld uit je eigen leven.</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Wat bedoelen we met cyclische tijd en met gefragmenteerde tijd? Waarom passen beide niet in het beeld van tijd als een rechte lijn?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Hoe stellen de Aymara zich verleden en toekomst voor, en wat leert dat ons over de manier waarop wij tijd begrijpen?</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Augustinus zocht de tijd in de menselijke geest. Leg uit wat hij bedoelt met herinnering, aandacht en verwachting.</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Leg het verschil uit tussen fysieke en figuurlijke ruimte, en tussen publieke en private ruimte.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Wat bedoelt de Japanse esthetiek met Ma? Waarom kan Ma zowel over ruimte als over tijd gaan?</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Waarom is de vraag of we ons lichaam hebben of ons lichaam zijn een filosofisch probleem? Betrek Descartes en Merleau-Ponty in je antwoord.</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Vergelijk hoe Plato en het zenboeddhisme naar het lichaam kijken.</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Leg uit wat Kant bedoelt met das Ding an sich. Waarom kunnen we volgens hem enkel objecten kennen zoals ze aan ons verschijnen?</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Hoe verschilt de visie op objecten van Graham Harman van die van het boeddhisme?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Kies een kunstwerk dat je goed kent en bespreek het kort aan de hand van de vier elementen: lichaam, ruimte, object en tijd. Welk element is het belangrijkst?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Een schilderij hangt stil aan de muur. Toch zeggen we dat tijd in elk kunstwerk aanwezig is. Leg uit op welke manieren tijd een rol speelt bij een schilderij.</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Vergelijk de ervaring van ruimte in een gotische kathedraal en in een kleine kamer. Hoe beïnvloedt de ruimte wat je voelt?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Een kunstenaar zet zijn eigen slaapkamer in een museum. Bespreek dit met de begrippen publieke en private ruimte.</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Zoek in je eigen omgeving een voorbeeld van Ma, in muziek, architectuur, film of een gesprek. Leg uit waarom de leegte daar betekenis heeft.</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Is het lichaam van een model op een schilderij een subject of een object? Verdedig je standpunt en betrek ook het lichaam van de toeschouwer.</label></li><li><input type="checkbox" id="v1-6" data-vraag="1-6"><label for="v1-6">Kies een alledaags voorwerp in de klas. Beschrijf het eerst zoals Plato, daarna zoals het boeddhisme het zou bekijken.</label></li><li><input type="checkbox" id="v1-7" data-vraag="1-7"><label for="v1-7">Kies twee elementen en toon met een eigen voorbeeld uit kunst of het dagelijks leven hoe ze elkaar beïnvloeden of in elkaar overgaan.</label></li><li><input type="checkbox" id="v1-8" data-vraag="1-8"><label for="v1-8">Gebruik het analyseraster uit het kader: kies een werk en beschrijf het met twee combinaties, bijvoorbeeld publieke tijd en picturaal lichaam.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><span></span><a href="../epoche/" style="text-align:right"><span>Volgend onderwerp</span>De epoché en de ekphrasis &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-de-vier-elementen",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

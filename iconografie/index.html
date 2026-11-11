@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iconografie en iconologie</title>
+<meta name="description" content="Betekenis lezen in een kunstwerk met het stappenplan van Panofsky">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#3-1-kijken-is-niet-hetzelfde-als-lezen">3.1 Kijken is niet hetzelfde als lezen</a></li><li><a href="#3-2-twee-vragen-bij-elk-kunstwerk">3.2 Twee vragen bij elk kunstwerk</a></li><li><a href="#3-3-iconografie-en-iconologie-twee-woorden">3.3 Iconografie en iconologie: twee woorden</a></li><li><a href="#3-4-het-stappenplan-van-panofsky">3.4 Het stappenplan van Panofsky</a><ol><li><a href="#a-stap-1-de-pre-iconografische-beschrijving">a. Stap 1: de pre-iconografische beschrijving</a></li><li><a href="#b-stap-2-de-iconografische-analyse">b. Stap 2: de iconografische analyse</a></li><li><a href="#c-stap-3-de-iconologische-interpretatie">c. Stap 3: de iconologische interpretatie</a></li><li><a href="#d-toepassing-poussin-les-bergers-d-arcadie">d. Toepassing: Poussin, Les Bergers d&#x27;Arcadie</a></li></ol></li><li><a href="#3-5-de-bouwstenen-van-betekenis">3.5 De bouwstenen van betekenis</a><ol><li><a href="#a-personificatie">a. Personificatie</a></li><li><a href="#b-allegorie">b. Allegorie</a></li><li><a href="#c-symbool">c. Symbool</a></li><li><a href="#d-attribuut">d. Attribuut</a></li><li><a href="#e-embleem">e. Embleem</a></li></ol></li><li><a href="#3-6-waar-komen-de-onderwerpen-vandaan">3.6 Waar komen de onderwerpen vandaan?</a><ol><li><a href="#a-de-bijbel">a. De Bijbel</a></li><li><a href="#b-de-klassieke-mythologie">b. De klassieke mythologie</a></li><li><a href="#c-andere-literatuur">c. Andere literatuur</a></li></ol></li><li><a href="#3-7-de-genres-en-de-verborgen-laag">3.7 De genres en de verborgen laag</a></li><li><a href="#3-8-niet-overdrijven-niet-te-snel-tevreden-zijn">3.8 Niet overdrijven, niet te snel tevreden zijn</a></li><li><a href="#oefeningen">Oefeningen</a></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Leren kijken</p>
+  <h1>Iconografie en iconologie</h1>
+  <p class="onder">Betekenis lezen in een kunstwerk met het stappenplan van Panofsky</p>
+</header>
+
+<h2 id="3-1-kijken-is-niet-hetzelfde-als-lezen">3.1 Kijken is niet hetzelfde als lezen</h2>
+<p>Je staat in een museum voor een schilderij. Je ziet een vrouw, een kind, een hond, een ekster, een raam. Je vindt het mooi, of net niet. En dan ga je verder. Wat je dan gedaan hebt, is kijken. Wat je niet gedaan hebt, is lezen.</p>
+<p>Lezen betekent hier: begrijpen wat er staat. Een schilderij uit 1434 is gemaakt voor mensen die andere verhalen kenden dan wij, andere gewoontes hadden en andere dingen vanzelfsprekend vonden. Voor hen was een hond op een schilderij niet zomaar een huisdier en een brandende kaars niet zomaar licht. Wie die taal niet kent, ziet wel het beeld, maar mist de boodschap. Vergelijk het met een gedicht in een taal die je half begrijpt: je herkent de woorden, maar de betekenis ontsnapt je.</p>
+<p>Lange tijd was kunst iets voor een kleine groep mensen die rijk en goed opgeleid waren. In de twintigste eeuw werden musea toegankelijk voor iedereen en verschenen er overal boeken over kunst. Dat is een goede zaak, maar het bracht ook een nieuw probleem mee: veel meer mensen kijken naar kunst, zonder dat iemand hen ooit geleerd heeft hoe je een kunstwerk leest.</p>
+<p>Dit hoofdstuk leert je precies dat. Je krijgt een methode om stap voor stap van wat je ziet naar wat het betekent te gaan, en je leert de belangrijkste bouwstenen kennen waarmee kunstenaars eeuwenlang betekenis in hun werk hebben gestopt.</p>
+<aside class="kader"><h4>Paideia</h4><p>Dit Oud-Griekse woord betekent letterlijk opvoeding. Het staat voor een brede vorming waarbij je leert nadenken, verbanden leggen en dingen op hun waarde schatten, in plaats van enkel kennis te verzamelen die je meteen kunt gebruiken. Leren kijken naar kunst hoort al sinds de oudheid bij dat ideaal. Het gaat niet om het onthouden van namen en jaartallen, maar om een manier van kijken die je overal mee naartoe neemt.</p></aside>
+<h2 id="3-2-twee-vragen-bij-elk-kunstwerk">3.2 Twee vragen bij elk kunstwerk</h2>
+<p>Wie voor een kunstwerk staat, stelt zichzelf bijna automatisch twee vragen, ook al merkt hij dat zelf niet.</p>
+<p>De eerste vraag is: hoe ziet het eruit? Dat is de vraag naar de vorm. Welke kleuren zie je, welke lijnen, hoe is het beeld opgebouwd, waar valt het licht, hoe is de ruimte gemaakt? Als je enkel naar die dingen kijkt, bestudeer je de morfologie van het werk, de leer van de vormen. Dat noemen we ook hardop kijken: je beschrijft eerst wat je concreet ziet, voor je een oordeel velt. Die manier van kijken ken je al uit de vorige hoofdstukken, bijvoorbeeld uit de a-vragen bij Ron Mueck.</p>
+<p>De tweede vraag is: wat stelt het voor? Dat is de vraag naar de inhoud. Wie of wat zie je afgebeeld, welk verhaal wordt er verteld, en welke betekenis zit daarachter?</p>
+<p>Kunstenaars vinden vaak dat de eerste vraag de belangrijkste is. Voor hen is een schilderij in de eerste plaats verf op doek, een samenspel van vormen en kleuren, en niet in de eerste plaats een verhaal. Toch begrijp je een kunstwerk nooit volledig als je de inhoud negeert. Beide vragen horen bij elkaar. In dit hoofdstuk leer je vooral hoe je de tweede vraag grondig beantwoordt.</p>
+<p>Kunstgeschiedenis en kunstbeschouwing</p>
+<p>Er zijn twee manieren om kunst te bestuderen. De kunstgeschiedenis volgt de ontwikkeling van de kunst doorheen de tijd: eerst dit, dan dat, met invloeden, stromingen en evoluties, van de oudheid over de renaissance en de barok tot vandaag. De kunstbeschouwing doet iets anders. Ze neemt één werk tegelijk en probeert dat zo diep mogelijk te doorgronden, zoals je bij een tekst aan close reading doet. In dit vak doen we vooral het tweede, maar we hebben het eerste nodig: zonder kennis van de tijd waarin een werk ontstond, kun je het niet lezen.</p>
+<h2 id="3-3-iconografie-en-iconologie-twee-woorden">3.3 Iconografie en iconologie: twee woorden</h2>
+<p>De methode om de vraag naar de inhoud te beantwoorden heet iconografie. Het woord komt uit het Grieks: eikoon betekent beeld, graphein betekent schrijven of beschrijven. Iconografie is dus het beschrijven van beelden: onderzoeken wat een kunstwerk voorstelt.</p>
+<p>Iconologie gaat een stap verder. Logos betekent woord, rede of verklaring. Iconologie wil verklaren waarom een onderwerp op een bepaalde manier werd uitgebeeld, en wat dat zegt over de tijd en de cultuur waarin het werk ontstond.</p>
+<aside class="kader"><h4>Iconografie of iconologie?</h4><p>De twee woorden worden vaak door elkaar gebruikt, en zelfs specialisten zijn het niet altijd eens over het precieze verschil. Onthoud het zo: iconografie beschrijft wat een kunstwerk voorstelt, iconologie verklaart waarom het zo voorgesteld is. Iconografie is de vraag wat, iconologie de vraag waarom.</p></aside>
+<p>Als methode is de iconografie nog jong. Ze ontstond aan het begin van de twintigste eeuw. De Duitse kunsthistoricus Aby Warburg richtte in Hamburg een bibliotheek op waar beelden en teksten uit alle tijden naast elkaar werden gelegd om te zien hoe motieven doorheen de eeuwen terugkeren. Zijn jongere collega Erwin Panofsky (1892-1968) maakte er een duidelijke methode van, die tot vandaag de basis vormt van elke iconografische studie. Panofsky vluchtte in de jaren dertig voor de nazi&#x27;s naar de Verenigde Staten en publiceerde daar in 1939 zijn <i>Studies in Iconology</i>.</p>
+<p>Kunstenaars zelf hadden al veel vroeger hulpmiddelen om betekenis in hun werk te stoppen. Het bekendste is de <i>Iconologia</i> van de Italiaan Cesare Ripa uit 1593, een dik handboek vol beschrijvingen van personificaties, symbolen en attributen. Daarover lees je meer in 3.5.</p>
+<h2 id="3-4-het-stappenplan-van-panofsky">3.4 Het stappenplan van Panofsky</h2>
+<p>Panofsky legt zijn methode uit met een voorbeeld uit het dagelijks leven. Je loopt op straat en een kennis neemt zijn hoed voor je af. Wat zie je eigenlijk?</p>
+<p>Op het eerste niveau zie je enkel vormen en kleuren die bewegen: een man, een hoed, een arm die omhooggaat. Je herkent een mens en een voorwerp, en je voelt aan of het gebaar vriendelijk of onvriendelijk is. Daarvoor heb je geen bijzondere kennis nodig, enkel je ervaring als mens.</p>
+<p>Op het tweede niveau begrijp je dat het gebaar een groet is. Dat is niet vanzelfsprekend. Een Griek uit de oudheid of iemand uit een cultuur zonder hoeden zou het gebaar niet als groet herkennen. Je weet het omdat je in een cultuur opgroeide waarin dit gebaar die betekenis kreeg. Het gaat terug op de middeleeuwse ridder die zijn helm afnam om te tonen dat hij vreedzame bedoelingen had.</p>
+<p>Op het derde niveau zegt het gebaar iets over de man zelf: zijn opvoeding, zijn tijd, zijn opvattingen over beleefdheid. Dat lees je niet rechtstreeks af, maar je leidt het af uit alles wat je over hem en zijn tijd weet.</p>
+<p>Precies die drie niveaus gebruik je bij een kunstwerk.</p>
+<h3 id="a-stap-1-de-pre-iconografische-beschrijving" class="sub">a. Stap 1: de pre-iconografische beschrijving</h3>
+<p>Je beschrijft wat je herkent, zonder er al betekenis aan te geven: mensen, dieren, voorwerpen, een landschap, een gebouw. Ook de uitdrukking van de figuren hoort hierbij: iemand kijkt bezorgd, iemand lacht. Je zegt bijvoorbeeld: drie mannen en een vrouw staan bij een groot blok steen in een landschap. Meer niet. Voor deze stap heb je geen voorkennis nodig, enkel een aandachtige blik. Dit is de stap die je al kent van de beschrijvingsvragen.</p>
+<h3 id="b-stap-2-de-iconografische-analyse" class="sub">b. Stap 2: de iconografische analyse</h3>
+<p>Nu ga je op zoek naar wat die figuren en voorwerpen precies voorstellen. De drie mannen blijken herders, het blok steen is een graf, en er staat een tekst op. Een man met een leeuw naast zich is de heilige Hiëronymus, een groep van dertien mannen aan tafel is het Laatste Avondmaal. Voor deze stap heb je kennis nodig: van de Bijbel, van de Griekse en Romeinse mythologie, van de geschiedenis, en van de manier waarop bepaalde onderwerpen eeuwenlang telkens op dezelfde manier werden afgebeeld.</p>
+<h3 id="c-stap-3-de-iconologische-interpretatie" class="sub">c. Stap 3: de iconologische interpretatie</h3>
+<p>In de laatste stap vraag je je af wat het werk eigenlijk wil zeggen: niet alleen welk verhaal het vertelt, maar waarom de kunstenaar of zijn tijd dat verhaal zo vertelt. Wat zegt dit werk over de manier van denken van de mensen die het maakten en bekeken? Hiervoor moet je de cultuur en de ideeën van die tijd kennen. Panofsky geeft toe dat deze stap ook aanvoelen vraagt: je moet als het ware kunnen raden welke ideeën toen vanzelfsprekend waren en voor ons verloren zijn gegaan. Daarom moet je in deze stap extra voorzichtig zijn en je interpretatie altijd toetsen aan wat je over de tijd weet.</p>
+<p>In de praktijk lopen de drie stappen door elkaar. Het stappenplan is geen keurslijf, maar een houvast: het dwingt je om eerst goed te kijken voor je begint te interpreteren.</p>
+<h3 id="d-toepassing-poussin-les-bergers-d-arcadie" class="sub">d. Toepassing: Poussin, Les Bergers d&#x27;Arcadie</h3>
+<figure class="beeld"><figcaption>Nicolas Poussin, <i>Les Bergers d&#x27;Arcadie (Et in Arcadia ego)</i> (1637-1638)<br>Musée du Louvre, Parijs. Olieverf op doek, 85 x 121 cm.</figcaption></figure>
+<dl class="fiche"><dt>Kunstenaar</dt><dd>Nicolas Poussin (1594-1665), Frans schilder die bijna zijn hele leven in Rome werkte</dd><dt>Jaar</dt><dd>1637-1638</dd><dt>Plaats</dt><dd>Musée du Louvre, Parijs</dd><dt>Techniek</dt><dd>Olieverf op doek, 85 x 121 cm</dd></dl>
+<p>Stap 1</p>
+<p>Drie mannen en een vrouw staan in een heuvelachtig landschap bij een groot, rechthoekig blok steen. Twee mannen knielen en wijzen naar letters op de steen. Een derde man leunt op de steen en kijkt naar de vrouw. De vrouw staat rechts, rustig, met haar hand op de schouder van de man naast haar. De figuren dragen losse gewaden en sandalen, twee van hen hebben een staf. Het licht is warm, de kleuren zijn rood, blauw, geel en wit, de lucht is helder.</p>
+<p>Stap 2</p>
+<p>De staven en gewaden maken van de mannen herders. Het blok steen is een graf. Op de steen staat in het Latijn Et in Arcadia ego: ook in Arcadië ben ik. Arcadië is een streek in Griekenland die in de literatuur van de oudheid het beeld werd van een zorgeloos herdersleven in een ideale natuur. De ik die spreekt is de dood. De herders ontdekken dus dat zelfs in het paradijs de dood aanwezig is.</p>
+<p>Stap 3</p>
+<p>Het werk hoort bij de traditie van de vanitas, het thema van de vergankelijkheid dat in de zeventiende eeuw overal in Europa opduikt. Maar Poussin schildert geen schedel of uitgedoofde kaars. Hij toont rustige, nadenkende mensen in een sereen landschap. De dood is hier geen schrikbeeld, maar een gedachte waarmee je leert leven. Dat past bij het stoïcijnse denken dat Poussin en zijn opdrachtgevers aantrok: de wijze mens aanvaardt wat niet te veranderen valt. De vrouw, die kalm toekijkt, wordt vaak gelezen als het beeld van die wijsheid.</p>
+<aside class="kader"><h4>Waarom je je interpretatie moet controleren</h4><p>Panofsky waarschuwt dat kennis alleen niet volstaat. Een schilderij uit de zeventiende eeuw toont een jonge vrouw met een zwaard en een schotel waarop een afgehakt hoofd ligt. Is dat Salome, die volgens de Bijbel het hoofd van Johannes de Doper op een schotel kreeg, maar nooit zelf een zwaard droeg? Of is het Judith, die Holofernes eigenhandig onthoofdde met een zwaard, maar zijn hoofd volgens de tekst in een zak stopte? De tekst alleen geeft geen antwoord: beide verhalen kloppen half. Het antwoord komt uit de beeldtraditie. Er bestaan uit die tijd wel voorstellingen van Judith met een schotel, maar geen enkele van Salome met een zwaard. Het schilderij toont dus Judith. Zo werkt iconografie: je toetst wat je ziet aan de teksten én aan de manier waarop andere kunstenaars hetzelfde onderwerp hebben afgebeeld.</p></aside>
+<h2 id="3-5-de-bouwstenen-van-betekenis">3.5 De bouwstenen van betekenis</h2>
+<p>Om een kunstwerk te lezen moet je een aantal begrippen kennen. Het zijn de bouwstenen waarmee kunstenaars eeuwenlang betekenis in hun werk hebben verwerkt.</p>
+<h3 id="a-personificatie" class="sub">a. Personificatie</h3>
+<p>Een personificatie is een abstract begrip dat als mens wordt voorgesteld. Waarheid, Overwinning, Gerechtigheid of Naastenliefde kun je niet zien of aanraken, maar een kunstenaar kan ze een lichaam geven, meestal dat van een vrouw, met voorwerpen die duidelijk maken wie ze is. De Waarheid draagt vaak een zon, omdat de waarheid altijd aan het licht komt. De Overwinning draagt een lauwerkrans. De Gerechtigheid draagt een weegschaal en een zwaard, en je ziet haar nog altijd boven de ingang van gerechtsgebouwen.</p>
+<p>Ook landen en steden worden als vrouw voorgesteld. Marianne is Frankrijk, Britannia is Groot-Brittannië, en een vrouw met een kroon in de vorm van stadsmuren is een stad.</p>
+<h3 id="b-allegorie" class="sub">b. Allegorie</h3>
+<p>Het woord allegorie komt uit het Grieks en betekent anders spreken. Een allegorie is een voorstelling waarin wat je ziet niet letterlijk bedoeld is, maar naar iets anders verwijst, zoals een beeldspraak in taal. Meestal gaat het om een scène met meerdere personificaties die samen een boodschap uitdrukken, vaak een les over het leven.</p>
+<figure class="beeld"><figcaption>Agnolo Bronzino, <i>Allegorie met Venus en Cupido</i> (circa 1545)<br>National Gallery, Londen. Olieverf op paneel, 146 x 116 cm.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.nationalgallery.org.uk/paintings/bronzino-an-allegory-with-venus-and-cupid">Bekijk bij National Gallery, Londen</a></div></figure>
+<p>Een beroemd voorbeeld is de allegorie van Bronzino. In het midden kussen Venus, de godin van de liefde, en haar zoon Cupido elkaar. Rond hen staan figuren die begrippen voorstellen: een lachend kind met rozen is het Genot, een oude vrouw die zich de haren uit het hoofd trekt is de Jaloezie, een meisje met het lichaam van een slang is het Bedrog, en de oude man met vleugels en een zandloper is de Tijd, die het doek wegtrekt en alles onthult. Samen vertellen ze dat de liefde zoet is, maar bedrog en spijt meebrengt, en dat de tijd alles aan het licht brengt. Je ziet dus geen verhaal, maar een gedachte in beelden.</p>
+<h3 id="c-symbool" class="sub">c. Symbool</h3>
+<p>Een symbool is een voorwerp, een plant, een dier of een teken waaraan een diepere betekenis vastzit, los van het ding zelf. Een duif is vrede, een schedel is de dood, een roos is de liefde. Belangrijk: hetzelfde symbool kan in een andere tijd of bij een andere kunstenaar iets anders betekenen. Een aap stond in de middeleeuwen voor de zonde, maar werd later een beeld van de schilderkunst zelf, omdat de schilder de natuur na-aapt. Je moet een symbool dus altijd lezen in zijn tijd.</p>
+<p>Sommige dieren horen vast bij één figuur. Het lam verwijst naar Christus, de adelaar naar de oppergod Zeus, de uil naar Athena, de godin van de wijsheid.</p>
+<h3 id="d-attribuut" class="sub">d. Attribuut</h3>
+<p>Een attribuut is een voorwerp, plant of dier waaraan je een figuur herkent. Het verschil met een symbool is klein: een attribuut hoeft geen diepere betekenis te hebben, het dient vooral om te zeggen wie iemand is. De heilige Hiëronymus herken je aan de leeuw naast hem, omdat hij volgens de legende een doorn uit de poot van een leeuw trok. De heilige Catharina herken je aan het rad waarop ze gemarteld werd. Petrus draagt een sleutel, Hercules een knots en een leeuwenhuid.</p>
+<figure class="beeld"><figcaption>Albrecht Dürer, <i>De heilige Hiëronymus in zijn studeervertrek</i> (1514)<br>Gravure, 25 x 19 cm. Afdrukken onder meer in het Rijksmuseum, Amsterdam.</figcaption></figure>
+<p>Kijk naar de gravure van Dürer. De leeuw op de voorgrond zegt wie de man aan de lessenaar is: Hiëronymus, de geleerde die de Bijbel in het Latijn vertaalde. De kardinaalshoed aan de muur is een tweede attribuut. Maar de schedel in de vensterbank en de zandloper aan de muur zijn geen attributen: ze zeggen niet wie hij is, maar herinneren eraan dat de tijd verstrijkt en dat ook de geleerde sterfelijk is. Dat zijn symbolen.</p>
+<h3 id="e-embleem" class="sub">e. Embleem</h3>
+<p>In de zestiende en zeventiende eeuw waren emblemenboeken erg populair. Een embleem bestaat uit drie delen: een korte spreuk (het motto), een afbeelding (de pictura) en een tekstje dat uitlegt wat de afbeelding leert (het epigram). Een plaatje met een praatje, zou je kunnen zeggen. Veel spreekwoorden die we nog gebruiken komen uit die boeken. Vooral in de Nederlandse en Vlaamse schilderkunst van de zeventiende eeuw werden motieven uit emblemenboeken letterlijk overgenomen: een luit met een gesprongen snaar, een zeepbel, een rokende pijp dragen een boodschap die de kijker van toen meteen begreep.</p>
+<aside class="kader"><h4>Cesare Ripa en de Iconologia</h4><p>In 1593 publiceerde de Italiaan Cesare Ripa een handboek met de titel <i>Iconologia</i>. Het bevat honderden beschrijvingen van personificaties, in alfabetische volgorde, telkens met de kleuren, kleren, voorwerpen en dieren die erbij horen en een uitleg waarom. Latere uitgaven kregen ook prenten. Kunstenaars uit heel Europa gebruikten het boek bijna twee eeuwen lang als naslagwerk. Als een opdrachtgever een schildering van de Gerechtigheid of de Hoop wilde, sloeg de schilder Ripa open en wist hij hoe ze eruit moest zien. Het boek bestaat nog altijd, ook in Nederlandse vertaling uit 1644.</p></aside>
+<h2 id="3-6-waar-komen-de-onderwerpen-vandaan">3.6 Waar komen de onderwerpen vandaan?</h2>
+<p>De onderwerpen van de westerse kunst komen niet uit het niets. Tot ver in de negentiende eeuw putten kunstenaars uit een beperkt aantal grote bronnen. Wie die bronnen een beetje kent, herkent meteen veel meer.</p>
+<h3 id="a-de-bijbel" class="sub">a. De Bijbel</h3>
+<p>De meeste onderwerpen in de westerse kunst tot de negentiende eeuw zijn religieus. De verhalen van het Oude Testament (Adam en Eva, Noach, Abraham, Mozes, David, Judith) en van het Nieuwe Testament (de geboorte van Jezus, de wonderen, het Laatste Avondmaal, de kruisiging, de verrijzenis) zijn eindeloos vaak afgebeeld. Daarbij komen de levens van de heiligen, met hun eigen verhalen en attributen. Een basiskennis van die verhalen is onmisbaar om kerken en musea te lezen.</p>
+<h3 id="b-de-klassieke-mythologie" class="sub">b. De klassieke mythologie</h3>
+<p>De tweede grote bron zijn de verhalen over de Griekse en Romeinse goden en helden. Het belangrijkste boek daarbij is de <i>Metamorfosen</i> van de Romeinse dichter Ovidius, een verzameling van ongeveer 250 verhalen over gedaanteverwisselingen: Daphne die in een laurierboom verandert, Narcissus die in zijn spiegelbeeld verdrinkt, Europa die door een stier wordt ontvoerd. Daarnaast zijn er de heldenverhalen van Homerus en Vergilius, over de Trojaanse oorlog en de zwerftochten van Odysseus en Aeneas.</p>
+<h3 id="c-andere-literatuur" class="sub">c. Andere literatuur</h3>
+<p>Ook andere boeken leverden onderwerpen: de ridderverhalen over koning Arthur, de <i>Divina Commedia</i> van Dante, de <i>Decamerone</i> van Boccaccio, en later de toneelstukken van Shakespeare en de romans van de negentiende eeuw. Hoe dichter bij onze tijd, hoe breder de waaier aan bronnen wordt, tot kunstenaars in de twintigste eeuw hun onderwerpen uit kranten, films en reclame halen.</p>
+<h2 id="3-7-de-genres-en-de-verborgen-laag">3.7 De genres en de verborgen laag</h2>
+<p>Omdat er zoveel onderwerpen bestaan, hebben specialisten systemen bedacht om ze te ordenen. Het bekendste is Iconclass, een classificatiesysteem dat door musea en bibliotheken wordt gebruikt om elk onderwerp een code te geven, van heel grof (godsdienst, natuur, de mens, de maatschappij, de Bijbel, de mythologie) naar heel fijn. Voor wie geen specialist is, is dat systeem te ingewikkeld.</p>
+<p>In de praktijk gebruiken we een eenvoudigere indeling: die van de genres. Je kent ze: het portret, het landschap, het stadsgezicht, het stilleven, het interieur en het genrestuk, een tafereel uit het dagelijks leven.</p>
+<p>Het belangrijkste om te onthouden is dit: een werk kan op het eerste gezicht gewoon tot een genre horen, maar vaak zit er een tweede laag onder. Een stilleven met een schedel, een uitgedoofde kaars of een omgevallen glas is geen neutraal stilleven, maar een vanitas, een voorstelling over de vergankelijkheid van het leven. Een portret van een vrouw met een kroon van stadsmuren is geen gewoon portret, maar de personificatie van een stad. Een vrolijk gezelschap aan tafel kan een waarschuwing zijn tegen losbandigheid.</p>
+<div class="tabel"><table><tr><th>Genre</th><th>Wat je ziet</th><th>Mogelijke tweede laag</th></tr><tr><td>Portret</td><td>Een bepaalde persoon</td><td>De persoon als mythologische figuur of personificatie</td></tr><tr><td>Landschap</td><td>De natuur</td><td>Een verhaal uit de Bijbel of de mythologie dat zich in de natuur afspeelt</td></tr><tr><td>Stadsgezicht</td><td>Een stad of gebouwen</td><td>Een bestaande stad of een verzonnen decor met een boodschap</td></tr><tr><td>Stilleven</td><td>Levenloze voorwerpen</td><td>Een vanitas over de vergankelijkheid</td></tr><tr><td>Interieur</td><td>Een binnenruimte</td><td>Voorwerpen die iets zeggen over de bewoners of een moraal dragen</td></tr><tr><td>Genrestuk</td><td>Een tafereel uit het dagelijks leven</td><td>Een les of waarschuwing, vaak uit een emblemenboek</td></tr></table></div>
+<figure class="beeld"><figcaption>Jan van Eyck, <i>Het Arnolfini-portret</i> (1434)<br>National Gallery, Londen. Olieverf op paneel, 82 x 60 cm.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait">Bekijk bij National Gallery, Londen</a></div></figure>
+<p>Het Arnolfini-portret van Jan van Eyck is daar het schoolvoorbeeld van. Op het eerste gezicht is het een dubbelportret van een rijk koppel in een slaapkamer. Maar bijna elk voorwerp is al gelezen als teken: de ene brandende kaars in de luchter, het hondje aan hun voeten als beeld van trouw, de afgelegde klompen die van de kamer een gewijde plek maken, de vruchten op de vensterbank, de spiegel met de kleine lijdensscènes errond en de deftige handtekening boven de spiegel: Johannes de Eyck fuit hic, Jan van Eyck was hier. Of het werk een huwelijk afbeeldt, een verloving of gewoon een welgesteld koppel, daarover zijn de specialisten het tot vandaag niet eens. Precies daarom is het zo&#x27;n goed oefenstuk.</p>
+<h2 id="3-8-niet-overdrijven-niet-te-snel-tevreden-zijn">3.8 Niet overdrijven, niet te snel tevreden zijn</h2>
+<p>Nu je weet hoeveel betekenis er in een kunstwerk kan zitten, is de verleiding groot om overal een verborgen boodschap te zoeken. Dat is een valkuil. Niet elk werk verbergt een symboliek en niet elk detail betekent iets. Soms is een stilleven gewoon een mooi geschilderde opstelling van vruchten en bloemen, en soms is een hond gewoon de hond van de familie. Een goede iconograaf kan bewijzen wat hij beweert: met de tekst waar het verhaal vandaan komt, of met andere werken waarin hetzelfde motief dezelfde betekenis heeft.</p>
+<p>Tegelijk mag je niet te snel tevreden zijn. Wie vluchtig kijkt, loopt voorbij aan betekenissen die er wel degelijk zijn. De kunst van het iconografisch kijken bestaat erin een evenwicht te vinden tussen kritische voorzichtigheid en een open, onderzoekende blik.</p>
+<p>Bij moderne en hedendaagse kunst ligt dat nog moeilijker. Veel kunstenaars sinds de twintigste eeuw houden zich niet aan de oude beeldtradities, en bij abstracte kunst valt er niets te herkennen. Toch is die kunst niet betekenisloos. Je moet de betekenis alleen anders zoeken: in wat de kunstenaar er zelf over zegt, in de titel, in de context van de tentoonstelling, in de tijd waarin het werk gemaakt is. En soms werkt de oude iconografie nog volop. Denk aan Ron Mueck: de wonde in de zij van <i>Youth</i> roept de Christus van de Ongelovige Thomas op, en <i>Mother and Child</i> speelt met het eeuwenoude beeld van de Madonna met kind. Wie die traditie kent, ziet wat Mueck ermee doet. Wie ze niet kent, ziet alleen een jongen met een wonde en een vrouw met boodschappentassen.</p>
+<section id="oefeningen"><h2>Oefeningen</h2><p>Lees elk van de twee werken hieronder volgens de drie stappen van Panofsky. Schrijf bij elke stap in volzinnen in de tabel. Bij stap 1 beschrijf je alleen wat je ziet, zonder te interpreteren. Bij stap 2 benoem je wie of wat er voorgesteld wordt en welke symbolen en attributen je herkent; zeg er eerlijk bij waar je kennis tekortschiet en wat je zou moeten opzoeken. Bij stap 3 formuleer je wat het werk volgens jou wil zeggen en waarom het in die tijd zo gemaakt werd. Gebruik de begrippen uit de woordenschat.</p>
+<h2 id="oefening-1-hans-holbein-de-jongere-de-gezanten-1533">Oefening 1: Hans Holbein de Jongere, <i>De gezanten</i> (1533)</h2>
+<figure class="beeld"><figcaption>Hans Holbein de Jongere, <i>De gezanten</i> (1533)<br>National Gallery, Londen. Olieverf op paneel, 207 x 210 cm.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.nationalgallery.org.uk/paintings/hans-holbein-the-younger-the-ambassadors">Bekijk bij National Gallery, Londen</a></div></figure>
+<p>Twee rijke jonge mannen staan aan weerszijden van een kast vol voorwerpen. Hulpvragen bij stap 2: wat zijn de voorwerpen op de bovenste en op de onderste plank, en bij welke twee domeinen van kennis horen ze? Wat is de vreemde grijze vorm onderaan, en vanuit welke hoek moet je ernaar kijken? Wat hangt er halfverborgen links bovenaan achter het gordijn? Waarom is de luitsnaar gesprongen? Hulpvraag bij stap 3: wat zegt dit werk over kennis, macht en vergankelijkheid in 1533?</p>
+<div class="tabel"><table><tr><th>Stap 1: pre-iconografische beschrijving (wat zie je?)</th><th></th></tr><tr><td>Stap 2: iconografische analyse (wat stelt het voor?)</td><td></td></tr><tr><td>Stap 3: iconologische interpretatie (wat betekent het?)</td><td></td></tr></table></div>
+<h2 id="oefening-2-johannes-vermeer-vrouw-met-weegschaal-circa-1664">Oefening 2: Johannes Vermeer, <i>Vrouw met weegschaal</i> (circa 1664)</h2>
+<figure class="beeld"><figcaption>Johannes Vermeer, <i>Vrouw met weegschaal</i> (circa 1664)<br>National Gallery of Art, Washington. Olieverf op doek, 40 x 36 cm.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.nga.gov/collection/art-object-page.1236.html">Bekijk bij National Gallery of Art, Washington</a></div></figure>
+<p>Een vrouw staat in een stil interieur aan een tafel en houdt een kleine weegschaal in evenwicht. Hulpvragen bij stap 2: wat ligt er op de tafel? Wat stelt het schilderij aan de muur achter haar voor, en waar hangt het precies ten opzichte van haar hoofd? Is de weegschaal leeg of vol? Welk genre lijkt dit op het eerste gezicht, en welke tweede laag zit eronder? Hulpvraag bij stap 3: wat zegt dit werk over het afwegen van aardse en geestelijke waarden, en waarom kon een kijker uit de zeventiende eeuw dat meteen lezen?</p>
+<div class="tabel"><table><tr><th>Stap 1: pre-iconografische beschrijving (wat zie je?)</th><th></th></tr><tr><td>Stap 2: iconografische analyse (wat stelt het voor?)</td><td></td></tr><tr><td>Stap 3: iconologische interpretatie (wat betekent het?)</td><td></td></tr></table></div></section>
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Kunstgeschiedenis", "Studie van de ontwikkeling van de kunst doorheen de tijd, in chronologische volgorde."], ["Kunstbeschouwing", "Studie van één kunstwerk in de diepte, los van de chronologie."], ["Morfologie", "Studie van de vormaspecten van een werk: lijn, kleur, licht, compositie, ruimte."], ["Iconografie", "Methode om te onderzoeken wat een kunstwerk voorstelt en welke betekenis erachter zit."], ["Iconologie", "Verdere stap: verklaren waarom een onderwerp zo werd uitgebeeld en wat dat zegt over de tijd en de cultuur."], ["Pre-iconografische beschrijving", "Eerste stap van Panofsky: beschrijven wat je herkent, zonder betekenis toe te kennen."], ["Iconografische analyse", "Tweede stap: herkennen welk verhaal, welke figuur of welk thema wordt voorgesteld, met behulp van teksten en beeldtradities."], ["Iconologische interpretatie", "Derde stap: de diepere betekenis van het werk in zijn tijd en cultuur."], ["Personificatie", "Een abstract begrip voorgesteld als een menselijke figuur, herkenbaar aan attributen."], ["Allegorie", "Een voorstelling waarin wat je ziet naar iets anders verwijst; vaak meerdere personificaties die samen een boodschap vormen."], ["Symbool", "Voorwerp, plant, dier of teken met een diepere, niet-letterlijke betekenis, afhankelijk van tijd en context."], ["Attribuut", "Voorwerp, plant of dier waaraan je een figuur herkent."], ["Embleem", "Combinatie van motto, afbeelding en verklarende tekst met een les; populair in de zestiende en zeventiende eeuw."], ["Vanitas", "Voorstelling die de vergankelijkheid van het leven en de ijdelheid van aards bezit benadrukt."], ["Beeldtraditie", "De manier waarop een onderwerp eeuwenlang telkens op een gelijkaardige manier werd afgebeeld."], ["Iconclass", "Wetenschappelijk classificatiesysteem dat elk onderwerp in de kunst een code geeft."], ["Genre", "Grote categorie van onderwerpen: portret, landschap, stadsgezicht, stilleven, interieur, genrestuk."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Leg het verschil uit tussen de vraag hoe ziet het eruit en de vraag wat stelt het voor. Welke van de twee beantwoordt de iconografie?</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Benoem en beschrijf de drie stappen van Panofsky. Welke kennis heb je bij elke stap nodig?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Leg het verschil uit tussen een symbool en een attribuut. Geef van elk een voorbeeld dat niet in de cursus staat.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Wat is een personificatie en wat is een allegorie? Leg uit hoe de twee met elkaar samenhangen.</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Wie was Cesare Ripa en waarom was zijn boek zo belangrijk voor kunstenaars?</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Noem de drie grote bronnen waaruit de westerse kunst haar onderwerpen haalde en geef bij elke bron een voorbeeld van een onderwerp.</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Waarom waarschuwt Panofsky dat kennis van de teksten alleen niet volstaat om een werk te lezen? Gebruik het voorbeeld van Judith en Salome.</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Je krijgt een schilderij dat je nog nooit gezien hebt. Doorloop de drie stappen van Panofsky en schrijf bij elke stap in volzinnen wat je vaststelt. Geef duidelijk aan waar je kennis tekortschiet.</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Bekijk een stilleven en een vanitas-stilleven naast elkaar. Welke voorwerpen maken van het tweede werk een vanitas? Leg uit wat elk voorwerp betekent.</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Leg uit waarom het Arnolfini-portret méér is dan een portret. Welke voorwerpen worden als teken gelezen, en waarom zijn specialisten het toch niet eens over de betekenis van het werk?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Pas de iconografische methode toe op <i>Mother and Child</i> van Ron Mueck. Welk beeld uit de westerse traditie roept het werk op, wat neemt Mueck over en wat verandert hij?</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Zoek zelf een reclamebeeld of een filmaffiche waarin een personificatie, een symbool of een attribuut wordt gebruikt. Beschrijf het beeld volgens de drie stappen van Panofsky.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../epoche/"><span>Vorig onderwerp</span>&larr; De epoché en de ekphrasis</a><a href="../sjklovski/" style="text-align:right"><span>Volgend onderwerp</span>Viktor Sjklovski &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-iconografie",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

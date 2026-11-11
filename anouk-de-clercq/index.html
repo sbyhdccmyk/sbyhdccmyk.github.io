@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anouk De Clercq</title>
+<meta name="description" content="Love that Moves the Sun: een video-installatie om in te wandelen">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#inleiding-een-film-om-in-te-wandelen">Inleiding: een film om in te wandelen</a></li><li><a href="#1-anouk-de-clercq">1 Anouk De Clercq</a></li><li><a href="#2-wat-is-een-videoinstallatie">2 Wat is een videoinstallatie?</a></li><li><a href="#3-analyse">3 Analyse</a><ol><li><a href="#3-1-love-that-moves-the-sun-2026">3.1 Love that Moves the Sun (2026)</a></li></ol></li><li><a href="#leon-decock-in-gesprek-met-anouk-de-clercq-over-love-that-mo">Leon Decock in gesprek met Anouk De Clercq over Love that Moves the Sun</a></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, 2026</p>
+  <h1>Anouk De Clercq</h1>
+  <p class="onder">Love that Moves the Sun: een video-installatie om in te wandelen</p>
+</header>
+<p class="legende"><span>Tekst met een grijze lijn ervoor is uitbreiding of achtergrond.</span></p>
+<div class="kijkfilter" role="group" aria-label="Volg één element"><span>Volg één element</span><button type="button" data-focus="" aria-pressed="true">Alles</button><button type="button" data-focus="lichaam" aria-pressed="false">Lichaam</button><button type="button" data-focus="ruimte" aria-pressed="false">Ruimte</button><button type="button" data-focus="object" aria-pressed="false">Object</button><button type="button" data-focus="tijd" aria-pressed="false">Tijd</button></div><div id="werken"><h4>Inhoudstafel</h4>
+<h2 id="inleiding-een-film-om-in-te-wandelen">Inleiding: een film om in te wandelen</h2>
+<h4>Waarom dit hoofdstuk?</h4>
+<p>In de week van 23 november 2026 bezoek je met de klas STUK, het huis voor dans, beeld en geluid in de Naamsestraat in Leuven. In de expozaal loopt er tot 13 december de tentoonstelling <i>Love that Moves the Sun</i> van de Belgische kunstenaar en filmmaker Anouk De Clercq. Het hoofdwerk is een nieuwe filminstallatie: een geanimeerd bos bij nacht, waar sterren traag over de hemel schuiven, vuurvliegjes dansen en dieren samenkomen om de zon te laten opkomen. De kunstenaar zelf noemt het “a film to walk in”, een film om in te wandelen. “A love song as a space. Something grand and majestic and tender. A film to walk in. A forest and a continuous dawn.” (Een liefdeslied als ruimte. Iets groots, majestueus en teders. Een film om in te wandelen. Een bos en een dageraad die niet ophoudt.)<sup class="bron"><a href="https://www.e-flux.com/announcements/6788082/anouk-de-clercqlove-that-moves-the-sun" title="Bron: e-flux">bron</a></sup></p>
+<p>Het werk werd in oktober 2026 voor het eerst getoond, dus nog voor critici en kunsthistorici er een vast oordeel over hebben. Om het te lezen, gebruik je wat je al kent: de vier elementen tijd, ruimte, lichaam en object Hoe gebruik je dit hoofdstuk?:</p>
+<p>Dit hoofdstuk wordt niet in de les behandeld. Je leest het zelfstandig, in drie stappen. Lees vóór het bezoek de delen 1 en 2 en de werkbespreking in deel 3, zodat je weet waar je naar kijkt. Neem tijdens het bezoek het kader “Kijkopdracht tijdens het bezoek” mee (aan het einde van deel 3) en noteer je antwoorden ter plaatse. Lees na het bezoek alles opnieuw, nu met je eigen ervaring in je hoofd, en beantwoord het kader “Jouw blik”.</p>
+<p>Het hoofdstuk telt mee voor het examen, samen met de woordenschat en de voorbeeldvragen achteraan. Grijze passages lees je, maar die moet je niet kennen. Bewaar je notities van de kijkopdracht: je hebt ze nodig om de vragen te beantwoorden.</p>
+<h2 id="1-anouk-de-clercq">1 Anouk De Clercq</h2>
+<h4>Leven en loopbaan</h4>
+<p class="uitbreiding">Anouk De Clercq werd in 1971 in Gent geboren. Ze studeerde piano in Gent en daarna film aan Sint-Lukas in Brussel. Die dubbele opleiding in muziek en beeld zie je in al haar werk terug. Ze woont en werkt in Brussel en Berlijn en maakt al zo’n dertig jaar films en installaties. Die waren te zien op het filmfestival van Berlijn (de Berlinale), in BOZAR in Brussel, het Centre Pompidou in Parijs, het Museo Reina Sofía in Madrid, het MAXXI in Rome en Tate Modern in Londen. Ze kreeg onder meer de illy Prize op de kunstbeurs Art Brussels en een eervolle vermelding van de Prix Ars Electronica, een belangrijke internationale prijs voor digitale kunst en mediakunst.</p>
+<p class="uitbreiding">Naast haar eigen werk zorgt ze voor de omgeving waarin kunstenaarsfilms kunnen ontstaan. Een kunstenaarsfilm is een film die een beeldend kunstenaar maakt en die je vooral in tentoonstellingen, op festivals en in kleine filmzalen ziet, zelden in de gewone bioscoop. De Clercq is medeoprichtster van Auguste Orts, een Brussels platform dat zulke films produceert en verspreidt. Ze startte Monokino, een rondreizende bioscoop rond het thema van de zee, en schreef het boek <i>Where is Cinema</i>. Ze is studio-docent aan KASK, de kunsthogeschool in Gent.<sup class="bron"><a href="https://www.augusteorts.be/en/about/anouk-de-clercq" title="Bron: Auguste Orts">bron</a></sup><sup class="bron"><a href="https://schoolofartsgent.be/en/people/anouk-de-clercq" title="Bron: KASK &amp; Conservatorium">bron</a></sup></p>
+<h4>Werkwijze</h4>
+<p>De Clercq vertrekt van wat bewegend beeld poëtisch kan doen. Ze maakt audiovisuele omgevingen: werken waarin beeld en klank samen een ruimte vormen waarin je als kijker opgaat. Vaak zijn het ingebeelde landschappen, plekken die niet bestaan maar die je toch met je hele lichaam ervaart. Beeld en klank wegen bij haar even zwaar. De muziek ontstaat tegelijk met de beelden en wordt er niet achteraf onder gelegd.</p>
+<p>Ze werkt bijna altijd samen, en haar medewerkers zijn echte medeauteurs. Een vaste partner is de Britse producer en componist Sebastian Gainsborough, die onder de naam Vessel elektronische muziek maakt. Met hem werkt ze al meer dan zeven jaar. De beelden ontstaan vaak samen met de Brusselse digitale kunstenaar Thomas De Brabanter, die haar animaties uitwerkt. En dan is er nog een laatste partner: de kijker. De Clercq vertrouwt erop dat jij het werk afmaakt, met je eigen aandacht en verbeelding.</p>
+<figure class="beeld"><figcaption>Anouk De Clercq, <i>One</i> (2020)<br>Video in zwart-wit, 6 min 30 s, met performster Helga Davis en muziek van Vessel. Te zien in STUK tijdens het festival Artefact in 2021.</figcaption><div class="werk-links"><a class="werk-link" href="https://augusteorts.be/en/catalogue/136/one">Bekijk bij Auguste Orts</a></div></figure>
+<p>Twee eerdere werken van De Clercq waren al in STUK te zien, op het festival Artefact. In <i>One</i> (2020) brengt de zangeres en performster Helga Davis achter vijf microfoons een soort manifest, samengesteld uit zinnen van De Clercq en van tal van schrijvers. <i>We’ll find you when the sun goes black</i> (2021) toont in zwart-wit het begin en het einde van een totale zonsverduistering, met muziek van Vessel. In <i>Birdsong</i> (2023) zingen twee vogels om de zon op te roepen, tot een verduistering de sterren zichtbaar maakt.<sup class="bron"><a href="https://augusteorts.be/en/catalogue/135/well-find-you-when-the-sun-goes-black" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/catalogue/135/well-find-you-when-the-sun-goes-black" title="Bron: We’ll find you when the sun goes black">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/catalogue/158/birdsong" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/catalogue/158/birdsong" title="Bron: Birdsong">bron</a></sup> De zon, de nacht, de kosmos en een wereld zonder mensen keren dus steeds terug. <i>Love that Moves the Sun</i> bouwt op die werken verder.</p>
+<figure class="beeld"><figcaption>Anouk De Clercq, <i>We’ll find you when the sun goes black</i> (2021)<br>Video in zwart-wit, 5 min, animatie Thomas De Brabanter, muziek Vessel. Still: de zon net voor of net na een totale verduistering, met de oplichtende rand die men de diamantring noemt.</figcaption><div class="werk-links"><a class="werk-link" href="https://augusteorts.be/en/catalogue/135/well-find-you-when-the-sun-goes-black">Bekijk bij Auguste Orts</a></div></figure>
+<h2 id="2-wat-is-een-videoinstallatie">2 Wat is een videoinstallatie?</h2>
+<p>In de bioscoop koop je een ticket voor een vast aanvangsuur. Je zit op een vaste plaats, het licht gaat uit, de film begint en hij eindigt. Iedereen in de zaal ziet hetzelfde, in dezelfde volgorde en even lang. Je lichaam zit stil, alleen je ogen en oren werken. Wat je beleeft, heeft de filmmaker vooraf in de montage vastgelegd: welk beeld na welk beeld komt en hoe lang elk beeld duurt.</p>
+<p>Een videoinstallatie plaatst bewegend beeld in een ruimte, en die ruimte hoort bij het werk. De kunstenaar ontwerpt het beeld en ook de wanden, het licht, de plaats van de luidsprekers en de zitplaatsen. Die inrichting heet de scenografie. Jij bent geen toeschouwer op een stoel meer. Je wandelt binnen, kiest waar je gaat staan of zitten en beslist zelf hoe lang je blijft. Het beeld loopt meestal in een lus (Engels: <i>loop</i>): als het gedaan is, begint het meteen opnieuw. Je komt dus binnen op een willekeurig moment, en jij bepaalt waar voor jou het begin en het einde liggen.</p>
+<p>Met de vier elementen uit de inleiding van het vijfde jaar zie je het verschil scherp. In de bioscoop worden ruimte en lichaam zoveel mogelijk uitgeschakeld: de zaal is donker, je zit stil en vergeet waar je bent. In een installatie komen ze terug in het werk. De ruimte is een deel van het beeld, en jouw lichaam beweegt erdoorheen. Dat brengt een installatie dicht bij performance (KBS5, hoofdstuk 2). Ook daar deel je de ruimte met het werk en beleef je het in real time. Er is wel een verschil. In een performance gebeurt de handeling nu, door een levend lichaam. In een videoinstallatie is het beeld vooraf gemaakt en ligt het vast, maar jouw bezoek gebeurt in real time. Het werk bestaat in de ontmoeting tussen de vaste tijd van de film en jouw eigen, beleefde tijd.</p>
+<p>Ook licht en klank horen bij de ruimte. Vaak is het beeld de enige lichtbron, zodat het licht van de film op de wanden en op de bezoekers valt. De klank komt uit luidsprekers die over de zaal verspreid staan, zodat je iets anders hoort naargelang de plek waar je staat.</p>
+<p>Een installatie kan je ook omringen en klein maken, zodat je ze niet in één blik overziet.</p>
+<figure class="beeld"><figcaption>Anouk De Clercq, <i>Love that Moves the Sun</i> (2026)<br>Zaalzicht in de Expozaal van STUK, Leuven, 2026. Scenografie: Vsevolod Kovalevskij; geluidsscenografie: Johan Vandermaelen.</figcaption></figure>
+<h2 id="3-analyse">3 Analyse</h2>
+<h3 id="3-1-love-that-moves-the-sun-2026" class="sub">3.1 Love that Moves the Sun (2026)</h3>
+<p>[Afbeelding toevoegen: still uit de film <i>Love that Moves the Sun</i>, bv. het bos bij nacht met vuurvliegjes of de vier dieren samen. Persbeeld op de catalogus-pagina van Auguste Orts: https://augusteorts.be/en/catalogue/189/love-that-moves-the-sun (rechtstreeks: https://augusteorts.be/storage/media/img/original/1190_jpeg-afbeelding-4397-9f67-33-0.jpeg). Pas het tweede bijschrift aan wat er op het gekozen beeld staat.]</p>
+<p>Anouk De Clercq, <i>Love that Moves the Sun</i> (2026)</p>
+<p>STUK, Leuven, 7 oktober tot 13 december 2026. Still uit de geanimeerde film.<sup class="bron"><a href="https://augusteorts.be/en/catalogue/189/love-that-moves-the-sun" title="Bron: Auguste Orts">bron</a></sup></p>
+<div class="tabel"><table><tr><th>Jaar</th><th>2026</th></tr><tr><td>Kunstenaar</td><td>Anouk De Clercq</td></tr><tr><td>Animatie</td><td>Thomas De Brabanter</td></tr><tr><td>Muziek</td><td>Vessel (Sebastian Gainsborough) en Rakhi Singh, met drie zangstemmen</td></tr><tr><td>Duur</td><td>ongeveer 21 minuten, in een lus</td></tr><tr><td>Techniek of medium</td><td>digitale animatie, met de hand opgebouwd; full HD, kleur; klank over vijf luidsprekers in de zaal</td></tr><tr><td>Plaats en periode</td><td>STUK, Expozaal, Leuven, 7 oktober tot 13 december 2026 (eerste presentatie)</td></tr><tr><td>Stroming of periode</td><td>hedendaagse kunst, kunstenaarsfilm en videoinstallatie</td></tr><tr><td>Functie</td><td>nieuw werk voor een solotentoonstelling in STUK, geproduceerd door Auguste Orts; eerst bedacht als voorstel voor het Belgische paviljoen op de Biënnale van Venetië 2026</td></tr></table></div>
+<h4>Wat zie en hoor je?</h4>
+<p>Als je de zaal binnenkomt, zie je de film niet meteen. Twee halfronde wanden staan in de weg, en je moet eromheen wandelen. Daarachter staat een rond zitmeubel voor een groot beeld. De klank komt uit vijf luidsprekers rondom je.</p>
+<p>De film begint bij een nachtelijke hemel waar de sterren traag verschuiven. Een meteorenregen trekt voorbij, de zon komt op, en de camera daalt het bos in. Een hert kijkt met knipperende ogen recht in de camera. Waar een meteoor insloeg, smeult vuur, en motten fladderen rond het zwakke licht. Een vogel, gemaakt naar het voorbeeld van de veldleeuwerik, stijgt zingend in cirkels op, en een zwerm glijdt rond de zon. Dan wordt het weer donker en vullen vuurvliegjes het nachtblauwe bos.</p>
+<p>Op het hoogtepunt verschijnen het hert, een uil die zijn kop bijna helemaal ronddraait en een wolf die ontwaakt. De dieren antwoorden op elkaars roep, en hun zang stuwt de vuurvliegjes de hemel in, alsof die de zon doen opkomen. De camera stijgt mee en draait achterwaarts rond haar as, terwijl de vuurvliegjes als sterren aan de hemel blijven staan. De nacht valt, en de film is terug bij zijn begin.</p>
+<p>Er is in de hele film geen enkele knip. Je ziet één lange, zorgvuldig gechoreografeerde camerabeweging door een bos dat volledig verzonnen is. De camera is hier dus geen echt toestel: het is een virtuele camera in een digitale wereld. De Clercq en De Brabanter bouwden alles met de hand op, blad per blad en bot per bot. Ze gebruikten geen kant-en-klare dieren uit databanken en geen artificiële intelligentie. Voor het bos keken ze naar geschilderde bossen. Ze wilden een bos als een operadecor: een podium en een kader waarin de dieren verschijnen.<sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Quietly Attending">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: , gesprek met Anouk De Clercq">bron</a></sup></p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>In de film komt geen enkel mens voor. Er zijn wel dierenlichamen, en die zijn met grote zorg gemaakt: elke vacht en elke beweging is uitgewerkt. Elk dier gaat terug op echte dieren en op ontmoetingen die De Clercq zelf had. Het belangrijkste lichaam in de zaal is echter het jouwe. Door de halfronde wanden en het ronde zitmeubel ga je vanzelf in cirkels wandelen. De dieren kijken je recht aan, en de lage klanken voel je in je lijf. De Clercq noemt de muziek eerder een atmosfeer: trillingen die op je lichaam in de ruimte werken en niet alleen op je oren.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Er zijn twee ruimtes die in elkaar schuiven. De eerste is het verzonnen bos. Het verbindt hemel en aarde: meteoren slaan in, vogels stijgen op, vuurvliegjes worden sterren. De tweede is de expozaal. De twee halfronde wanden kan je zien als twee manen, als armen die je omarmen of als haakjes die een moment uit de tijd lichten. Omdat de klank over vijf luidsprekers verdeeld is, zit je als het ware tussen de bomen. De geluiden van buiten het bos maken de ruimte nog groter: ergens ver weg is er een andere wereld.</p></div>
+<div class="el object"><h5>Object</h5><p>In de film zijn er weinig voorwerpen in de gewone betekenis. Het centrale object is de zon. Ze komt op, dooft en komt terug, en ze wordt gevoed door de zang van de dieren en door de vuurvliegjes. De Clercq ziet haar als een zingende machine. Rond de zon draait alles om licht: vuurvliegjes maken zelf licht, motten zoeken het op, meteoren en vuur brengen het naar beneden.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>In dit werk lopen verschillende tijden door elkaar. Er is de kosmische tijd van sterren en zon, die eindeloos ronddraaien. Er is de cyclus van nacht en dag, samengeperst in ongeveer twintig minuten. Er is de lus: de film eindigt waar hij begon, met een uil aan het begin en aan het einde, “as though the two are communicating” (alsof de twee met elkaar in gesprek zijn).<sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Quietly Attending">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: , gesprek met Anouk De Clercq">bron</a></sup> Zo ontstaat wat De Clercq “a continuous dawn” noemt, een dageraad die niet ophoudt. En er is jouw tijd: hoe lang je blijft, beslis je zelf. Omdat er geen montage is, springt de tijd nooit vooruit. Ze verandert alleen door het licht en door de trage beweging van de camera. Wie in de nacht een dier wil zien, moet stil zijn en wachten, zegt De Clercq. Het werk vraagt dezelfde soort aandacht.</p></div>
+<h4>Beeld en klank</h4>
+<p>De muziek is een nieuwe compositie van Vessel en de Britse violiste en componiste Rakhi Singh, bekend van het ensemble Manchester Collective.<sup class="bron"><a href="https://www.beethovenfest.de/en/artist/rakhi-singh/350" title="Bron: Beethovenfest Bonn">bron</a></sup> Eerst was er veel meer muziek. Die bedekte alles, en het leek alsof de dieren en de natuur erin verstikten. “In the end, we threw out everything that felt human, including most of the music,” vertelt De Clercq (uiteindelijk gooiden we alles weg wat menselijk aanvoelde, ook het grootste deel van de muziek). Veel dierengeluiden werden gemaakt met onverwachte middelen, zoals een zingende zaag voor het hert en rubberen handschoenen voor de vleugels van de uil.<sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Quietly Attending">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: , gesprek met Anouk De Clercq">bron</a></sup></p>
+<p>De klank heeft twee lagen. Dichtbij hoor je de intieme geluiden van het bos zelf. Van ver dringen gedempte, ritmische klanken binnen, als de beats van een club die je door de muren hoort. Het enige spoor van de mensenwereld is dus een geluid in de verte. Op het hoogtepunt van de film neemt de klank het over. De vier dieren zingen elk vanuit een eigen plek, hun stemmen bewegen door het landschap en komen ergens in het midden samen. Zo’n samenklank van verschillende melodieën heet polyfonie. Omdat de dieren daarbij recht naar jou kijken en voor jou lijken te zingen, merkte Vessel op dat ze de vierde wand doorbreken: de denkbeeldige grens tussen het werk en het publiek.</p>
+<p>Beeld en klank hangen hier oorzakelijk samen. Het lied van de dieren stuwt de vuurvliegjes omhoog, en die doen de zon opkomen. De klank beweegt dus de wereld van het beeld. Vergelijk dat met <i>Swimmer</i> van Lynne Ramsay, waar de klank een eigen spoor naast het beeld legde (KBS5, hoofdstuk 5).</p>
+<h4>Het vuur en het gedicht</h4>
+<p>In twee kleinere ruimtes achteraan maken twee korte werken de tentoonstelling af. <i>The flame that feels the sun</i> (2026, 7 minuten) is een geanimeerd vuur, rechtop geprojecteerd. Vlammen in geel, roze, paars en blauw draaien traag rond een witte, pulserende kern, en vonken stijgen op als vuurvliegjes. Het werk vertrekt van een eenvoudige gedachte: wat er ook gebeurt, mensen zullen altijd rond een vuur samenkomen om verhalen te vertellen. In de film zelf ontstaat er ook een klein vuur, waar een meteoor insloeg.</p>
+<p><i>The words that make a world</i> (2026, 3 minuten) is een tekstanimatie van een gedicht dat De Clercq schreef. Elke regel neemt het laatste woord van de vorige regel over: “The spark / that sparks the flame / The flame / that feels the sun / The sun / that feeds the flame” (de vonk die de vlam doet ontvlammen, de vlam die de zon voelt, de zon die de vlam voedt). Zo rijgt het gedicht vonk, vuur, wolf, uil, hert en zon aan elkaar, tot de laatste regel: “It’s love that moves the sun” (het is liefde die de zon beweegt).</p>
+<h4>Kunsthistorische verwijzing: Dante</h4>
+<p>De titel komt uit een van de beroemdste gedichten van Europa, de <i>Goddelijke Komedie</i> (<i>Divina Commedia</i>) van de Florentijnse dichter Dante Alighieri (1265-1321). Dante schreef het lange gedicht in het begin van de veertiende eeuw, in het Italiaans van zijn tijd. Het bestaat uit drie delen: de <i>Hel</i> (<i>Inferno</i>), de <i>Louteringsberg</i> (<i>Purgatorio</i>) en het <i>Paradijs</i> (<i>Paradiso</i>). De dichter reist zelf door het hiernamaals, eerst met de Romeinse dichter Vergilius als gids, daarna met Beatrice, de vrouw die hij liefhad. In het wereldbeeld van zijn tijd staat de aarde stil in het midden, en draaien daarrond hemelsferen met de zon, de planeten en de sterren.</p>
+<p>In de laatste zang krijgt Dante een visioen van God. Hij kan het niet beschrijven, maar voelt dat hij meedraait in de beweging van het heelal:<sup class="bron"><a href="https://edu.inaf.it/wp-content/uploads/2021/03/Approfondimento_Astronomico_II_grado_Paradiso.pdf" title="Bron: INAF,">bron</a></sup><sup class="bron"><a href="https://edu.inaf.it/wp-content/uploads/2021/03/Approfondimento_Astronomico_II_grado_Paradiso.pdf" title="Bron: Astronomia nella Divina Commedia: Paradiso">bron</a></sup></p>
+<h4>Dante, Paradiso XXXIII, 142-145</h4>
+<p>A l’alta fantasia qui mancò possa; ma già volgeva il mio disio e ’l velle, sì come rota ch’igualmente è mossa, l’amor che move il sole e l’altre stelle.</p>
+<p>Hier schoot mijn verbeelding tekort voor dit hoge visioen; maar mijn verlangen en mijn wil werden al rondgedraaid, zoals een wiel dat gelijkmatig in beweging wordt gezet, door de liefde die de zon beweegt en de andere sterren.</p>
+<p>Elk van de drie delen van de <i>Goddelijke Komedie</i> eindigt met hetzelfde woord: <i>stelle</i>, sterren. Voor Dante is de liefde van God de kracht die het hele heelal laat draaien. De Clercq neemt de zin over, maar geeft er een eigen betekenis aan. Bij haar zit de liefde in het samenkomen: de zwerm vogels, de wolk vuurvliegjes, de motten rond het licht, de vier dieren die samen zingen, de mensen rond het vuur. Dat samenkomen zet dingen in beweging en houdt ze in beweging. Daarom moet de zon in haar film gevoed worden door zang. Ook het beeld van Dante keert terug: een wiel dat gelijkmatig draait, zoals de camera die met de zon meebeweegt en zich op het einde achterwaarts omwentelt.</p>
+<p class="uitbreiding">De zin uit Dante circuleert al jaren tussen De Clercq en Vessel. In 2018 bracht Vessel een nummer uit met de titel “Paplu (Love That Moves The Sun)”, op zijn album <i>Queen of Golden Dogs</i>.<sup class="bron"><a href="https://mixmag.net/amp/vessel-shares-new-visual-for-single-paplu-love-that-moves-the-sun" title="Bron: Mixmag">bron</a></sup> Bij de opening van de tentoonstelling toonde STUK een nieuwe videoclip van De Clercq bij muziek van Vessel, met de tweede helft van het vers als titel: <i>And all the other stars</i> (2026).</p>
+<h4>Betekenis</h4>
+<p><i>Love that Moves the Sun</i> toont een wereld zonder ons. Er rijden geen auto’s, er vliegen geen vliegtuigen, er wandelt niemand. De Clercq laat de vraag open of dit een wereld is nadat de mens verdwenen is, of een wereld die de mens nooit heeft aangeraakt.<sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Quietly Attending">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: , gesprek met Anouk De Clercq">bron</a></sup> Het bos is getuige en hoofdpersonage tegelijk: het ziet alles wat er gebeurt en vertelt zijn eigen verhaal.</p>
+<p>Het werk groeide uit echte ervaringen. De Clercq bracht tijd door in het Białowieżawoud, een van de laatste en best bewaarde oerbossen van Europa, op de grens van Polen en Belarus. Het bos is rijk aan dieren en planten, maar ligt ook in een gebied vol politieke spanning. Daar stond ze plots oog in oog met twee wolven. Ze voelde angst, maar ook een bijna vergeten gevoel van thuishoren: alsof ze deel was van een wereld waarin mensen vroeger meer op hun plaats waren.</p>
+<p>Zo raakt het werk aan de ecologische vragen van vandaag, zonder te preken. Er valt geen woord over klimaat of uitsterven. Toch hoor je de mensenwereld alleen als een verre dreun, en kijken de dieren je aan alsof ze je ter verantwoording roepen. Het bos is mooi en tegelijk onheilspellend. De Clercq wil er uitdrukkelijk een plek van hoop van maken en geen plek van wanhoop.<sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Auguste Orts,">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: Quietly Attending">bron</a></sup><sup class="bron"><a href="https://augusteorts.be/en/document/6ae3344514f76" title="Bron: , gesprek met Anouk De Clercq">bron</a></sup></p>
+<p>Het werk is ook een uitnodiging tot meditatie. Het cyclische ritme van camera en zon laat een orde voelen die groter is dan jij en die geruststelt doordat ze terugkeert. De Clercq beschreef het werk met deze woorden: “A love song as a space. Something grand and majestic and tender. A film to walk in. A forest and a continuous dawn.” (Een liefdeslied als ruimte. Iets groots, majestueus en teders. Een film om in te wandelen. Een bos en een dageraad die niet ophoudt.)<sup class="bron"><a href="https://www.e-flux.com/announcements/6788082/anouk-de-clercqlove-that-moves-the-sun" title="Bron: e-flux">bron</a></sup> Het grootse en het tedere gaan hier samen. Of dat voor jou werkt, kan je in de zaal zelf aftoetsen.</p>
+<h4>Jouw blik</h4>
+<p>Hoe lang bleef je in de zaal, en waarom ging je weg? Wat zegt dat over de manier waarop jij naar dit werk keek?</p>
+<p>De Clercq laat de dieren recht naar de bezoeker kijken. Stel je voor dat je het werk bekijkt vanuit de ogen van de wolf. Wat ziet hij, als hij naar jou en de andere bezoekers kijkt?</p>
+<p>Vind jij dit werk mooi, ontroerend, saai of onrustwekkend? Verklaar je oordeel met minstens één concreet moment uit de film.</p>
+<h4>Kijkopdracht tijdens het bezoek</h4>
+<p>Neem een blad en een pen mee. Noteer kort, in steekwoorden of met een schets.</p>
+<ul class="lijst"><li>Kijk op je horloge of gsm als je de zaal binnenkomt en als je weggaat. Hoe lang bleef je? Wat zag je op het moment dat je binnenkwam, en wat op het moment dat je wegging?</li><li>Waar stond of zat je? Verander minstens één keer van plaats. Wat verandert er aan wat je ziet en hoort?</li><li>Sluit een halve minuut je ogen. Welke geluiden hoor je? Welke komen uit het bos, en welke lijken van ver te komen?</li><li>Maak een snelle schets van de zaal van bovenaf: de wanden, het zitmeubel, het scherm en de plek waar jij stond of zat.</li><li>Welk moment onthoud je het best? Beschrijf het in drie zinnen: wat zag je, wat hoorde je, wat voelde je?</li><li>Ga ook naar het vuur achteraan. Welk verhaal zou jij aan dat vuur vertellen, of willen horen?</li></ul>
+<p>Leon Decock in gesprek met Anouk De Clercq over Love that Moves the Sun</p>
+<p>Inleiding door LEON DECOCK</p>
+<p><i>We zweven boven een donker bos dat zich uitstrekt tot aan de horizon. Een meteorenregen schiet door de lucht. Een paar meteoren slaan in de verte in. Kleine lichtpuntjes verschijnen in de heldere nachtelijke hemel. Blauw verandert langzaam in paars, dan in rood naarmate de zon opkomt. We glijden over de boomtoppen en dalen af ​​tot we ons tussen de bomen bevinden.</i></p>
+<p>Liefde die de zon beweegt<i>Het neemt ons mee naar een bos dat is ontsproten aan de verbeelding van Anouk De Clercq. We worden meegenomen in één zorgvuldig gechoreografeerde animatiescène met een woordeloze gids die er vooral op lijkt uit te zijn ons te laten verdwalen in onze eigen verbeelding.</i></p>
+<p><i>Glinsterende ogen en silhouetten wachten ons op in het donker. Dieren verschijnen tussen de bomen, tegelijk vertrouwd en vreemd. Dit is een bos dat zich niet aan zijn eigen regels hoeft te houden. Een uil heeft de ogen van de ene soort en de oren van een andere. De zon blijft stilstaan ​​aan de hemel en wordt donker terwijl vuurvliegjes in sterrenstof veranderen.</i></p>
+<p><i>De film nodigt ons uit om aandachtig te kijken. Het hert, de wolf en de uil kijken allemaal terug, zonder dat de film onze aandacht op iets specifieks lijkt te richten. De uitnodiging is simpelweg om het ritme en de beweging te volgen. Rust, slaap, verveling, extase of herinnering: er is ruimte voor alles.</i></p>
+<p><i>Misschien begin je je af te vragen waarom je alleen natuurgeluiden hoort. Waar is het verkeer in de verte, of het vliegtuig dat overvliegt? Waar zijn de mensen? Is dit een post-apocalyptische wereld, of een ongerepte? En waarom denk je meteen aan een bosbrand als je een landschap vol bomen ziet? Maar dan draait het beeld om, de zon volgend. Even voel je de aarde onder je voeten draaien. En dan beginnen we weer opnieuw.</i></p>
+<p><i>Het is een film als meditatie, balancerend tussen de menselijke en de planetaire schaal. Even meebewegen met de verbeelding, dansen rond de as van de aarde, en dan weer je evenwicht terugvinden. Onder diezelfde zon, in een wereld die al die tijd is blijven draaien. </i>LEON DECOCK</p>
+<p>Het eerste wat me opviel, was hoe stil de film is. Misschien had je eerdere werk me doen verwachten dat er meer muziek in zou zitten. Je vertelde me eerder dat er aanvankelijk meer muziek in zat. Hoe is die stilte ontstaan?</p>
+<p>ANOUK DE CLERCQ</p>
+<p>In mijn eerdere werk was het beeld abstracter, waardoor er meer ruimte was voor de muziek. Hier draagt ​​het beeld op zichzelf al zoveel met zich mee. Maar de stilte komt vooral voort uit wat dit werk inspireerde: mijn ervaring van &#x27;s nachts slapen in een bos. Ik film of fotografeer nooit, maar ik luister wel heel veel.</p>
+<p>Ooit lag ik in een hangmat en werd ik wakker van het geluid van een bever die aan mijn boom knaagde. Ik hoorde een uil in de verte, en toen nog een vlakbij. Ik vind dat zo speels. De manier waarop geluiden &#x27;s nachts in een bos worden versterkt, alsof je tegelijkertijd door een telescoop en een microscoop luistert.</p>
+<p>Tijdens het werken aan de soundtrack realiseerde ik me dat dit precies de ervaring was die ik wilde overbrengen: &#x27;s nachts in een hangmat in een bos liggen en luisteren naar wat er om je heen gebeurt. Maar onze eerste versie overstemde alles. Het was alsof de dieren en de natuur verstikt werden. Het geluid klonk te menselijk. Aanvankelijk dacht ik dat de dieren stemmen nodig hadden om te kunnen zingen, maar dat werkte helemaal niet.</p>
+<p>Voor het hert stelde ik voor om een ​​muzikale zaag te proberen. Seb [Gainsborough, alias Vessel] ging er eentje kopen en was verbaasd dat het beter klonk dan zijn modulaire synthesizer. De flapperende vleugels van de uil zijn rubberen handschoenen die heen en weer worden gezwaaid. De vuurvliegjes klinken nu als kleine deugnieten, een beetje dissonant en ondeugend. De wolf is een huilende wind.</p>
+<p>Uiteindelijk hebben we alles wat menselijk aanvoelde weggelaten, inclusief het grootste deel van de muziek. Als je &#x27;s nachts iets bijzonders wilt zien, moet je stil zijn en jezelf klein maken. Dat was de ervaring die ik wilde overbrengen, in de hoop mensen uit te nodigen om in stilte aanwezig te zijn. Iets waar we veel te zelden toe worden uitgenodigd.</p>
+<h4>Wat trekt je aan in die stille aandacht?</h4>
+<p>ANOUK DE CLERCQ</p>
+<p>Ik pak het boek van Annie Dillard er vaak weer bij.<i>Pelgrim bij Tinker Creek.</i>Wat ik er zo mooi aan vind, is dat ze zichzelf wilde aanleren om anders te kijken. Ze trok zich terug uit de stad om aandacht te besteden aan de kleinere dingen.</p>
+<p>Ik houd van werk dat me uitnodigt om op die manier te kijken. Het doet me goed; het stelt me ​​in staat om te ontspannen. Het is bijna een spirituele ervaring, misschien wel het dichtst bij religie of gebed. Door de eeuwen heen hebben mensen een manier gevonden om zichzelf te aarden door middel van die stille aandacht. Het doet iets goeds vanbinnen, in je borst, je hart, je geest, je ziel.</p>
+<p>Dat is ook wat ik met mijn werk probeer te bereiken. De manier waarop die ene opname zich ontvouwt, de beweging van de camera en de zon, de acties en hoe ze elkaar opvolgen: dat alles is van groot belang. Ik wil dat het een soort golf wordt waarop je kunt drijven, iets dat op een diepgaand, instinctief niveau werkt. Het is moeilijk uit te leggen, maar mensen die mijn werk zien, vertellen me dat ze rust vinden in die beweging. Soms komen ze dan naar boven. Daarna zeggen ze dat ze willen mediteren of schrijven terwijl ze met hun werk bezig zijn, en dat vat ik op als een compliment. Dat ze zich veilig genoeg voelen om zich op die manier te laten gaan, om even rust te nemen van alles wat er in de wereld of in hun eigen leven gebeurt.</p>
+<p>Ik vind het heel rustgevend om tijd door te brengen in die ongerepte wereld, maar ik voel er ook een zekere spanning. Het doet me denken aan een citaat van Marwan Makhoul: &#x27;Om de vogels te horen, moeten de oorlogsvliegtuigen stil zijn.&#x27; Voor de film bezocht u onder andere het Białowieża-bos, op de grens tussen Polen en Wit-Rusland, waar zich ook een humanitaire crisis afspeelt. Ik vroeg me af hoe u die twee realiteiten hebt ervaren: de schoonheid van het bos en wat er aan de grens gebeurt?</p>
+<p>ANOUK DE CLERCQ</p>
+<p>Ik sprak daarover met een Poolse natuurjournalist die daar woont, een bekende natuurschrijver en activist. Toen ik daar was, dacht ik: ik moet hier iets aan doen, aan het lijden in het bos en aan de grens. Waarop hij zei: iedereen doet dat al, iedereen schrijft erover. Maar voor ons is dit een plek van hoop. Ik wil niet dat het een plek van wanhoop wordt. En als je iets meeneemt, hoop ik dat dit het is.</p>
+<p>Hij vertelde me hoe het dorp voor het bos zorgt, hoe mensen samenwerken om het te beschermen. Voedsel brengen naar vluchtelingen of hen in veiligheid brengen. Hoe ze &#x27;s nachts het bos aan de dieren overlaten. Dat zijn nogal radicale gebaren. Het gaat om hun onvoorwaardelijke liefde voor dat bos, en voor alles en iedereen die erin leeft.</p>
+<p>Er zat echt passie in. Bovenal wilde hij dat ik dat gevoel van zorgzaamheid met me meedroeg, evenals het besef dat alles met elkaar verbonden is. Ik zou niet zeggen dat ik dat letterlijk heb gedaan, maar het bleef wel in mijn achterhoofd spelen. Ik hoefde niet per se te doen wat Agnieszka Holland deed met...<i>Groene rand</i>Bijvoorbeeld. En natuurlijk gaat deze film ook niet over die specifieke plek.</p>
+<p>Het is een gesprek dat ik ook met mezelf voer. Wat doe je als kunstenaar in een tijd van zulke politieke spanning en crisis? Het doet me denken aan de gedichten van Mary Oliver of de essays van Ursula K. Le Guin. Ze schrijven dingen die ademen, maar tegelijkertijd zo diep geworteld zijn in het lijden van de wereld. In hun blik op de wereld.</p>
+<p>Als ik in die ruimte bij STUK ben en mensen zie die zich volledig aan die wereld overgeven, merk ik dat hetzet iets in bewegingSoms vertellen mensen me dat de ervaring warm aanvoelde, dat hun verbeelding werd geprikkeld; soms zijn ze ontroerd. Ze denken aan hun eigen verhalen, of aan iets heel anders.</p>
+<p class="uitbreiding">Anouk De Clercq<i>Liefde die de zon beweegt</i>(2026) · Nog steeds</p>
+<p>Als student heb ik eens met je gesproken over mijn gevoel dat ik steeds hetzelfde werk maakte. Ik herinner me dat je zei dat je dat gevoel altijd had. Toen ik zag...<i>Liefde die de zon beweegt</i>Dat gesprek moest me weer te binnen schieten. Ik herken veel van wat er in dat gesprek staat.<i>Vogelgezang</i>erin, alsof de films zich in dezelfde wereld afspelen.</p>
+<p>Beide lijken een moment te bieden om even op adem te komen.</p>
+<p>ANOUK DE CLERCQ</p>
+<p>Ik heb onlangs laten zien<i>Vogelgezang</i>In Vilnius, een plek waar de dreiging van oorlog een constante realiteit is. Daar zat ik, met mijn twee vogels, een kleurrijke hemel en een poëtische tekst. Je voelt je bijna terughoudend om het daarheen te brengen, wetende wat de mensen daar meemaken.</p>
+<p>Maar achteraf hoorde ik dat mensen meerdere keren naar het werk waren teruggekeerd omdat ze daar een soort rust vonden die ze nergens anders meer konden vinden. Het was tegelijkertijd ontnuchterend en verhelderend. Er was ook een lang krantenartikel van een jonge vrouw die haar ervaringen met die harde realiteit beschreef, naast haar ervaringen met het werk. Hoe er overal paniek heerst, in de wereld, in het nieuws, en hoe mensen juist daarheen kwamen om wat rust te vinden.</p>
+<p>Misschien heeft het ook te maken met het feit dat mensen niet meer naar de kerk gaan. Ik ben zelf geen katholiek en ik wil niet per se dat mensen weer naar de kerk gaan, maar blijkbaar ontbreekt er iets aan wat ons elders wordt aangeboden. Een museum kan ook een plek van stilte zijn. Een plek om rust te vinden, je over te geven aan schoonheid, om troost te vinden.</p>
+<p><i>Vogelgezang</i>was oorspronkelijk gemaakt voor een stuk van Messiaen.<i>Kwartet voor het einde der tijden</i>Muziek die hij schreef tijdens de Tweede Wereldoorlog, terwijl hij gevangen zat in een Duits krijgsgevangenenkamp. Hier is een componist en musicus, opgesloten in een donkere plek tijdens een van de donkerste momenten in de geschiedenis, die er desondanks in slaagt een van de mooiste muziekstukken ter wereld te schrijven. Zijn voorwoord bij de De partituur zit vol verwijzingen naar alle kleuren van de regenboog, engelen en diepe extase. Als ik die muziek hoor, stel ik me de partituur voor als iets dat barst van de kleur, een soort tegengif voor de immense ellende die hij doormaakte.</p>
+<p>Ik krijg er bijna tranen van als ik eraan denk. Het is alsof hij een touw voor zichzelf maakt om zichzelf omhoog te trekken, naar ruimte, licht en vrijheid.</p>
+<p>Wat ook opvalt, is hoe de zon steeds weer terugkeert in je werk. <i>Liefde die de zon beweegt </i>We gaan er zelfs in mee.</p>
+<p>ANOUK DE CLERCQ</p>
+<p>Mijn fascinatie voor licht en donker is voor mij onlosmakelijk verbonden met de magie van de film. Het zien van een andere wereld die verschijnt in een donkere ruimte, getekend door licht. Het is een soort verschijning, een geest. Als een droom die plotseling werkelijkheid wordt. Ik kan het nog steeds niet helemaal bevatten; ik vind het nog steeds zo ongelooflijk mooi.</p>
+<p>Dat is ook een van de redenen waarom ik me zo aangetrokken voel tot de zon. En tot de manier waarop de kleinste dingen verbonden zijn met de grootste, een vonk of een vuurvliegje met de zon, bijvoorbeeld. Dat vind ik echt ontroerend.</p>
+<p>Soms, in de natuur, heb ik momenten waarop ik het gevoel heb dat ik opga in wat ik zie. Alsof er geen grens meer is tussen mij en mijn omgeving. Dat zijn momenten van puur geluk, waarop je gewoon verdwijnt in waar je bent en wat je ziet.</p>
+<p>En ik vond het idee van die camerabeweging aan het einde, die achterwaartse salto, ook behoorlijk gewaagd. Bovenal was ik benieuwd hoe het eruit zou zien. Het begon met de camera die van hoog naar laag bewoog, als een dans met de opkomende en ondergaande zon. Van daaruit voelde het natuurlijk aan om de opkomende zon te volgen, haar vervolgens los te laten en zelf die rollende beweging te maken, een revolutie.</p>
+<p>Het is alsof de zon eerst zijn ding doet en de camera daarvan leert. En dan denkt de camera: nu ga ik dat ook proberen. En het publiek mag meedoen.</p>
+<p class="uitbreiding">Anouk De Clercq<i>Liefde die de zon beweegt</i>(2026) · Nog steeds</p>
+<p>En dan begint de hele beweging opnieuw.</p>
+<p>ANOUK DE CLERCQ</p>
+<p>Ik vind het prachtig dat er aan het begin én aan het einde van de lus een uil te zien is, alsof ze met elkaar communiceren. De vuurvliegjes veranderen in sterren en het spel begint opnieuw. Het is wonderbaarlijk en hoopvol om te weten dat alles constant in beweging is.</p>
+<p>Over die uil gesproken: drie mensen hebben me al verteld dat een uil geen geluid maakt als hij vliegt. Dat weet ik ook; ik heb het gehoord en gelezen. Maar dit is een denkbeeldige wereld, en hier is alles mogelijk. Normaal gesproken kan een uil zijn kop maar 270 graden draaien, maar in deze wereld kan hij 360 graden draaien. En dus maakt hij hier wel degelijk geluid als hij vliegt.</p>
+<p>Elke keer als die uil op de tak landt, moet ik lachen. Het geluid is zo levendig, ook al kan het in werkelijkheid niet gebeuren. Maar dat komt ook door mijn ervaring in het bos &#x27;s nachts, liggend te luisteren, wanneer zelfs de zachtste geluiden ineens zo hard lijken.</p>
+<p>Tijdens je artist talk bij de opening van STUK deelde Thomas [De Brabanter, de maker van de animatie] ook je moodboard. Ik vond het geweldig om te zien hoe een film vorm kon krijgen met zo weinig woorden, slechts een korte beschrijving, een paar citaten en vooral veel beelden. Hoe breng je zoiets over op anderen? Hoe overtuig je mensen van iets wat je zelf moeilijk onder woorden kunt brengen?</p>
+<p>ANOUK DE CLERCQ</p>
+<p>Wat je natuurlijk niet ziet op dat moodboard, zijn alle videogesprekken en berichten. Maar het is zeker niet makkelijk. Vooral niet met dit project, omdat ik minder geïnteresseerd ben in het zelf vertellen van een verhaal dan in het creëren van een ervaring. Iets zintuiglijks, bijna een ritueel. Een uitnodiging aan de kijkers om hun eigen verhaal te vinden. Het is moeilijk om het in woorden uit te drukken, laat staan ​​om anderen erin te laten geloven, zolang ze het niet kunnen zien. Of het ervaren. Dus in een moodboard omcirkel ik het ding of gevoel dat ik wil vastleggen, met behulp van oude en nieuwe afbeeldingen, reproducties van schilderijen, tekstfragmenten en korte beschrijvingen.</p>
+<p>Ik heb Jungs werk gelezen.<i>De mens en zijn symbolen</i>Als kind. Mijn vader gaf me het boek toen ik tien was. Het staat vol illustraties en ik kon eindeloos naar die symbolische afbeeldingen kijken. Mandala&#x27;s bijvoorbeeld: ik vond ze oneindig fascinerend. Misschien heeft dat er ook iets mee te maken.</p>
+<p>Het idee dat je beelden kunt maken of vinden waarin mensen zichzelf herkennen, ongeacht hun achtergrond of leeftijd. Beelden die deel uitmaken van een collectief geheugen. Dat is iets waar ik me graag in verdiep. Het is werk waar ik van geniet: proberen een verhaal dat misschien heel persoonlijk is, te verheffen tot iets universeels. Daarin vind je ook mijn blijvende fascinatie voor de ontmoeting tussen de kleinste en de grootste dingen.</p>
+<p>Juist wanneer de wereld donker wordt, wanneer de dingen complex worden, hebben we plekken nodig die ons weer op krachten brengen. Zoals Rebecca Solnit het onlangs zo treffend verwoordde: &quot;We zijn in de hel beland. Maar ook daar kun je paradijzen en toevluchtsoorden bouwen.&quot; Het is goed en noodzakelijk om veilige plekken te creëren waar mensen in verwondering samen kunnen komen, waar ze zich geborgen, verheven en meegevoerd voelen. Zodat ze uit die hangmat in het bos kunnen stappen en met hernieuwde moed de wereld weer in kunnen stappen.</p></div>
+<section id="leon-decock-in-gesprek-met-anouk-de-clercq-over-love-that-mo"><h2>Leon Decock in gesprek met Anouk De Clercq over Love that Moves the Sun</h2><p class="uitbreiding">AUGUSTUS ORTS</p></section>
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Animatie", "Techniek waarbij beelden één voor één gemaakt worden (getekend, geboetseerd of digitaal opgebouwd), zodat ze na elkaar afgespeeld bewegen."], ["Audiovisuele omgeving", "Kunstwerk waarin beeld en klank samen een ruimte vormen waarin de bezoeker opgaat."], ["Dageraad", "Het moment waarop de nacht overgaat in de dag en de zon opkomt."], ["Doorlopend shot", "Opname zonder één enkele knip, waarin de camera ononderbroken beweegt; het tegendeel van montage."], ["Kunstenaarsfilm", "Film gemaakt door een beeldend kunstenaar, die vooral in tentoonstellingen, op festivals en in kleine filmzalen getoond wordt."], ["Lus (loop)", "Manier van tonen waarbij een film na het einde meteen opnieuw begint, zodat er voor de bezoeker geen vast begin of einde is."], ["Oerbos", "Bos dat nooit of nauwelijks door de mens gekapt of beplant werd en zich op natuurlijke wijze ontwikkelt."], ["Polyfonie", "Meerstemmigheid: verschillende zelfstandige melodieën die tegelijk klinken en samen één geheel vormen."], ["Scenografie", "De inrichting van de ruimte waarin een werk getoond wordt: wanden, licht, zitplaatsen en de plaats van beeld en luidsprekers."], ["Soundscape", "Klanklandschap: een compositie van geluiden en muziek die een ruimte of omgeving oproept."], ["Videoinstallatie", "Kunstwerk waarin bewegend beeld in een ingerichte ruimte getoond wordt, waar de bezoeker zich vrij beweegt en zelf bepaalt hoe lang hij blijft."], ["Vierde wand", "Denkbeeldige grens tussen een voorstelling of film en het publiek; die wordt doorbroken wanneer personages zich rechtstreeks tot de toeschouwer richten."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Leg uit wat Anouk De Clercq bedoelt met een audiovisuele omgeving. Waarom is samenwerking zo belangrijk in haar werkwijze, en welke rol geeft ze aan de kijker?</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Leg het verschil uit tussen een film in de bioscoop en een videoinstallatie. Gebruik de begrippen lus en scenografie.</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Waarom kan je zeggen dat de ruimte en het lichaam van de bezoeker deel uitmaken van <i>Love that Moves the Sun</i>? Verwijs naar de inrichting van de zaal in STUK.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Hoe hangen beeld en klank samen in <i>Love that Moves the Sun</i>? Leg uit wat er gebeurt wanneer de vier dieren samen zingen.</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Waar komt de titel <i>Love that Moves the Sun</i> vandaan, en welke betekenis geeft De Clercq aan die liefde? Vergelijk met de betekenis in de oorspronkelijke tekst.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Leg uit waarom het werk “een wereld zonder ons” genoemd wordt, en hoe de ervaring in het Białowieżawoud het werk mee vormde.</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Hypothetisch: Twee leerlingen bezoeken de tentoonstelling. De ene loopt na twee minuten weer naar buiten, de andere blijft een uur zitten. Beschrijf hoe elk het werk ervaart. Wie heeft het werk volgens jou “gezien”? Verantwoord met de begrippen lus en real time.</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1"><i>Love that Moves the Sun</i> bestaat uit één doorlopende camerabeweging zonder knip. Vergelijk de manier waarop dit werk tijd maakt met de montage in <i>Swimmer</i> van Lynne Ramsay. Wat win je en wat verlies je zonder montage?</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Een bioscoopbezoeker die een spannende natuurfilm verwacht en Anouk De Clercq zelf kijken naar hetzelfde werk. Wat verwacht elk van het werk, en hoe zouden ze het beoordelen?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">(Zesde jaar) De Clercq noemt haar werk “grand and majestic and tender”. Kan je <i>Love that Moves the Sun</i> subliem noemen in de zin van Kant? Bespreek wat ervoor en wat ertegen pleit.</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Bekijk het werk vanuit de dieren die de bezoeker aankijken. Welke vraag stellen zij aan de mens, en welk antwoord zou jij geven?</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../film/"><span>Vorig onderwerp</span>&larr; Film als tijdskunst</a><a href="../muziek/" style="text-align:right"><span>Volgend onderwerp</span>Muziek: luisteren naar tijd &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-anouk-de-clercq",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Popart</title>
+<meta name="description" content="Andy Warhol, de Factory en The Velvet Underground">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#1-wat-is-popart">1 Wat is popart?</a></li><li><a href="#2-de-kerngedachte">2 De kerngedachte</a></li><li><a href="#3-analyse-van-twee-werken">3 Analyse van twee werken</a><ol><li><a href="#3-1-richard-hamilton-just-what-is-it-that-makes-today-s-home">3.1 Richard Hamilton, Just what is it that makes today&#x27;s homes so different, so appealing?</a></li><li><a href="#3-2-roy-lichtenstein-whaam">3.2 Roy Lichtenstein, Whaam!</a></li></ol></li><li><a href="#4-andy-warhol-de-factory-en-the-velvet-underground">4 Andy Warhol, de Factory en The Velvet Underground</a><ol><li><a href="#4-1-andy-warhol-marilyn-diptych">4.1 Andy Warhol, Marilyn Diptych</a></li><li><a href="#4-2-de-factory">4.2 De Factory</a></li><li><a href="#4-3-the-velvet-underground">4.3 The Velvet Underground</a></li></ol></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, 1955-1970</p>
+  <h1>Popart</h1>
+  <p class="onder">Andy Warhol, de Factory en The Velvet Underground</p>
+</header>
+
+<p>Reclameborden, tijdschriften, strips, televisie, verpakkingen in de supermarkt: na de Tweede Wereldoorlog werd het dagelijkse leven overspoeld door beelden die gemaakt waren om te verkopen en snel vergeten te worden. Lange tijd hoorden zulke beelden niet in een museum. In de jaren 1950 en 1960 maakten kunstenaars er juist hun onderwerp van. Die kunst kreeg de naam popart.</p>
+<p>In dit hoofdstuk lees je waar popart vandaan komt en wat ze wilde. Misschien ken je Andy Warhol al uit het hoofdstuk over Arthur Danto. Hier bekijken we twee andere werken: een collage van Richard Hamilton, die vaak het eerste werk van de popart genoemd wordt, en het schilderij <i>Whaam!</i> van Roy Lichtenstein. Daarna zoomen we in op Andy Warhol, zijn atelier de Factory en de rockgroep The Velvet Underground.</p>
+<h2 id="1-wat-is-popart">1 Wat is popart?</h2>
+<p>Het woord pop is een afkorting van het Engelse popular, populair. Popart ontstond in het midden van de jaren 1950 in Groot-Brittannië en werd in de jaren 1960 vooral in de Verenigde Staten bekend. Popkunstenaars gebruikten beelden en technieken uit de massacultuur: reclame, strips, film, merkproducten en beroemdheden. Ze werkten vaak met heldere kleuren, vlakke vormen en technieken die op drukwerk lijken, zoals zeefdruk.</p>
+<p>In Londen kwam vanaf 1952 een groep jonge kunstenaars, architecten en critici samen in het Institute of Contemporary Arts: de Independent Group. Ze bespraken Amerikaanse tijdschriften, sciencefiction, autodesign en reclame, onderwerpen die de kunstwereld toen niet ernstig nam. Richard Hamilton was een van hen.</p>
+<h2 id="2-de-kerngedachte">2 De kerngedachte</h2>
+<h4>Wat is pop?</h4>
+<p>In januari 1957 schreef Hamilton een brief aan de architecten Alison en Peter Smithson, die ook bij de Independent Group hoorden. Daarin somde hij op wat popcultuur kenmerkt. Pop is volgens hem populair, gemaakt voor een groot publiek; vluchtig; wegwerpbaar en snel vergeten; goedkoop; in massa geproduceerd; jong; geestig; sexy; vol trucjes; glamoureus; en big business. Die lijst wordt nog altijd gebruikt als een van de beste omschrijvingen van popart.</p>
+<h4>Geen grens tussen hoog en laag</h4>
+<p>Traditioneel maakte men een scherp onderscheid tussen hoge kunst, zoals schilderkunst in musea, en lage cultuur, zoals reclame en strips. Popart trekt die grens in twijfel. Een blik soep, een stripheld of een filmster kan net zo goed het onderwerp van een schilderij zijn als een mythologisch verhaal of een landschap. Het alledaagse beeld wordt het onderwerp van de kunst.</p>
+<h4>Bewondering en ironie</h4>
+<p>Popkunstenaars staan dubbel tegenover de massacultuur. Ze zijn gefascineerd door de kleur, de energie en de eenvoud van reclame en strips. Tegelijk tonen ze, door die beelden uit hun context te halen en te vergroten, hoe kunstmatig ze zijn. Of een werk de consumptiemaatschappij viert of bekritiseert, is vaak niet duidelijk. Die dubbelzinnigheid hoort bij de stroming.</p>
+<aside class="kader"><h4>Popart en het abstract expressionisme</h4><p>In de jaren 1950 was het abstract expressionisme de belangrijkste stroming in New York. Schilders zoals Jackson Pollock maakten grote, persoonlijke doeken waarin elke verfstreek de hand en het gevoel van de kunstenaar toonde. Popart reageert daartegen. Popkunstenaars verbergen hun hand, kiezen onpersoonlijke technieken en onderwerpen die iedereen kent. In plaats van de binnenwereld van de kunstenaar toont popart de buitenwereld van reclame en media.</p></aside>
+<h2 id="3-analyse-van-twee-werken">3 Analyse van twee werken</h2>
+<h3 id="3-1-richard-hamilton-just-what-is-it-that-makes-today-s-home" class="sub">3.1 Richard Hamilton, Just what is it that makes today&#x27;s homes so different, so appealing?</h3>
+<aside class="kader"><h4>[Afbeelding invoegen]</h4><p>Richard Hamilton, <i>Just what is it that makes today&#x27;s homes so different, so appealing?</i> (1956)</p><p>Kunsthalle Tübingen, collectie Zundel. Collage.<sup class="bron"><a href="https://www.kunsthalle-tuebingen.de/" title="Bron: Kunsthalle Tübingen">bron</a></sup></p></aside>
+<dl class="fiche"><dt>Jaar</dt><dd>1956</dd><dt>Techniek</dt><dd>Collage</dd><dt>Afmetingen</dt><dd>26 x 24,8 cm</dd><dt>Collectie</dt><dd>Kunsthalle Tübingen, collectie Zundel</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een kleine collage van een woonkamer, opgebouwd uit knipsels uit tijdschriften. Op de voorgrond staat een gespierde bodybuilder in pose, met een reusachtige lolly waarop in grote letters POP staat. Op de bank zit een bijna naakte vrouw met een lampenkap op haar hoofd. In de kamer staan de nieuwste toestellen: een televisie, een bandrecorder en een stofzuiger, waarmee een vrouw op de trap aan het werk is. Aan de muur hangt een ingelijste stripcover, op tafel staat een blik ham. Door het raam zie je de gevel van een bioscoop.</p>
+<h4>Een catalogus van het moderne leven</h4>
+<p>Richard Hamilton (1922-2011) was een Engelse kunstenaar. Hij maakte deze collage in 1956 voor de catalogus en de affiche van de tentoonstelling <i>This Is Tomorrow</i> in de Whitechapel Art Gallery in Londen, waaraan leden van de Independent Group meewerkten. Het werk is amper 26 centimeter hoog.</p>
+<p>Hamilton brengt in één kamer bijna alles samen wat het moderne leven van de jaren 1950 beloofde: comfort, technologie, een perfect lichaam, ontspanning en merkproducten. Het woord POP op de lolly leest als een titel voor de hele stroming. De lange titel van het werk klinkt als een slogan uit een advertentie.</p>
+<h4>Betekenis</h4>
+<p>Is dit een droomhuis of een spotprent? De figuren lijken zelf producten, net zo glad als de toestellen rond hen. Hamilton toont het nieuwe consumentenleven met fascinatie en ironie tegelijk. Het werk vat samen wat popart zou worden, nog voor de stroming echt een naam had.</p>
+<h3 id="3-2-roy-lichtenstein-whaam" class="sub">3.2 Roy Lichtenstein, Whaam!</h3>
+<aside class="kader"><h4>[Afbeelding invoegen]</h4><p>Roy Lichtenstein, <i>Whaam!</i> (1963)</p><p>Tate, Londen. Acryl en olieverf op doek, twee panelen.<sup class="bron"><a href="https://www.tate.org.uk/art/artworks/lichtenstein-whaam-t00897" title="Bron: Tate">bron</a></sup></p></aside>
+<dl class="fiche"><dt>Jaar</dt><dd>1963</dd><dt>Techniek</dt><dd>Acryl (Magna) en olieverf op doek, twee panelen</dd><dt>Afmetingen</dt><dd>172,7 x 406,4 cm</dd><dt>Collectie</dt><dd>Tate, Londen</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een groot schilderij van twee panelen naast elkaar, samen meer dan vier meter breed. Op het linkerpaneel vliegt een straaljager naar rechts en vuurt een raket af. Linksboven staat een geel tekstvak, zoals in een strip. Op het rechterpaneel ontploft een vijandelijk vliegtuig in een vuurbal van rood, geel en wit, met daarboven in grote gele letters het woord WHAAM!. Alles is getekend met dikke zwarte lijnen en ingekleurd met vlakke, felle kleuren. In de lucht en op de vliegtuigen zie je regelmatige rasterpuntjes.</p>
+<h4>Een strip op museumformaat</h4>
+<p>Roy Lichtenstein (1923-1997) was een Amerikaanse schilder. Vanaf 1961 baseerde hij schilderijen op prenten uit strips en reclame. <i>Whaam!</i> maakte hij in 1963 naar een tekening uit een Amerikaanse oorlogsstrip van 1962, <i>All-American Men of War</i>. Hij vereenvoudigde de compositie, verdeelde ze over twee doeken en vergrootte ze enorm.</p>
+<p>De rasterpuntjes zijn Ben-Day-punten, een goedkope druktechniek waarmee strips toen kleurtinten maakten. Lichtenstein bracht ze met de hand aan, met een zelfgemaakt sjabloon vol gaatjes. Wat in een strip een paar centimeter groot is en in een seconde gelezen wordt, wordt in het museum een monumentaal schilderij.</p>
+<h4>Betekenis</h4>
+<p>Lichtenstein neemt een beeld dat helden en oorlog verheerlijkt en maakt het zo groot en zo afstandelijk dat je het anders gaat bekijken. De ontploffing wordt een decoratief patroon, de dood een kleurrijk effect. Lichtenstein had zelf tijdens de Tweede Wereldoorlog in het Amerikaanse leger gediend. Of het werk de strip bewondert of ermee spot, laat hij open. Tegelijk stelt het de vraag wat er gebeurt met een beeld uit de lage cultuur wanneer het in een museum hangt.</p>
+<aside class="kader"><h4>Opdracht</h4><p>Kies een beeld uit de reclame, een strip of sociale media dat je deze week zag. Vergroot een klein fragment ervan op A3, met vlakke kleuren en dikke contourlijnen, zoals Lichtenstein. Schrijf er drie zinnen bij: wat verandert er aan het beeld doordat je het uit zijn context haalt en vergroot?</p></aside>
+<h2 id="4-andy-warhol-de-factory-en-the-velvet-underground">4 Andy Warhol, de Factory en The Velvet Underground</h2>
+<p>Geen kunstenaar is zo nauw verbonden met popart als Andy Warhol. Hij maakte niet alleen schilderijen van soepblikken en filmsterren, maar bouwde rond zich ook een hele wereld van film, muziek, mode en feesten. In dit deel zoomen we in op drie kanten van die wereld: zijn zeefdrukschilderijen, zijn atelier de Factory en de rockgroep The Velvet Underground.</p>
+<h4>Van reclametekenaar tot popartiest</h4>
+<p>Andy Warhol (1928-1987) werd geboren in Pittsburgh, als zoon van ouders die uit het huidige Slowakije kwamen. In de jaren 1950 werkte hij in New York als succesvol reclametekenaar, onder meer voor schoenadvertenties en tijdschriften. Hij kende de wereld van de reclame dus van binnenuit. Rond 1961 begon hij schilderijen te maken naar strips en advertenties, en in 1962 werd hij bekend met een reeks van tweeëndertig schilderijen van blikken Campbell-soep. Datzelfde jaar ontdekte hij de zeefdruk: een techniek waarmee hij een foto rechtstreeks op doek kon overbrengen en eindeloos kon herhalen.</p>
+<h3 id="4-1-andy-warhol-marilyn-diptych" class="sub">4.1 Andy Warhol, Marilyn Diptych</h3>
+<aside class="kader"><h4>[Afbeelding invoegen]</h4><p>Andy Warhol, <i>Marilyn Diptych</i> (1962)</p><p>Tate, Londen. Acrylverf en zeefdruk op doek.<sup class="bron"><a href="https://www.tate.org.uk/art/artworks/warhol-marilyn-diptych-t03093" title="Bron: Tate">bron</a></sup></p></aside>
+<dl class="fiche"><dt>Jaar</dt><dd>1962</dd><dt>Techniek</dt><dd>Acrylverf en zeefdrukinkt op doek, twee panelen</dd><dt>Afmetingen</dt><dd>205,4 x 289,6 cm (elk paneel 205,4 x 144,8 cm)</dd><dt>Collectie</dt><dd>Tate, Londen</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Twee grote doeken hangen naast elkaar. Op elk doek staat vijfentwintig keer hetzelfde gezicht van Marilyn Monroe, in vijf rijen van vijf. Op het linkerdoek is het gezicht felgekleurd: geel haar, roze huid, rode lippen en turquoise oogschaduw. De kleuren liggen er een beetje naast, alsof de drukvormen verschoven zijn. Op het rechterdoek is het gezicht zwart-wit. Sommige portretten zijn bijna zwart van de inkt, andere zijn zo bleek dat het gezicht bijna verdwijnt.</p>
+<h4>Herhaling als methode</h4>
+<p>Warhol maakte dit werk in 1962, enkele maanden na de dood van Marilyn Monroe in augustus van dat jaar. Hij vertrok van een publiciteitsfoto voor de film <i>Niagara</i> uit 1953. Met de zeefdruk kon hij die foto snel en mechanisch herhalen, zoals een drukpers een affiche of een tijdschrift vermenigvuldigt. Dat het werk uit twee delen bestaat, was een voorstel van de verzamelaarster Emily Hall Tremaine, die de doeken bij Warhol kocht.</p>
+<h4>Betekenis</h4>
+<p>Marilyn Monroe was de bekendste filmster van haar tijd, een beeld dat in kranten en tijdschriften duizenden keren gedrukt werd. Warhol toont haar zoals de massamedia haar toonden: als een herhaald product, net als zijn soepblikken. Tegelijk zit er iets ontroerends in het werk. Links schittert de ster in kleur, rechts vervaagt ze in zwart-wit. Veel kunsthistorici lezen in die tegenstelling leven en dood. Het werk gaat over roem, maar ook over een mens die achter haar eigen beeld verdwijnt.</p>
+<h3 id="4-2-de-factory" class="sub">4.2 De Factory</h3>
+<h4>Een zilveren atelier</h4>
+<p>Eind 1963 huurde Warhol een loft in een oud industrieel gebouw aan East 47th Street in Manhattan. Zijn vriend Billy Name bekleedde de muren, het plafond en zelfs de leidingen met zilverfolie en zilververf. Het atelier kreeg de naam Factory, fabriek, en wordt vandaag ook de Silver Factory genoemd. Billy Name woonde er een tijd en fotografeerde er alles wat er gebeurde.</p>
+<h4>Kunst als productie</h4>
+<p>De naam Factory was geen toeval. Warhol werkte er met assistenten, zoals de dichter Gerard Malanga, die hem hielp bij het zeefdrukken. Schilderijen ontstonden in reeksen, bijna aan de lopende band. In een interview uit 1963 zei Warhol dat hij zo schilderde omdat hij een machine wilde zijn. Daarmee zette hij zich af tegen het romantische beeld van de kunstenaar als eenzaam genie dat zijn ziel in elke penseelstreek legt.</p>
+<h4>Een ontmoetingsplaats</h4>
+<p>De Factory was meer dan een werkplaats. Kunstenaars, muzikanten, dichters, acteurs, modellen en verzamelaars liepen er in en uit. Warhol noemde sommigen van hen zijn superstars en liet hen spelen in zijn experimentele films. Tussen 1964 en 1966 filmde hij honderden bezoekers voor zijn <i>Screen Tests</i>: korte filmportretten van enkele minuten waarin iemand zwijgend en bijna onbeweeglijk in de camera kijkt. Warhol zelf bleef vaak een stille toeschouwer, die alles vastlegde met zijn camera en zijn bandrecorder.</p>
+<p>In juni 1968, kort nadat de Factory naar een nieuw adres verhuisd was, werd Warhol er neergeschoten door een vrouw die eerder in een van zijn films had meegespeeld. Hij overleefde, zwaargewond. Daarna werd de toegang strenger en de sfeer zakelijker. Het open en chaotische tijdperk van de zilveren Factory was voorbij.</p>
+<h3 id="4-3-the-velvet-underground" class="sub">4.3 The Velvet Underground</h3>
+<aside class="kader"><h4>[Afbeelding invoegen]</h4><p>Andy Warhol, hoes voor <i>The Velvet Underground &amp; Nico</i> (1967)</p><p>Verve Records, New York. Offsetdruk met afpelbare sticker.<sup class="bron"><a href="https://www.warhol.org/" title="Bron: The Andy Warhol Museum">bron</a></sup></p></aside>
+<dl class="fiche"><dt>Jaar</dt><dd>1967</dd><dt>Techniek</dt><dd>Platenhoes, offsetdruk met afpelbare sticker</dd><dt>Afmetingen</dt><dd>Ongeveer 31 x 31 cm (lp-hoes)</dd><dt>Uitgave</dt><dd>Verve Records, New York</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een vierkante platenhoes met een witte achtergrond. Schuin over de hoes ligt een grote gele banaan met zwarte vlekjes, gedrukt in zeefdruk. Onderaan staat de handtekening van Andy Warhol. De naam van de groep staat niet op de voorkant. Bij de eerste exemplaren was de schil van de banaan een sticker, met daarnaast de woorden Peel slowly and see: trek langzaam en kijk. Wie de schil aftrok, zag daaronder een roze banaan.</p>
+<h4>Warhol als manager</h4>
+<p>The Velvet Underground was een rockgroep uit New York, met zanger en gitarist Lou Reed, de Welshe muzikant John Cale, die een klassieke opleiding had gevolgd en altviool speelde, gitarist Sterling Morrison en drumster Maureen Tucker. Hun muziek was ruw, luid en experimenteel, en hun teksten gingen over de schaduwkant van de grootstad. Rond de jaarwisseling van 1965 en 1966 zag Warhol hen spelen en werd hij hun manager. Hij voegde de Duitse zangeres en fotomodel Nico aan de groep toe en betaalde de opnames van hun eerste plaat. Zo werd de groep de huisband van de Factory.</p>
+<h4>Exploding Plastic Inevitable</h4>
+<p>In 1966 trok Warhol met de groep rond met een multimediavoorstelling, de Exploding Plastic Inevitable. Terwijl de band speelde, werden films van Warhol op de muren en op de muzikanten zelf geprojecteerd, flitsten stroboscooplampen en dansten Gerard Malanga en Mary Woronov op het podium. De grens tussen concert, film, dans en beeldende kunst verdween. Zulke voorstellingen waren een voorloper van de lichtshows en videoclips van later.</p>
+<h4>Betekenis</h4>
+<p>In 1967 verscheen <i>The Velvet Underground &amp; Nico</i>. De plaat verkocht toen slecht, maar geldt vandaag als een van de invloedrijkste rockalbums ooit. De hoes toont hoe ver Warhol het idee van popart doortrok: een kunstenaar ontwerpt een massaproduct dat in elke platenwinkel ligt, en dat product wordt zelf een kunstwerk. Bij Warhol vallen schilderkunst, film, muziek, reclame en roem samen. De Factory was de plek waar die werelden elkaar raakten.</p>
+<aside class="kader"><h4>Opdracht</h4><p>Bekijk in de klas enkele <i>Screen Tests</i> van Warhol, bijvoorbeeld die van Lou Reed of Nico. Kijk een volledige film zonder te praten. Noteer daarna wat je zag en wat je voelde. Wat gebeurt er met een gezicht als je er zo lang naar kijkt? Vergelijk de <i>Screen Tests</i> met een portretfoto op sociale media.</p></aside>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Popart", "Kunststroming uit de jaren 1950 en 1960 die beelden en technieken uit reclame, strips en massacultuur gebruikt."], ["Massacultuur", "Cultuur die in grote hoeveelheden geproduceerd wordt voor een groot publiek, zoals reclame, film, strips en televisie."], ["Independent Group", "Groep jonge kunstenaars, architecten en critici die vanaf 1952 in Londen samenkwam en de populaire cultuur ernstig nam."], ["Collage", "Werk dat samengesteld is uit knipsels van papier, foto's of andere materialen die op een ondergrond gekleefd worden."], ["Ben-Day-punten", "Regelmatig patroon van kleine gekleurde punten waarmee in goedkoop drukwerk kleurtinten gemaakt werden."], ["Abstract expressionisme", "Amerikaanse kunststroming uit de jaren 1940 en 1950 met grote, abstracte en zeer persoonlijke schilderijen."], ["Ironie", "Iets zeggen of tonen op een manier die een andere, vaak tegenovergestelde betekenis laat doorschemeren."], ["Consumptiemaatschappij", "Samenleving waarin het kopen en gebruiken van producten een centrale plaats inneemt."], ["Zeefdruk", "Druktechniek waarbij inkt door een fijn gaas op een ondergrond geperst wordt; zo kan een foto vele keren op doek of papier gedrukt worden."], ["Factory", "Het atelier van Andy Warhol in New York vanaf 1963, werkplaats en ontmoetingsplaats voor kunstenaars, muzikanten en filmmakers."], ["Screen Test", "Kort filmportret van Warhol waarin iemand enkele minuten zwijgend in de camera kijkt."], ["Multimediavoorstelling", "Voorstelling die verschillende media combineert, zoals muziek, film, licht en dans."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Waar en wanneer ontstond popart, en waar komt de naam vandaan?</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Wat was de Independent Group?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Noem vijf kenmerken van popcultuur uit de brief van Hamilton uit 1957.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Waartegen reageerde popart in de Amerikaanse kunst van de jaren 1950?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Welke elementen van het moderne leven verwerkt Hamilton in zijn collage?</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Wat zijn Ben-Day-punten en waarom gebruikt Lichtenstein ze in <i>Whaam!</i>?</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Waarom herhaalt Warhol in <i>Marilyn Diptych</i> vijftig keer hetzelfde portret?</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Wat was de Factory, en waarom paste die naam bij de manier waarop Warhol werkte?</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Welke rol speelde Warhol voor The Velvet Underground?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Vergelijk de collage van Hamilton met <i>Whaam!</i> van Lichtenstein. Hoe gebruiken beide kunstenaars beelden uit de massacultuur?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Viert popart de consumptiemaatschappij of bekritiseert ze die? Argumenteer met één werk uit dit hoofdstuk.</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Vergelijk <i>Whaam!</i> met <i>De derde mei 1808</i> van Goya. Hoe verschilt de houding van beide kunstenaars tegenover het geweld?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Welke beelden uit jouw dagelijkse leven zouden vandaag het onderwerp van popart kunnen zijn? Leg uit waarom.</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Warhol zei dat hij een machine wilde zijn. Hoe zie je dat in <i>Marilyn Diptych</i> en in de werking van de Factory?</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Is een platenhoes een kunstwerk? Bespreek de hoes van <i>The Velvet Underground &amp; Nico</i> met begrippen uit dit hoofdstuk en uit het hoofdstuk over Danto.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../architectuur-en-design/"><span>Vorig onderwerp</span>&larr; Architectuur en design</a><a href="../conceptuele-kunst/" style="text-align:right"><span>Volgend onderwerp</span>Conceptuele kunst &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-popart",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neoclassicisme</title>
+<meta name="description" content="David en Ingres: terug naar de Oudheid">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#jacques-louis-david">Jacques-Louis David</a><ol><li><a href="#le-serment-des-horaces">Le Serment des Horaces</a></li><li><a href="#la-mort-de-marat">La Mort de Marat</a></li></ol></li><li><a href="#jean-auguste-dominique-ingres">Jean-Auguste-Dominique Ingres</a><ol><li><a href="#la-grande-odalisque">La Grande Odalisque</a></li><li><a href="#oedipus-en-de-sfinx">Oedipus en de Sfinx</a></li></ol></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, 1780-1830</p>
+  <h1>Neoclassicisme</h1>
+  <p class="onder">David en Ingres: terug naar de Oudheid</p>
+</header>
+
+<p>Het neoclassicisme ontstond in de tweede helft van de achttiende eeuw (ca. 1760-1830) als een bewuste breuk met de speelse frivoliteit* van de rococo. Het was een periode waarin de westerse wereld teruggreep naar de waarden en esthetiek van de klassieke oudheid, gedreven door een verlangen naar orde, ratio en morele zuiverheid.</p>
+<p>De opkomst van het neoclassicisme was onlosmakelijk verbonden met de Verlichting*. Filosofen als Voltaire en Rousseau bekritiseerden de decadentie* van de adel en pleitten voor een maatschappij gebaseerd op de rede en burgerdeugden*.</p>
+<ul class="lijst"><li>Politieke Revolutie: Het neoclassicisme werd de visuele taal van de Franse Revolutie. De burgerij zocht naar een stijl die symbool stond voor democratie, burgerplicht* en opofferingsgezindheid*, waarden die men terugvond in de Romeinse Republiek. Later adopteerde Napoleon de stijl om zijn keizerrijk de allure en autoriteit van het Romeinse Rijk te geven (de zogenaamde Empirestijl*).</li><li>Archeologische Sensatie: De herontdekking en opgravingen van de steden Pompeii</li></ul>
+<p>en Herculaneum zorgden voor een schokgolf in Europa. Voor het eerst zag men de</p>
+<p>12 authentieke, ongeschonden kunst en architectuur van de Romeinen, wat leidde tot een &#x27;Grieks-Romeinse koorts&#x27; onder intellectuelen en kunstenaars.</p>
+<p>De economische context van het neoclassicisme werd getekend door de vroege Industriële Revolutie* en de groeiende macht van de middenklasse*.</p>
+<ul class="lijst"><li>De Grand Tour: Rijke jonge Europeanen maakten een educatieve reis naar Italië (de <i>Grand Tour</i>) om de klassieke resten te bestuderen. Dit creëerde een enorme markt voor neoclassicistische kunst, prenten en architectuur.</li><li>Stedelijke Vernieuwing: De economische groei leidde tot grote publieke bouwprojecten. Musea, bibliotheken en overheidsgebouwen werden opgetrokken in een sobere, monumentale stijl met zuilen en frontons*, om stabiliteit en macht uit te stralen zonder de overdadige kosten van de barokke decoratie.</li></ul>
+<p>Artistiek gezien was het neoclassicisme een zoektocht naar de &#x27;ideale schoonheid&#x27;. De theoreticus Johann Joachim Winckelmann vatte de stijl samen als een combinatie van &quot;stille eenvoud en edele grootsheid&quot;.</p>
+<ul class="lijst"><li>Vorm en Lijn: In tegenstelling tot de lossere toets van de rococo, draaide alles nu om de strakke lijn (disegno*). De contouren moesten scherp zijn en de penseelvoering nagenoeg onzichtbaar.</li><li>Compositie: Schilderijen werden opgezet als een toneelstuk, vaak met een ondiepe achtergrond en een strikte, vaak piramidale* of horizontale ordening. Dit zorgde voor een statische en kalme uitstraling.</li><li>Ethiek* boven Esthetiek*: Het doel van kunst was niet langer enkel te behagen (zoals bij Fragonard), maar om te onderwijzen. Thema&#x27;s werden geput uit de antieke geschiedenis en mythologie, waarbij de focus lag op heroïek, vaderlandsliefde en de overwinning van de ratio op de emotie.</li></ul>
+<p>Het neoclassicisme was dus niet louter een kopie van het verleden, maar een heruitvinding van de klassieke traditie om antwoorden te bieden op de turbulente veranderingen van de achttiende en negentiende eeuw.</p>
+<p>13</p>
+<h2 id="jacques-louis-david">Jacques-Louis David</h2>
+<p>Jacques-Louis David was de onbetwiste leider van de Franse kunstwereld rond de eeuwwisseling van de achttiende naar de negentiende eeuw. Geboren in 1748 in Parijs, groeide hij op in een tijd waarin de rococo haar laatste adem uitblies. David zou deze &quot;decadente&quot; stijl eigenhandig de doodsteek toedienen door een nieuwe, strenge beeldtaal te ontwikkelen die gebaseerd was op de Griekse en Romeinse oudheid. Zijn carrière was onlosmakelijk verbonden met de turbulente Franse geschiedenis; hij was niet alleen een begenadigd* schilder, maar ook een actieve revolutionair en later de officiële hofschilder van Napoleon Bonaparte.</p>
+<p>De persoonlijkheid van David was complex, gedreven en vaak onverbiddelijk. Hij stond bekend als een man met een ijzeren wil en een enorme passie voor zijn idealen, maar ook als iemand die politiek zeer wendbaar* was. Tijdens de Revolutie was hij een goede vriend van de radicale Robespierre* en stemde hij zelfs voor de doodstraf van koning Lodewijk XVI. Zijn karakter kenmerkte zich door een diepe ernst; hij minachtte oppervlakkigheid en streefde in alles naar morele verheffing*. Een opvallend detail was een gezwel in zijn wang, opgelopen bij een schermduel, die zijn spraak bemoeilijkte en zijn gezicht een asymmetrisch uiterlijk gaf, wat mogelijk bijdroeg aan zijn soms norse en gereserveerde uitstraling.</p>
+<p>Zijn artistieke ambitie reikte veel verder dan het louter creëren van mooie beelden. David zag de schilderkunst als een krachtig instrument voor maatschappelijke verandering en morele educatie. Hij wilde de kijker niet vermaken*, maar inspireren tot deugdzame daden en vaderlandsliefde. Zijn ambitie was om de puurheid en de logica van de klassieke oudheid te herstellen in de kunst. Hij verving de dromerige kleuren van de rococo door strakke lijnen, sobere composities en een bijna fotografische scherpte. Voor David moest de kunst de rede* dienen; elk penseelstreek was een statement tegen de chaos en voor de discipline. Hiermee legde hij het fundament voor het neoclassicisme en beïnvloedde hij generaties kunstenaars in heel Europa.</p>
+<p>14</p>
+<h3 id="le-serment-des-horaces" class="sub">Le Serment des Horaces</h3>
+<p>Jacques-Louis Davids &quot;De eed van de Horatii&quot; (<i>Le Serment des Horaces</i>), voltooid in 1784, is het belangrijkste schilderij van de achttiende eeuw. Het markeert de definitieve overgang van de rococo naar het neoclassicisme en fungeerde als een visueel manifest voor een nieuwe morele orde.</p>
+<ul class="lijst"><li>Wanneer en voor wie: David schilderde het werk in opdracht van het Franse hof (de graaf d’Angiviller, namens koning Lodewijk XVI). Hoewel de koning een werk wilde dat de monarchie eerde, schilderde David onbedoeld een icoon van de revolutie.</li><li>Waar: David stond erop het werk in Rome te schilderen. Hij geloofde dat hij alleen te midden van de antieke ruïnes de juiste &quot;zuiverheid&quot; kon vangen. Toen het schilderij in 1785 in Parijs op de Salon* werd tentoongesteld, veroorzaakte het een sensatie; men had nog nooit kunst gezien met zo’n krachtige, sobere uitstraling.</li><li>Historische context: Frankrijk bevond zich in een diepe crisis. De Verlichtingsfilosofen* bekritiseerden de decadentie van de adel. Er was behoefte aan exemplum virtutis*: voorbeelden van deugdzame daden uit het verleden die de moderne burger konden inspireren.</li></ul>
+<p>15</p>
+<p>David breekt in dit werk met alle wetten van de rococo:</p>
+<ul class="lijst"><li>Compositie en Geometrie: De opbouw is streng wiskundig. Het schilderij is verdeeld in drie delen door de drie Romeinse rondbogen* op de achtergrond.</li><li>Links: De drie broers (de Horatii) vormen een krachtige, diagonaal opstijgende lijn. Hun lichamen zijn gespannen en tonen eenheid.</li><li>Midden: De vader heft de drie zwaarden op. Hij is het centrum van de actie en de emotionele spil*.</li><li>Rechts: De vrouwen en kinderen. In schril contrast met de rechte lijnen van de mannen, zijn zij weergegeven in zachte, vloeiende en neerwaartse lijnen. Dit benadrukt hun verdriet en passiviteit.</li><li>Licht en Kleur: Het licht is hard en zijdelings, bijna als een schijnwerper in een theater (karavaggistisch*). De kleuren zijn sober: veel aardetinten met het felle rood van de mantel van de vader als blikvanger. Er zijn geen zachte pasteltinten of wazige achtergronden; alles is scherp en gedefinieerd*.</li><li>Focus op de lijn (Disegno): De contouren zijn messcherp. David elimineert de &quot;vlekkerige&quot; penseelvoering van de rococo ten gunste van een gladde, bijna onzichtbare afwerking.</li></ul>
+<p>David integreerde de resultaten van de recente opgravingen in Pompeii* en Herculaneum*:</p>
+<ul class="lijst"><li>Architectuur: De Toscaanse zuilen (zonder voet) zijn ongecompliceerd en robuust, wat past bij de archaïsche* periode van Rome die hij wilde uitbeelden.</li><li>Kostuums en Wapens: De helmen, zwaarden en sandalen zijn gebaseerd op authentieke archeologische vondsten. Hij wilde geen &quot;verzonnen&quot; oudheid, maar een die historisch accuraat aanvoelde.</li><li>Anatomie: De gespierde lichamen van de broers doen denken aan antieke standbeelden zoals de <i>Doryphoros*</i>, waarbij de nadruk ligt op de fysieke perfectie als spiegel van een sterke geest.</li><li>Ratio boven Emotie: Het thema is de triomf van de rede en de plicht boven persoonlijke gevoelens. Een van de vrouwen, Camilla, is verloofd met een van de tegenstanders, maar haar persoonlijk leed is ondergeschikt aan het staatsbelang.</li><li>Moralisme: Kunst moet een boodschap hebben. David vervangt de <i>joie de vivre*</i></li></ul>
+<p>door <i>vaderlandsliefde</i>.</p>
+<ul class="lijst"><li>Statuair karakter: De figuren staan stil, bevroren in een monumentaal moment. Er is geen beweging om de beweging zelf, maar elke houding draagt bij aan de plechtige ernst van de eed.</li></ul>
+<p>16</p>
+<p>Met <i>De eed van de Horatii </i>zette David de standaard voor de officiële kunst van de komende vijftig jaar: een kunst die niet langer wilde behagen, maar wilde overtuigen.</p>
+<h3 id="la-mort-de-marat" class="sub">La Mort de Marat</h3>
+<p>Jacques-Louis Davids &quot;De dood van Marat&quot; (<i>La Mort de Marat</i>), geschilderd in 1793, is wellicht het meest indrukwekkende politieke propagandastuk* uit de kunstgeschiedenis. Het transformeert een bloederige politieke moord tot een sereen, bijna religieus icoon van de Franse Revolutie.</p>
+<ul class="lijst"><li>David schilderde het werk in de herfst van 1793 in opdracht van de Nationale Conventie, het revolutionaire parlement van Frankrijk. Het was bedoeld als een eerbetoon aan een gevallen kameraad en als inspiratiebron voor het volk.</li><li>Jean-Paul Marat was een</li></ul>
+<p>radicale journalist en een van de leiders van de Jacobijnen*. Hij leed aan een ernstige huidaandoening, waardoor hij veel tijd in een medicinaal bad moest doorbrengen. Op 13 juli 1793 drong de jonge girondijnse* Charlotte Corday zijn werkkamer binnen en stak hem neer met een keukenmes. De moord schokte het revolutionaire Parijs.</p>
+<ul class="lijst"><li>De rol van David: David was een goede vriend van Marat. Hij was de dag vóór de</li></ul>
+<p>moord nog bij hem op bezoek geweest. Na de moord kreeg David de taak om de begrafenis te organiseren en dit herdenkingsschilderij te maken.</p>
+<p>17</p>
+<p>David kiest voor een compositie die opvalt door haar uiterste soberheid en verticale rust.</p>
+<ul class="lijst"><li>De &quot;Seculiere Piëta&quot;*: Hoewel Marat een atheïstische* revolutionair was, gebruikte David de beeldtaal van christelijke martelaren*. De houding van Marat (met het levenloze hoofd dat opzij valt en de afhangende arm) doet direct denken aan de <i>Kruisafname </i>van Christus of de <i>Piëta* </i>van Michelangelo*. Hierdoor wordt Marat een &quot;heilige&quot; van de nieuwe Republiek*.</li><li>De Achtergrond: De bovenste helft van het schilderij is nagenoeg leeg. De donkere,</li></ul>
+<p>monochrome* achtergrond creëert een enorme stilte en focust alle aandacht op het slachtoffer. Er is geen diepte of afleiding, wat het moment een tijdloos karakter geeft.</p>
+<ul class="lijst"><li>Realistische objecten versus idealisering: David schildert de details zeer scherp: de</li></ul>
+<p>houten kist die dienstdoet als schrijftafel, het bebloede mes op de grond en de pen die nog in Marats hand rust. Tegelijkertijd idealiseert hij het lichaam; de huidaandoening van Marat is nergens te zien, waardoor hij eruitziet als een klassieke held.</p>
+<p>David gebruikt tekst als een cruciaal onderdeel van zijn boodschap. Er zijn twee belangrijke teksten zichtbaar:</p>
+<ul class="lijst"><li>De brief van de moordenares: In Marats linkerhand zien we de brief waarmee Corday zijn kamer binnenkwam. Er staat:</li></ul>
+<p><i>13 juli 1793. Marie Anne Charlotte Corday aan de burger Marat. Het is voldoende dat ik erg ongelukkig ben om recht te hebben op uw goedwillendheid.</i></p>
+<p>Hiermee benadrukt David de valsheid van Corday: ze gebruikte Marats eigen barmhartigheid* om hem te vermoorden.</p>
+<ul class="lijst"><li>Op de houten kist ligt een cheque en een begeleidend briefje waarop staat dat het geld naar een weduwe met kinderen moet gaan wiens man voor het vaderland is gestorven. Dit presenteert Marat als een gulle, zorgzame man van het volk, zelfs in zijn laatste momenten.</li><li>Moralisme*: Het werk dient een hoger doel; het moet de kijker overtuigen van de rechtvaardigheid van de revolutie en de slechtheid van haar vijanden.</li><li>Disegno (De Lijn): De lijnen zijn uiterst strak en gecontroleerd. Ondanks de gruwelijke daad is er geen chaos op het doek; alles is geordend volgens de wetten van de ratio.</li></ul>
+<p>18</p>
+<ul class="lijst"><li>Soberheid: In tegenstelling tot de weelderige rococo-interieurs is deze kamer kaal en ascetisch. Dit staat symbool voor de republikeinse deugden van eenvoud en eerlijkheid.</li></ul>
+<p>Het schilderij heeft een bewogen geschiedenis die nauw verbonden is met de persoonlijke val van David.</p>
+<p>Na de val van Napoleon in 1815 werd David als &#x27;koningsmoordenaar&#x27; (hij had voor de dood van Lodewijk XVI gestemd) uit Frankrijk verbannen. Hij vluchtte naar Brussel, waar hij de laatste jaren van zijn leven doorbracht. Hij nam zijn meest persoonlijke werken mee, waaronder <i>De dood van Marat</i>.</p>
+<p>Na Davids dood in 1825 probeerden zijn erfgenamen het schilderij te verkopen, maar de politieke lading was nog te gevoelig voor de Franse overheid. In 1893, precies honderd jaar na de moord, schonk de familie het schilderij aan de Belgische staat als dank voor de gastvrijheid die David in Brussel had genoten. Sindsdien is het een van de topstukken van de Koninklijke Musea voor Schone Kunsten van België in Brussel. Zeker eens gaan kijken!</p>
+<h2 id="jean-auguste-dominique-ingres">Jean-Auguste-Dominique Ingres</h2>
+<p>Jean-Auguste-Dominique Ingres (1780-1867) was de onvermoeibare bewaker van de klassieke traditie in een eeuw die voortdurend in beweging was. Geboren in Montauban als zoon van een decoratief kunstenaar, werd hij al op jonge leeftijd naar Parijs gestuurd om in de leer te gaan bij Jacques-Louis David. Hoewel hij de favoriete leerling van de grote meester was, ontwikkelde Ingres een stijl die weliswaar geworteld was in de oudheid, maar die tegelijkertijd een bijna bovennatuurlijke verfijning en abstractie bezat. Zijn carrière overspande meer dan zestig jaar, waarin hij uitgroeide van een omstreden vernieuwer tot de patriarch* van de Franse academische kunst.</p>
+<p>De persoonlijkheid van Ingres was intens, koppig en uiterst gevoelig voor kritiek. Hij was een man van absolute overtuigingen die kunst zag als een heilige discipline. Hij kon woedend worden op tijdgenoten die volgens hem de &quot;wetten van de schoonheid&quot; schonden, wat leidde tot zijn legendarische rivaliteit met de romantische schilder Delacroix. Zijn leven was er een van discipline; wanneer hij niet schilderde, speelde hij gepassioneerd viool (wat</p>
+<p>19 leidde tot de Franse uitdrukking <i>violon d&#x27;Ingres </i>voor een uit de hand gelopen hobby). Ondanks zijn soms dogmatische* houding, schuilt er in zijn werk een diepe zintuiglijkheid* en een bijna obsessieve zoektocht naar de perfecte vorm.</p>
+<p>Zijn artistieke ambitie was even helder als ambitieus: het bereiken van een tijdloze, ideale schoonheid door de totale beheersing van de lijn. Voor Ingres was de tekening (<i>le dessin</i>) de &quot;eerlijkheid van de kunst&quot;. Hij wilde de puurheid van de Griekse beeldhouwkunst en de gratie van zijn grote idool, de renaissancemeester Rafaël*, verenigen in een moderne vormentaal. Hij streefde naar een esthetiek waarbij de anatomie* ondergeschikt was aan de harmonie van de contour, wat resulteerde in figuren met een bijna vloeibare elegantie.</p>
+<p>Ingres wilde niet de vergankelijke emotie van het moment vangen, maar de eeuwige essentie van zijn onderwerpen, of het nu ging om monumentale historiestukken of zijn wereldberoemde, psychologisch gelaagde portretten.</p>
+<h3 id="la-grande-odalisque" class="sub">La Grande Odalisque</h3>
+<p>Jean-Auguste-Dominique Ingres’ &quot;La Grande Odalisque&quot; uit 1814 is een van de meest raadselachtige en fascinerende werken uit de kunstgeschiedenis. Het schilderij bevindt zich op het breukvlak tussen de strenge regels van het neoclassicisme en de opkomende romantische fascinatie voor het exotische*.</p>
+<p>20</p>
+<ul class="lijst"><li>Ingres schilderde het werk in opdracht van Caroline Bonaparte, de zus van Napoleon en de koningin van Napels. Het was bedoeld als een tegenhanger voor een ander (nu verloren gegaan) werk van een liggend naakt.</li><li>Het werk werd voltooid in Rome, waar Ingres op dat moment verbleef. Toen het schilderij in 1819 in Parijs op de Salon werd geëxposeerd, werd het door critici met verbazing en zelfs vijandigheid ontvangen. Men vond de stijl &quot;vreemd&quot; en &quot;archaïsch&quot;.</li><li>Het schilderij ontstond aan het einde van het Napoleontische tijdperk. Frankrijk was in de ban van het Oriëntalisme*: een geromantiseerd en vaak onrealistisch beeld van het &quot;Oosten&quot; (het Ottomaanse Rijk). Een <i>odalisque* </i>was een concubine* of slavin in een harem, een onderwerp dat de Europese kijker toestond om naar naakt te kijken onder het mom van een &quot;exotische studie&quot;, zonder dat het als immoreel werd beschouwd.</li></ul>
+<p>Ingres stelt in dit werk de esthetische harmonie boven de anatomische waarheid.</p>
+<ul class="lijst"><li>Anatomische Deformatie: De meest beroemde kritiek op dit werk is de verlengde rug. Wetenschappers hebben later berekend dat Ingres de vrouw drie tot vijf extra ruggenwervels heeft gegeven. Ook haar linkerarm is onnatuurlijk lang en haar bekken staat in een hoek die fysiek bijna onmogelijk is. Voor Ingres was dit geen fout, maar een bewuste keuze: hij wilde een ononderbroken, golvende lijn creëren die de elegantie van het vrouwelijk lichaam accentueerde.</li><li>Oppervlakte en Textuur: Het schilderij is technisch perfect uitgevoerd. De huid van de</li></ul>
+<p>odalisque is zo glad en egaal als porselein, zonder zichtbare penseelstreken. Dit contrasteert prachtig met de rijke texturen van de omgeving: het koele blauwe satijn, de zware bonten deken, de pauwenveren van de waaier en de gedetailleerde waterpijp (hookah) rechtsonder.</p>
+<ul class="lijst"><li>De Blik: De vrouw kijkt de toeschouwer over haar schouder aan. Haar blik is echter</li></ul>
+<p>niet verleidelijk of emotioneel, maar koel, afstandelijk en bijna emotieloos. Dit versterkt het gevoel dat zij een &quot;ideaalbeeld&quot; is in plaats van een vrouw van vlees en bloed.</p>
+<p>Ingres keek niet alleen naar de klassieke oudheid, maar vooral naar de meesters van de Renaissance: Titiaan: De liggende houding herinnert aan de <i>Venus van Urbino*</i>, maar Ingres &quot;ontkleurt&quot; de warme, vleselijke tinten van Titiaan en vervangt ze door de koele, bijna abstracte helderheid</p>
+<p>21</p>
+<p>Venus van Urbino, Titiaan, 1538, 119 cm x 165 cm, olieverf op canvas, Galleria degli Uffizi (Florence).</p>
+<ul class="lijst"><li>Neoclassicisme: Het werk is neoclassicistisch in zijn uitvoering. De nadruk ligt volledig op de lijn (<i>le dessin</i>) en de scherpe contouren. Er is geen sprake van de wilde emotie of de losse toets die de Romantiek later zou kenmerken. De compositie is geordend en de sfeer is sereen.</li><li>Vroege Romantiek: Tegelijkertijd loopt Ingres vooruit op de Romantiek door het onderwerp. De keuze voor een haremmeisje en de focus op zintuiglijkheid en het &quot;exotische&quot; wijken af van de strikte, morele geschiedenislessen van zijn leraar David.</li></ul>
+<p><i>La Grande Odalisque </i>is het ultieme bewijs van Ingres&#x27; filosofie: kunst is niet het kopiëren van de natuur, maar het verbeteren ervan door de perfectie van de lijn. Vandaag de dag is het een van de absolute pronkstukken van het Louvre in Parijs.</p>
+<p>22</p>
+<h3 id="oedipus-en-de-sfinx" class="sub">Oedipus en de Sfinx</h3>
+<p>Jean-Auguste-Dominique Ingres’ &quot;Oedipus en de Sfinx&quot; is een sleutelwerk dat zijn transitie van veelbelovende leerling naar eigenzinnige meester markeert. Het schilderij toont de confrontatie tussen de Griekse held Oedipus* en het monster dat de stad Thebe* teisterde.</p>
+<ul class="lijst"><li>Ingres schilderde de eerste versie van dit werk in 1808 tijdens zijn verblijf in de Villa Medici in Rome. Het was een zogenaamd <i>envoi</i>: een bewijsstuk van zijn vorderingen dat hij naar de Academie in Parijs moest sturen. Later, rond 1827, werkte hij het</li></ul>
+<p>schilderij verder uit tot het monumentale werk dat we nu kennen.</p>
+<ul class="lijst"><li>De mythe: De Sfinx* stelde elke reiziger een raadsel: <i>&quot;Wat loopt &#x27;s ochtends op vier benen, &#x27;s middags op twee en &#x27;s avonds op drie?&quot; </i>Degenen die het fout hadden, werden verslonden. Oedipus gaf het juiste antwoord (de mens) en bevrijdde de stad.</li><li>Het neoclassicisme zocht in deze periode naar thema&#x27;s waarin de menselijke ratio en intelligentie zegevierden over brute kracht en bijgeloof. Het schilderij ontstond in een tijd waarin de Napoleontische orde de rede probeerde op te leggen aan Europa, vaak vergeleken met de beschavende kracht van de klassieke helden.</li></ul>
+<p>23</p>
+<p>Ingres creëert een compositie die zowel statisch als vol psychologische spanning is:</p>
+<ul class="lijst"><li>De Figuur van Oedipus: Oedipus is weergegeven als een antiek standbeeld. Zijn lichaam is atletisch en ideaal geproportioneerd, gebaseerd op de klassieke Griekse beeldhouwkunst. Hij buigt zich voorover naar het monster, wat een sterke diagonale lijn creëert die de compositie domineert. Zijn houding straalt geen angst uit, maar diepe concentratie.</li><li>Contrast tussen Licht en Donker: Oedipus staat in het volle licht, wat zijn helderheid</li></ul>
+<p>van geest en rede symboliseert. De Sfinx daarentegen bevindt zich in de schaduw van een donkere grot, symbool voor het duistere, het irrationele en het gevaarlijke.</p>
+<ul class="lijst"><li>De Gruwelijke Details: Linksonder in de schaduw zien we de overblijfselen van</li></ul>
+<p>degenen die het raadsel niet konden oplossen: een menselijke voet en beenderen. Rechts op de achtergrond vlucht een bange figuur weg. Deze details contrasteren met de kalmte van de held.</p>
+<ul class="lijst"><li>De Lijnvoering: Zoals altijd bij Ingres is de contourlijn messcherp. Er is geen</li></ul>
+<p>atmosferische vaagheid*; elke spier en elk detail van de rotsen is met precisie vastgelegd.</p>
+<p>koppeling neoclassicisme:</p>
+<ul class="lijst"><li>De Triomf van de Ratio: Dit is het kernthema van de stroming. De mens overwint het monster niet met fysiek geweld (zoals Hercules dat zou doen), maar met zijn verstand. Dit weerspiegelt het Verlichtingsideaal.</li><li>Statuair Karakter: De invloed van de klassieke beeldhouwkunst is evident. Oedipus lijkt bijna van marmer. Ingres wilde de &quot;ideale mens&quot; tonen, ontdaan van de onvolkomenheden van de dagelijkse realiteit.</li><li>Moraliteit: Het werk dient als een <i>exemplum virtutis </i>(voorbeeld van deugd). Het herinnert de toeschouwer eraan dat moed en wijsheid de fundamenten zijn van de beschaving.</li><li>Archeologische Precisie: De weergave van de Sfinx en de wapens van Oedipus getuigen van Ingres&#x27; diepe studie van de antieke vazen en reliëfs die hij in Italië had bestudeerd.</li></ul>
+<p>Waar Davids neoclassicisme vaak politiek en militant* was, is dat van Ingres in <i>Oedipus en de Sfinx </i>meer intellectueel en esthetisch. Het schilderij, dat tegenwoordig in het Louvre hangt, blijft een krachtig symbool voor de kracht van de menselijke geest tegenover de mysteries van het lot.</p>
+<p>24</p>
+
+
+
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../rococo/"><span>Vorig onderwerp</span>&larr; Rococo</a><a href="../romantiek/" style="text-align:right"><span>Volgend onderwerp</span>Romantiek &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-neoclassicisme",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

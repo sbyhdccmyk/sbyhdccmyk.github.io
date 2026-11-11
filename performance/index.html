@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Performance als tijdskunst</title>
+<meta name="description" content="Marina Abramović en Ulay">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#inleiding-marina-abramovi-ulay-en-de-performance">Inleiding: Marina Abramović, Ulay en de performance</a></li><li><a href="#2-1-wat-is-performancekunst">2.1 Wat is performancekunst?</a></li><li><a href="#2-2-de-vier-basiselementen-van-performance">2.2 De vier basiselementen van performance</a><ol><li><a href="#a-lichaam">a. Lichaam</a></li><li><a href="#b-ruimte">b. Ruimte</a></li><li><a href="#c-object">c. Object</a></li><li><a href="#d-tijd">d. Tijd</a></li><li><a href="#e-samenhang-en-transformatie">e. Samenhang en transformatie</a></li></ol></li><li><a href="#2-3-verschil-met-theater">2.3 Verschil met theater</a><ol><li><a href="#geen-personage">Geen personage</a></li><li><a href="#geen-verhaal">Geen verhaal</a></li><li><a href="#geen-herhaling">Geen herhaling</a></li></ol></li><li><a href="#2-4-geschiedenis-en-iconische-namen">2.4 Geschiedenis en iconische namen</a><ol><li><a href="#allan-kaprow-en-de-happenings">Allan Kaprow en de Happenings</a></li><li><a href="#joseph-beuys-en-het-ritueel">Joseph Beuys en het ritueel</a></li><li><a href="#marina-abramovi-en-het-lichaam">Marina Abramović en het lichaam</a></li><li><a href="#re-performance-het-archief-tot-leven-wekken">Re-performance: het archief tot leven wekken</a></li></ol></li><li><a href="#2-5-tijdskunst-time-based-art">2.5 Tijdskunst (time based art)</a><ol><li><a href="#duur-als-materiaal">Duur als materiaal</a></li><li><a href="#het-nu-van-real-time">Het “nu” van real time</a></li><li><a href="#vergankelijkheid-en-archief">Vergankelijkheid en archief</a></li></ol></li><li><a href="#2-6-analyse-van-belangrijke-werken">2.6 Analyse van belangrijke werken</a><ol><li><a href="#2-6-1-freeing-the-voice-1975">2.6.1 Freeing the Voice (1975)</a></li><li><a href="#2-6-2-art-must-be-beautiful-artist-must-be-beautiful-1975">2.6.2 Art Must Be Beautiful, Artist Must Be Beautiful (1975)</a></li><li><a href="#2-6-3-rhythm-0-1974">2.6.3 Rhythm 0 (1974)</a></li><li><a href="#2-6-4-breathing-in-breathing-out-death-itself-1977">2.6.4 Breathing In / Breathing Out (Death Itself) (1977)</a></li><li><a href="#2-6-5-aaa-aaa-1978">2.6.5 AAA AAA (1978)</a></li><li><a href="#2-6-6-imponderabilia-1977">2.6.6 Imponderabilia (1977)</a></li><li><a href="#2-6-7-rest-energy-1980">2.6.7 Rest Energy (1980)</a></li><li><a href="#2-6-8-the-lovers-the-great-wall-walk-1988">2.6.8 The Lovers: The Great Wall Walk (1988)</a></li><li><a href="#2-6-9-the-artist-is-present-2010">2.6.9 The Artist Is Present (2010)</a></li></ol></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, vanaf 1970</p>
+  <h1>Performance als tijdskunst</h1>
+  <p class="onder">Marina Abramović en Ulay</p>
+</header>
+
+<div class="kijkfilter" role="group" aria-label="Volg één element"><span>Volg één element</span><button type="button" data-focus="" aria-pressed="true">Alles</button><button type="button" data-focus="lichaam" aria-pressed="false">Lichaam</button><button type="button" data-focus="ruimte" aria-pressed="false">Ruimte</button><button type="button" data-focus="object" aria-pressed="false">Object</button><button type="button" data-focus="tijd" aria-pressed="false">Tijd</button></div><div id="werken"><h2 id="inleiding-marina-abramovi-ulay-en-de-performance">Inleiding: Marina Abramović, Ulay en de performance</h2>
+<p>Marina Abramović werd in 1946 geboren in Belgrado (toen Joegoslavië, nu Servië). Ze studeerde schilderkunst, maar koos al in het begin van de jaren zeventig voor performance en videokunst. Vanaf 1976 woonde en werkte ze in Amsterdam, later in de Verenigde Staten. Zij behoort tot de hedendaagse kunst en wordt vaak “de grootmoeder van de performance” genoemd.<sup class="bron"><a href="https://www.moma.org/calendar/exhibitions/964" title="Bron: tentoonstelling">bron</a></sup><sup class="bron"><a href="https://www.moma.org/calendar/exhibitions/964" title="Bron: The Artist Is Present">bron</a></sup><sup class="bron"><a href="https://www.moma.org/calendar/exhibitions/964" title="Bron: (MoMA)">bron</a></sup><sup class="bron"><a href="https://www.moma.org/audio/playlist/243" title="Bron: audiogids met haar eigen commentaar">bron</a></sup></p>
+<p>Haar werk draait rond uithoudingsvermogen, lichamelijke grenzen, aanwezigheid en de relatie tussen kunstenaar en publiek. Zij gebruikt haar eigen lichaam als medium en onderzoekt hoe ver een mens fysiek en mentaal kan gaan.</p>
+<p>Van 1976 tot 1988 werkte zij samen met de Duitse kunstenaar Ulay (Frank Uwe Laysiepen, 1943-2020). Zij ontmoetten elkaar in Amsterdam op 30 november 1975, hun gemeenschappelijke verjaardag, en werden zowel een koppel als een kunstenaarsduo. Hun gezamenlijke performances noemden zij <i>Relation Works</i>: werken over de relatie tussen twee mensen, over vertrouwen, afhankelijkheid, concurrentie en afstand. Jarenlang leefden zij zonder vaste woonplaats in een bestelwagen en traden zij op in heel Europa. In dit hoofdstuk bespreken we zowel solowerken van Abramović als werken van het duo.</p>
+<h2 id="2-1-wat-is-performancekunst">2.1 Wat is performancekunst?</h2>
+<figure class="beeld"><figcaption>Charles Ray, <i>Plank Piece I-II</i> (1973)<br>Documentatiefoto. Het lichaam van de kunstenaar wordt letterlijk tegen de muur geklemd door een plank: lichaam als object als ruimte.</figcaption><div class="werk-links"><a class="werk-link" href="https://moca.org/collection/work/plank-piece-i-ii">Bekijk bij Museum of Contemporary Art, Los Angeles</a></div></figure>
+<p>Performancekunst is een kunstvorm waarbij niet een object, maar een handeling centraal staat, ook al kunnen er objecten voorkomen tijdens een performance. Het kunstwerk bestaat in de eerste plaats uit een actie die wordt uitgevoerd in een bepaalde tijd en ruimte. Vaak is het de kunstenaar zelf die optreedt en zijn of haar lichaam gebruikt als medium. Het lichaam, de stem, de ademhaling, de beweging en zelfs de fysieke uitputting maken deel uit van het werk. Maker en kunstwerk vallen dan grotendeels samen.</p>
+<p>Toch is dat niet altijd zo. Soms wordt een performance uitgevoerd door andere performers. De kunstenaar bedenkt het concept, de instructies of de structuur, maar laat de uitvoering over aan anderen. Zeker bij hedendaagse hernemingen van historische performances, zogenaamde re-performances, gebeurt dit regelmatig (zie 2.4). De identiteit van de uitvoerder verandert dan, terwijl het conceptuele kader van het werk behouden blijft.</p>
+<p>In tegenstelling tot schilderkunst of beeldhouwkunst is er bij performancekunst meestal geen blijvend tastbaar object dat het werk volledig vertegenwoordigt. Wanneer de actie stopt, verdwijnt het kernmoment van het werk. Wat overblijft, zijn herinneringen, foto’s, video-opnames en geschreven verslagen. Die documentatie kan in een museum worden getoond, maar ze is niet identiek aan de oorspronkelijke ervaring. Wat dit betekent voor tijd, vergankelijkheid en archief, werken we uit in 2.5.</p>
+<figure class="beeld"><figcaption>Michelangelo Pistoletto, <i>Twentytwo Less Two</i> (2009)<br>53ste Biënnale van Venetië, 5 juni 2009. Pistoletto slaat de spiegels kapot; de scherven blijven achter als sporen van de handeling. Foto: Alberto Pellaschiar (AP).</figcaption><div class="werk-links"><a class="werk-link" href="https://pistoletto.it/eng/crono25a.htm">Bekijk bij Fondazione Pistoletto</a></div></figure>
+<p>Daarnaast is het belangrijk te nuanceren dat sommige performances wel degelijk materiële sporen nalaten. Objecten die tijdens de actie werden gebruikt, getransformeerd, opgebouwd, veranderd of vernield, kunnen achteraf tentoongesteld worden. Zij worden dan dragers van betekenis en fungeren als resten of getuigen van de gebeurtenis. Ze verwijzen naar wat heeft plaatsgevonden, maar ze zijn niet het werk zelf. Het eigenlijke kunstwerk was de gebeurtenis in de tijd.</p>
+<p>In tegenstelling tot traditionele kunstvormen ligt de nadruk dus niet op het vervaardigen van een blijvend object, maar op het uitvoeren van een handeling. De betekenis ontstaat in het moment zelf, in de interactie tussen uitvoerder, ruimte en publiek. Performancekunst verschuift de focus van het kunstobject naar de ervaring. Ze maakt tijd, aanwezigheid en lichamelijkheid tot centrale elementen van het artistieke proces.</p>
+<h2 id="2-2-de-vier-basiselementen-van-performance">2.2 De vier basiselementen van performance</h2>
+<figure class="beeld"><figcaption>Joseph Beuys, <i>I Like America and America Likes Me</i> (1974)<br>René Block Gallery, New York. Documentatiefoto: Beuys gewikkeld in vilt, met de coyote.</figcaption><div class="werk-links"><a class="werk-link" href="https://bonvoyage.ludwigforum.de/en/joseph-beuys-i-like-america-and-america-likes-me-2/index.html">Bekijk bij Ludwig Forum Aachen</a></div></figure>
+<p>Performancekunst kan helder geanalyseerd worden aan de hand van vier fundamentele elementen: lichaam, ruimte, object en tijd. Samen vormen zij het kader waarbinnen een performance betekenis krijgt. Ze staan niet los van elkaar, maar beïnvloeden elkaar voortdurend en kunnen zelfs in elkaar overgaan. In de analyses in 2.6 gebruiken we deze vier elementen telkens als vaste kapstok.</p>
+<h3 id="a-lichaam" class="sub">a. Lichaam</h3>
+<p>Het lichaam is het centrale medium van performancekunst, het instrument waarmee de kunstenaar werkt. Het beweegt, spreekt, ademt, ondergaat vermoeidheid of pijn. Het is aanwezig in zijn kwetsbaarheid en realiteit.</p>
+<p>Het publiek behoort in zekere zin ook tot dit element. Performance is immers altijd een ontmoeting tussen lichamen in dezelfde ruimte en tijd. De lichamen van de toeschouwers zijn geen neutrale observatoren. Hun aanwezigheid beïnvloedt de sfeer, de spanning en soms zelfs het verloop van de actie. Wanneer een performance interactie toelaat, wordt het publiek medeverantwoordelijk voor wat er gebeurt.</p>
+<h3 id="b-ruimte" class="sub">b. Ruimte</h3>
+<p>De ruimte waarin een performance plaatsvindt, is essentieel voor de interpretatie. Een actie in een museum krijgt een andere betekenis dan dezelfde handeling op straat of in een publieke ruimte. De architectuur, de afstand tussen performer en toeschouwer, de schaal van de ruimte en de toegankelijkheid beïnvloeden de ervaring.</p>
+<p>Ruimte kan open of gesloten zijn, intiem of monumentaal. Ze kan de performer beschermen of juist blootstellen. In sommige performances wordt de ruimte actief gebruikt als onderdeel van het concept, bijvoorbeeld wanneer het publiek zich door een smalle doorgang moet bewegen of in een specifieke opstelling wordt geplaatst. De ruimte bepaalt hoe lichamen zich tot elkaar verhouden.</p>
+<h3 id="c-object" class="sub">c. Object</h3>
+<p>Hoewel performancekunst vaak wordt omschreven als een kunst zonder blijvend object, kunnen objecten toch een belangrijke rol spelen. Zij kunnen tijdens de actie functioneren als hulpmiddel, symbool of verlengstuk van het lichaam. Ze kunnen alledaags zijn of sterk geladen met betekenis. Ook kan het lichaam object worden, of de ruimte. Die verschuivingen zijn altijd mogelijk.</p>
+<p>Soms blijven objecten na afloop bestaan en worden ze tentoongesteld. In dat geval functioneren ze als sporen van de performance. Ze verwijzen naar een gebeurtenis die heeft plaatsgevonden, maar vervangen die gebeurtenis niet. Het object is een restant, een drager van herinnering en betekenis.</p>
+<h3 id="d-tijd" class="sub">d. Tijd</h3>
+<p>Tijd is in performancekunst geen neutrale achtergrond, maar een actief materiaal. De duur van een handeling bepaalt mee de betekenis ervan. Een eenvoudige actie kan banaal lijken wanneer ze enkele minuten duurt, maar krijgt een totaal andere lading wanneer ze uren of zelfs dagen wordt volgehouden. Vermoeidheid, herhaling, concentratie of verveling worden zichtbaar en voelbaar.</p>
+<p>Performance gebeurt in real time: de tijd die verstrijkt voor de performer is dezelfde als voor de toeschouwer. Er is geen fictieve tijd, geen versnelling of montage zoals in film. De ervaring van tijd is gedeeld. Duur kan spanning opbouwen, maar ook traagheid en stilte centraal stellen. Tijd wordt zo een materiaal waarmee de kunstenaar werkt, zoals een beeldhouwer met steen of klei werkt.</p>
+<h3 id="e-samenhang-en-transformatie" class="sub">e. Samenhang en transformatie</h3>
+<p>Lichaam, ruimte, object en tijd vormen samen een dynamisch geheel. Geen enkel element staat op zichzelf. De duur beïnvloedt hoe een lichaam wordt ervaren. De ruimte bepaalt hoe objecten functioneren. De aanwezigheid van lichamen verandert de betekenis van tijd.</p>
+<p>Belangrijk is dat we in performancekunst vaak de “wording” van het ene element in het andere zien. De grenzen tussen de elementen zijn niet vast:</p>
+<ul class="lijst"><li>Lichaam wordt ruimte wanneer het een doorgang blokkeert of een architecturale functie krijgt (<i>Imponderabilia</i>).</li><li>Lichaam wordt object wanneer het zich passief laat gebruiken (<i>Rhythm 0</i>).</li><li>Tijd wordt object wanneer duur bijna tastbaar aanvoelt, als een zwaar gewicht op de schouders (<i>The Artist Is Present</i>).</li><li>Object wordt verlengstuk van het lichaam wanneer een voorwerp het lot van de performer bepaalt (de boog in <i>Rest Energy</i>).</li><li>Ruimte wordt geladen met tijd en afstand wanneer een plek de duur en de scheiding zichtbaar maakt (de Chinese Muur in <i>The Lovers</i>).</li></ul>
+<p>Performancekunst toont dus niet enkel vier aparte elementen, maar ook hun voortdurende transformatie. Juist in die verschuivingen ontstaat betekenis. Kunst wordt hier geen stabiel gegeven, maar een proces waarin elementen elkaar beïnvloeden, vervormen en opnieuw definiëren.</p>
+<h2 id="2-3-verschil-met-theater">2.3 Verschil met theater</h2>
+<figure class="beeld"><figcaption>Scène uit een theatervoorstelling<br>In het theater spelen acteurs een personage binnen een fictief verhaal.</figcaption></figure>
+<p>Hoewel performancekunst en theater op het eerste gezicht gelijkenissen vertonen, zijn er fundamentele verschillen. Beide vinden plaats in een bepaalde ruimte, op een bepaald moment, in aanwezigheid van een publiek. Toch verschillen ze wezenlijk in opzet, intentie en betekenisvorming.</p>
+<h3 id="geen-personage" class="sub">Geen personage</h3>
+<p>In het theater speelt een acteur een rol. Hij of zij vertolkt een personage binnen een fictieve wereld. De emoties die worden getoond kunnen intens en overtuigend zijn, maar ze maken deel uit van een dramaturgische constructie. De acteur stapt als het ware in een andere identiteit.</p>
+<p>In performancekunst is er doorgaans geen personage. De kunstenaar treedt op als zichzelf. De handelingen zijn geen simulatie, maar reële acties. Wanneer een performer vermoeid raakt, pijn ervaart of emotioneel wordt, is dat geen gespeelde toestand maar een echte lichamelijke of psychische ervaring. De grens tussen kunst en leven wordt daardoor dunner. De authenticiteit van het moment staat centraal.</p>
+<h3 id="geen-verhaal" class="sub">Geen verhaal</h3>
+<p>Theater is meestal gebaseerd op een verhaalstructuur: een begin, een midden en een einde. Personages ontwikkelen zich, conflicten worden opgebouwd en opgelost. Het publiek volgt een narratief dat betekenis genereert via oorzaak en gevolg.</p>
+<p>Performancekunst volgt zelden een klassieke verhaallijn. Er is meestal geen plot of dramatische ontwikkeling. De focus ligt niet op een vertelling, maar op een idee, een concept of een fysieke en mentale grens. De betekenis ontstaat uit de intensiteit van de handeling zelf, uit herhaling, duur of confrontatie. De toeschouwer wordt niet meegenomen in een fictieve wereld, maar geconfronteerd met een situatie in het hier en nu.</p>
+<h3 id="geen-herhaling" class="sub">Geen herhaling</h3>
+<p>Een theatervoorstelling is ook tijdelijk, maar ze kan herhaald worden: avond na avond opnieuw, volgens hetzelfde script. Een performance daarentegen is vaak uniek en onherhaalbaar. Ze is gebonden aan een specifiek moment, een specifieke ruimte en specifieke omstandigheden. Zelfs een re-performance is nooit “dezelfde” performance: andere lichamen, een andere ruimte, een ander publiek.</p>
+<p>Performancekunst verschuift zo de aandacht van representatie naar aanwezigheid, van fictie naar realiteit en van herhaalbaarheid naar eenmaligheid. Daardoor ontstaat een andere relatie tussen kunstenaar, publiek en kunstwerk.</p>
+<div class="tabel"><table><tr><th></th><th>Theater</th><th>Performancekunst</th></tr><tr><td>Wie staat er?</td><td>Een acteur speelt een personage</td><td>De kunstenaar als zichzelf</td></tr><tr><td>Wat gebeurt er?</td><td>Gespeelde handelingen in een fictieve wereld</td><td>Reële handelingen in het hier en nu</td></tr><tr><td>Structuur</td><td>Verhaal met begin, midden en einde</td><td>Idee, concept of grens; herhaling en duur</td></tr><tr><td>Tijd</td><td>Fictieve tijd kan versneld of overgeslagen worden</td><td>Real time, gedeeld met het publiek</td></tr><tr><td>Herhaalbaarheid</td><td>Herhaalbaar volgens script</td><td>Eenmalig; een herneming is een nieuw werk</td></tr><tr><td>Publiek</td><td>Toeschouwer</td><td>Getuige, soms deelnemer</td></tr></table></div>
+<h2 id="2-4-geschiedenis-en-iconische-namen">2.4 Geschiedenis en iconische namen</h2>
+<p>Performancekunst bloeide vooral op in de jaren zestig en zeventig. Die periode werd gekenmerkt door maatschappelijke onrust, studentenprotesten, burgerrechtenbewegingen en een groeiend wantrouwen tegenover gevestigde structuren. Ook binnen de kunstwereld klonk kritiek. Kunst werd steeds meer handelswaar. Schilderijen en sculpturen werden gekocht, verzameld en verhandeld als luxegoederen. Veel kunstenaars verzetten zich tegen die commercialisering.</p>
+<p>Performance bood een alternatief. Een actie in de tijd kon je niet zomaar bezitten of verkopen. Ze bestond enkel in het moment van uitvoering. Door kunst te verplaatsen van het object naar de handeling probeerden kunstenaars zich los te maken van het traditionele kunstcircuit. Het ging minder om het produceren van een verkoopbaar werk en meer om het creëren van een ervaring, een confrontatie of een maatschappelijk statement.</p>
+<h3 id="allan-kaprow-en-de-happenings" class="sub">Allan Kaprow en de Happenings</h3>
+<figure class="beeld"><figcaption>Allan Kaprow, <i>Yard</i> (1961)<br>Martha Jackson Gallery, New York. Bezoekers mochten zelf over en tussen de autobanden klauteren.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.hauserwirth.com/news/2331-allan-kaprow-yard/">Bekijk bij Hauser &amp; Wirth</a></div></figure>
+<p>De Amerikaan Allan Kaprow (1927-2006) geldt als een pionier. Hij introduceerde eind jaren vijftig en in de jaren zestig de zogenaamde “Happenings”: gebeurtenissen waarin het onderscheid tussen kunstenaar en publiek vervaagde. De toeschouwers werden deelnemers. Er was geen vaste scheiding tussen podium en zaal. Kaprow wilde kunst integreren in het dagelijkse leven en benadrukte het proces boven het eindresultaat. Zijn werk legde de basis voor latere vormen van participatieve kunst.</p>
+<h3 id="joseph-beuys-en-het-ritueel" class="sub">Joseph Beuys en het ritueel</h3>
+<figure class="beeld"><figcaption>Joseph Beuys, <i>How to Explain Pictures to a Dead Hare</i> (1965)<br>Galerie Schmela, Düsseldorf. Beuys, het hoofd bedekt met honing en bladgoud, legt de schilderijen uit aan een dode haas.</figcaption><div class="werk-links"><a class="werk-link" href="https://en.wikipedia.org/wiki/How_to_Explain_Pictures_to_a_Dead_Hare">Bekijk bij Wikipedia</a></div></figure>
+<p>De Duitser Joseph Beuys (1921-1986) zag kunst als een middel om de samenleving te transformeren. Hij werkte vaak met rituelen en symbolische materialen zoals vet, vilt en dieren. Die materialen droegen voor hem persoonlijke en mythische betekenissen.</p>
+<p>In zijn performance <i>I Like America and America Likes Me</i> (1974) verbleef hij drie dagen in een galerieruimte in New York met een wilde coyote (zie de foto bij 2.2). Hij liet zich in vilt wikkelen en vermeed elk direct contact met de buitenwereld: hij werd van de luchthaven per ambulance naar de galerie gebracht en zette geen voet op Amerikaanse bodem. De coyote stond symbool voor het wilde, onderdrukte of vergeten deel van de Amerikaanse geschiedenis. De performance kan gelezen worden als een poging tot verzoening tussen cultuur en natuur, tussen Europa en Amerika. Het rituele karakter gaf het werk een bijna sjamanistische dimensie.</p>
+<h3 id="marina-abramovi-en-het-lichaam" class="sub">Marina Abramović en het lichaam</h3>
+<p>Marina Abramović bouwt verder op deze traditie, maar legt de nadruk sterker op het lichaam en op uithoudingsvermogen. Zij werd bekend door extreme performances waarin ze fysieke en psychologische grenzen onderzoekt. Haar werk confronteert het publiek met kwetsbaarheid, pijn, stilte en duur. Door haar lichaam bloot te stellen aan risico, uitputting of intense concentratie maakt zij de ervaring van tijd en aanwezigheid tastbaar. Waar Beuys werkte met symbolische materialen en rituele structuren en Kaprow het dagelijkse leven de kunst binnenbracht, richt Abramović zich radicaal op het lichaam als plaats van confrontatie.</p>
+<p>Samen tonen deze kunstenaars hoe performancekunst zich ontwikkelde als een kritische, experimentele en maatschappelijk betrokken kunstvorm die zich losmaakt van het traditionele kunstobject en inzet op ervaring, proces en aanwezigheid.</p>
+<h3 id="re-performance-het-archief-tot-leven-wekken" class="sub">Re-performance: het archief tot leven wekken</h3>
+<p>Precies omdat een performance eenmalig is, rijst de vraag hoe je ze kunt doorgeven. Abramović gaf daarop een eigen antwoord. In <i>Seven Easy Pieces</i> (Guggenheim Museum, New York, 2005)<sup class="bron"><a href="https://www.e-flux.com/announcements/41730/marina-abramovic-seven-easy-pieces" title="Bron: e-flux, aankondiging Guggenheim Museum">bron</a></sup> voerde zij zeven avonden na elkaar historische performances van de jaren zestig en zeventig opnieuw uit, onder meer werken van Beuys, Bruce Nauman en Vito Acconci, naast werk van haarzelf. Tijdens haar retrospectieve in het MoMA (2010) lieten jonge, door haar getrainde performers werken als <i>Imponderabilia</i> herleven, terwijl zij zelf <i>The Artist Is Present</i> uitvoerde. Zij noemt dit re-performance: de partituur van het werk blijft, de uitvoerder verandert. Zo wordt performance, net als muziek of theater, een kunstvorm die kan worden doorgegeven, al blijft elke uitvoering een nieuw moment.</p>
+<h2 id="2-5-tijdskunst-time-based-art">2.5 Tijdskunst (time based art)</h2>
+<p>Performancekunst is een tijdskunst (Engels: <i>time based art</i>). Dat betekent dat tijd niet gewoon het decor is waarbinnen iets gebeurt, maar een actief bestanddeel van het werk. Een schilderij kan je in één blik tot je nemen. Een performance niet. Ze bestaat omdat ze zich ontvouwt. De betekenis zit niet in één stilstaand beeld, maar in wat er gaandeweg ontstaat. Drie aspecten zijn daarbij essentieel.</p>
+<h3 id="duur-als-materiaal" class="sub">Duur als materiaal</h3>
+<p>In performancekunst wordt duur bewust ingezet als artistiek middel. De kunstenaar kan een eenvoudige handeling lang blijven herhalen of volhouden, tot ze kantelt. Wat eerst banaal lijkt, verandert door tijd en herhaling van lading. Na enkele minuten wordt een actie nadrukkelijk. Na uren wordt ze zwaar. Het lichaam begint mee te spreken: vermoeidheid, spanning, pijn, aarzeling, koppigheid, kwetsbaarheid, alles wordt zichtbaar.</p>
+<p>Daarin ligt een belangrijk punt: je kijkt niet alleen naar wat iemand doet, je ziet wat tijd met iemand doet. De aandacht verschuift van de handeling naar de effecten van de handeling. Tijd werkt dan als materiaal, zoals kleur of vorm dat doet in andere kunstvormen.</p>
+<h3 id="het-nu-van-real-time" class="sub">Het “nu” van real time</h3>
+<p>Een performance gebeurt in real time. De tijd van de performer is dezelfde tijd als die van het publiek. Er is geen montage, geen sprong vooruit, geen herneming van hetzelfde moment. Alles gebeurt hier, terwijl jij erbij bent.</p>
+<p>Dat maakt de ervaring direct en soms ongemakkelijk. Als er pijn is, is die echt. Als er verveling opkomt, hangt die in de ruimte en wordt ze gedeeld. Het publiek kan zich niet verschuilen achter een verhaal of personage. Je wordt aangesproken als getuige, simpelweg doordat je aanwezig bent.</p>
+<h3 id="vergankelijkheid-en-archief" class="sub">Vergankelijkheid en archief</h3>
+<p>Een performance is vergankelijk. Zodra de actie stopt, is het werk voorbij. Wat overblijft, zijn sporen: foto’s, video, getuigenissen, notities, objecten. Dat vormt het archief.</p>
+<p>Maar hier zit een spanningsveld. Is die documentatie het kunstwerk, of slechts een herinnering eraan? Een foto kan de scène vastleggen, maar niet de duur, de stilte, de spanning in de ruimte. Een video toont het verloop, maar niet precies wat het betekende om daar te zijn, op dat moment. Dit roept een fundamentele vraag op: waar bevindt het kunstwerk zich nadat het moment voorbij is? In de herinnering van de toeschouwer? In het archief? Of uitsluitend in het gedeelde moment zelf?</p>
+<p>Performancekunst leeft dus in twee vormen tegelijk: als eenmalige gebeurtenis die je moet meemaken, en als documentatie die het werk later zichtbaar en bespreekbaar maakt. Ze balanceert tussen aanwezigheid en herinnering, tussen het moment en zijn spoor.</p>
+<aside class="kader"><h4>Hoe je de video’s van de jaren zeventig leest</h4><p>De video-opnames van Abramović’ performances uit de jaren zeventig hebben telkens dezelfde vorm: een titel, een plaats en een duur, soms droog voorgelezen door een stem. Het lijkt wel de kop van een wetenschappelijk experiment: de parameters worden vastgelegd, daarna begint de proef. Die sobere kadering is belangrijk. Zij toont dat de kunstenaar de performance opvat als een onderzoek naar wat een lichaam onder bepaalde voorwaarden doet. Om dezelfde reden begint elke analyse hieronder met een korte feitenfiche. Bovendien geeft een dergelijke beschrijving geen enkele interpretatie, wel interpretatieruimte.</p></aside>
+<h2 id="2-6-analyse-van-belangrijke-werken">2.6 Analyse van belangrijke werken</h2>
+<p>Elke analyse volgt dezelfde opbouw: een feitenfiche, een beschrijving van wat er gebeurt, de vier elementen (lichaam, ruimte, object, tijd) en ten slotte de betekenis. Oefen jezelf om deze structuur ook zelf toe te passen op een werk dat je nog niet kent.</p>
+<h3 id="2-6-1-freeing-the-voice-1975" class="sub">2.6.1 Freeing the Voice (1975)</h3>
+<figure class="beeld"><figcaption>Marina Abramović, <i>Freeing the Voice</i> (1975)<br>Studentski Kulturni Centar, Belgrado. Videostill.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.stedelijk.nl/nl/collectie/10014-marina-abramovic-freeing-the-voice">Bekijk bij Stedelijk Museum Amsterdam</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1975</dd><dt>Plaats</dt><dd>Studentski Kulturni Centar (SKC), Belgrado</dd><dt>Duur</dt><dd>ca. 3 uur (tot de stem het begeeft)</dd><dt>Uitvoerder</dt><dd>Marina Abramović (solo)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović ligt achterover op de grond met haar hoofd over de rand naar achteren gebogen, waardoor haar keel volledig geopend is. Vanuit die kwetsbare positie schreeuwt ze onafgebroken tot haar stem volledig uitgeput raakt. <i>Freeing the Voice</i> hoort bij een reeks van drie: in <i>Freeing the Memory</i> zegt zij woorden op tot er geen meer opkomen, in <i>Freeing the Body</i> danst zij tot ze erbij neervalt.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Abramović gebruikt haar stem als instrument en maakt hoorbaar hoe het lichaam geleidelijk zijn grens bereikt. De stem breekt, verzwakt en verdwijnt uiteindelijk.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte is sober en leeg, zonder afleiding. De schreeuw vult de ruimte en maakt haar akoestisch tastbaar.</p></div>
+<div class="el object"><h5>Object</h5><p>Er is geen klassiek kunstobject. De stem zelf kan gezien worden als een tijdelijk, immaterieel object dat ontstaat in de tijd en weer verdwijnt.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Doordat de actie urenlang wordt volgehouden, verandert de betekenis van de schreeuw. Wat eerst een expressieve klank lijkt, wordt een uitgerekt proces waarin de stem zich uitput en transformeert.</p></div>
+<h4>Betekenis</h4>
+<p>De handeling is uiterst eenvoudig, maar door duur en fysieke intensiteit wordt ze extreem. De titel is dubbelzinnig: de stem wordt “bevrijd” door ze volledig op te gebruiken. Wat overblijft, is enkel documentatie; het eigenlijke kunstwerk bestond in het gedeelde moment van lichamelijke grens en duur.</p>
+<h3 id="2-6-2-art-must-be-beautiful-artist-must-be-beautiful-1975" class="sub">2.6.2 Art Must Be Beautiful, Artist Must Be Beautiful (1975)</h3>
+<figure class="beeld"><figcaption>Marina Abramović, <i>Art Must Be Beautiful, Artist Must Be Beautiful</i> (1975)<br>Charlottenborg Art Festival, Kopenhagen. Videostill.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.zkm.de/en/artwork/art-must-be-beautiful-artist-must-be-beautiful-0">Bekijk bij ZKM Karlsruhe</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1975</dd><dt>Plaats</dt><dd>Charlottenborg Art Festival, Kopenhagen</dd><dt>Duur</dt><dd>ca. 1 uur</dd><dt>Uitvoerder</dt><dd>Marina Abramović (solo)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović zit voor de camera en kamt haar haar met een metalen kam en borstel. Tegelijk herhaalt ze voortdurend de zin: “Art must be beautiful, artist must be beautiful.” Wat begint als een ogenschijnlijk eenvoudige, verzorgende handeling, verandert geleidelijk in een doorgeslagen, agressieve actie. Ze kamt steeds harder, trekt aan haar haar en verwondt bijna haar hoofdhuid. Haar stem klinkt dwingend en mechanisch door de voortdurende herhaling.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het haar kammen, traditioneel geassocieerd met vrouwelijkheid, schoonheid en zelfzorg, wordt een gewelddadige daad. De handeling is echt, de pijn is echt.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte is sober en zonder afleiding, waardoor alle aandacht naar de handeling en de uitspraak gaat.</p></div>
+<div class="el object"><h5>Object</h5><p>De kam en de borstel zijn alledaagse verzorgingsvoorwerpen die veranderen in instrumenten van zelfkwelling. Verder is er geen kunstobject: de actie zelf vormt het werk.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Door de herhaling verliest de zin haar vanzelfsprekendheid. Ze wordt obsessief, ironisch en beklemmend.</p></div>
+<h4>Betekenis</h4>
+<p>De uitspraak “art must be beautiful” krijgt een dubbele betekenis: als kunst mooi moet zijn, dan moet ook de kunstenaar mooi zijn. Kunst en kunstenaar vallen hier samen; art wordt artist. Terwijl zij de norm uitspreekt, blijft ze doorkammen, tot het ideaal van schoonheid omslaat in een pijnlijke, realistische actie. Wat eerst klinkt als een neutrale stelling, wordt een kritiek op de druk die wordt uitgeoefend op vrouwelijke kunstenaars en op kunstwerken om zowel esthetisch aantrekkelijk als artistiek “aanvaardbaar” te zijn. Schoonheidsnormen betreffen niet alleen de kunst, maar ook het lichaam van de kunstenaar.</p>
+<h3 id="2-6-3-rhythm-0-1974" class="sub">2.6.3 Rhythm 0 (1974)</h3>
+<figure class="beeld"><figcaption>Marina Abramović, <i>Rhythm 0</i> (1974)<br>Studio Morra, Napels. Documentatiefoto: op de tafel liggen de 72 objecten.</figcaption><div class="werk-links"><a class="werk-link" href="https://tate.org.uk/audio/marina-abramovic-rhythm-0-1974">Bekijk bij Tate, audiofragment</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1974</dd><dt>Plaats</dt><dd>Studio Morra, Napels</dd><dt>Duur</dt><dd>6 uur (van 20 tot 2 uur &#x27;s nachts)</dd><dt>Uitvoerder</dt><dd>Marina Abramović (solo), met het publiek als handelende partij</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović staat zes uur lang onbeweeglijk in een galerieruimte. Op een tafel naast haar liggen 72 objecten: onschuldige voorwerpen zoals een veer, een roos, brood en wijn, maar ook gevaarlijke zoals een schaar, een mes, een ketting en een pistool met één kogel. Een tekst op de tafel geeft het publiek expliciet toestemming om met haar te doen wat het wil; zij neemt de volledige verantwoordelijkheid voor de gevolgen. In het begin reageren toeschouwers voorzichtig. Ze geven haar een roos of raken haar zacht aan. Gaandeweg verschuift de sfeer. Mensen beginnen haar kleren open te knippen, haar huid te krassen en haar te vernederen. Iemand zet het geladen pistool in haar hand en richt het op haar hals, tot andere bezoekers ingrijpen.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam staat centraal als passief medium. Het is niet overdreven te stellen dat het lichaam hier object wordt. Abramović beweegt niet en verzet zich niet. Haar lichaam wordt letterlijk overgeleverd aan de handelingen van anderen en wordt een plaats van projectie, macht en geweld. Het publiek is hier zelf de handelende partij: het element lichaam omvat alle aanwezigen.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De galerie functioneert als gecontroleerde context, maar blijkt geen garantie voor veiligheid. Het kader “kunst” geeft mensen het gevoel dat alles mag.</p></div>
+<div class="el object"><h5>Object</h5><p>De aanwezigheid van de objecten is cruciaal. Ze vormen het arsenaal waaruit het publiek kan kiezen. Wat neutrale gebruiksvoorwerpen lijken, worden instrumenten van zorg of van agressie. De objecten maken zichtbaar hoe keuzevrijheid samenhangt met verantwoordelijkheid.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Doordat de performance zes uur duurt, verschuift het gedrag geleidelijk. Sociale remmingen vallen weg. De duur maakt zichtbaar hoe groepsdynamiek werkt en hoe morele grenzen verschuiven wanneer verantwoordelijkheid wordt uitbesteed.</p></div>
+<h4>Betekenis</h4>
+<p><i>Rhythm 0</i> toont hoe dun de grens is tussen beschaving en geweld. Doordat Abramović vooraf verklaart dat zij het object is, ontstaat een situatie waarin zij wordt ontmenselijkt en individuen hun verantwoordelijkheid projecteren op het kader van de kunst. Wanneer de zes uur voorbij zijn en Abramović opnieuw begint te bewegen, en dus van object terug lichaam wordt en haar zelfbeschikking en menselijkheid terugwint, blijken veel toeschouwers haar blik niet te kunnen verdragen. Ze verlaten de zaal. Het werk legt niet alleen de kwetsbaarheid van het lichaam bloot, maar ook de kwetsbaarheid van sociale normen. Deze performance is de kunstgeschiedenisboeken ingegaan als een van de meest radicale ooit.</p>
+<h3 id="2-6-4-breathing-in-breathing-out-death-itself-1977" class="sub">2.6.4 Breathing In / Breathing Out (Death Itself) (1977)</h3>
+<figure class="beeld"><figcaption>Marina Abramović en Ulay, <i>Breathing In / Breathing Out</i> (1977)<br>Studentski Kulturni Centar, Belgrado. Videostill.</figcaption><div class="werk-links"><a class="werk-link" href="https://stedelijk.nl/en/collection/9811-ulay-breathing-out-breathing-in-(performance-10)">Bekijk bij Stedelijk Museum Amsterdam</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1977 (hetzelfde jaar hernomen in Amsterdam, zonder publiek)</dd><dt>Plaats</dt><dd>Studentski Kulturni Centar, Belgrado</dd><dt>Duur</dt><dd>ca. 19 minuten</dd><dt>Uitvoerders</dt><dd>Marina Abramović en Ulay (Relation Work)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović en Ulay knielen tegenover elkaar met hun monden tegen elkaar gedrukt. Hun neusgaten zijn afgesloten met sigarettenfilters, waardoor ze enkel de uitgeademde lucht van de ander kunnen inademen. Zo vormen ze een gesloten systeem waarin de zuurstof langzaam opraakt en de koolstofdioxide toeneemt. Microfoons op hun keel maken het ademen hoorbaar voor het publiek. Na ongeveer een kwartier vallen ze bijna bewusteloos uit elkaar.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Ademhaling, normaal een vanzelfsprekende levensfunctie, wordt zichtbaar en kwetsbaar gemaakt. Door elkaars uitgeademde lucht in te ademen worden beiden afhankelijk van het lichaam van de ander. De grens tussen twee individuen vervaagt: zij fungeren als één organisme, een symbiose.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte krimpt tot de enkele millimeters tussen twee monden. Het publiek kijkt toe op een intimiteit die tegelijk afstotend en ontroerend is.</p></div>
+<div class="el object"><h5>Object</h5><p>Er is geen klassiek kunstobject. De adem zelf kan gezien worden als het immateriële element dat het werk draagt.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>De duur wordt niet door de kunstenaars gekozen, maar door het lichaam opgelegd: de performance eindigt wanneer de lucht op is. Tijd is hier letterlijk levensduur.</p></div>
+<h4>Betekenis</h4>
+<p>Het werk onderzoekt vertrouwen, afhankelijkheid en symbiose, maar toont tegelijk hoe een relatie ook verstikkend kan worden. Liefde en destructie liggen dicht bij elkaar. Het gedeelde ademen wordt een beeld van zowel verbondenheid als wederzijdse uitputting. De ondertitel <i>Death Itself</i> laat daarover geen twijfel bestaan.</p>
+<h3 id="2-6-5-aaa-aaa-1978" class="sub">2.6.5 AAA AAA (1978)</h3>
+<figure class="beeld"><figcaption>Marina Abramović en Ulay, <i>AAA AAA</i> (1978)<br>Opgenomen in de studio van de RTB in Luik. Videostill.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.stedelijk.nl/nl/collectie/9846-ulay-aaa-aaa">Bekijk bij Stedelijk Museum Amsterdam</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1978</dd><dt>Plaats</dt><dd>Televisiestudio RTB, Luik (voor de camera, zonder livepubliek)</dd><dt>Duur</dt><dd>ca. 15 minuten</dd><dt>Uitvoerders</dt><dd>Marina Abramović en Ulay (Relation Work)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović en Ulay knielen recht tegenover elkaar en beginnen zachtjes de klank “aaa” uit te stoten. Wat aanvankelijk klinkt als een neutrale vocale oefening, groeit geleidelijk uit tot een intense schreeuw. Ze komen steeds dichter bij elkaar, verhogen het volume en proberen elkaar vocaal te overstemmen, tot hun monden elkaar bijna raken en hun stemmen het begeven.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Stem, ademhaling en fysieke nabijheid staan centraal. De mond, de keel en de adem worden instrumenten van confrontatie.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte tussen hun lichamen wordt steeds kleiner, waardoor de spanning voelbaar toeneemt. Het werk ontstond voor de camera: de kijker neemt de plaats in van het afwezige publiek.</p></div>
+<div class="el object"><h5>Object</h5><p>Er is geen extern object; de stem zelf fungeert als tijdelijk en immaterieel materiaal.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Door de voortdurende escalatie verschuift de betekenis van de handeling. Wat begint als een gezamenlijke actie, wordt een competitie. De eenvoudige klank verandert door herhaling en duur in een strijd om dominantie.</p></div>
+<h4>Betekenis</h4>
+<p><i>AAA AAA</i> toont de dynamiek van een relatie waarin samenwerking en conflict dicht bij elkaar liggen. De performance maakt hoorbaar hoe communicatie kan omslaan in confrontatie. De eenvoudige klank wordt een geladen uitwisseling van macht, spanning en emotionele intensiteit. Vergelijk met <i>Freeing the Voice</i>: dezelfde uitputting van de stem, maar nu als relatie tussen twee mensen.</p>
+<h3 id="2-6-6-imponderabilia-1977" class="sub">2.6.6 Imponderabilia (1977)</h3>
+<figure class="beeld"><figcaption>Marina Abramović en Ulay, <i>Imponderabilia</i> (1977)<br>Galleria Comunale d’Arte Moderna, Bologna. Videostill: bezoekers wringen zich zijwaarts tussen de twee naakte lichamen.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.moma.org/audio/playlist/243/3119">Bekijk bij MoMA, audiogids</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1977 (2 juni)</dd><dt>Plaats</dt><dd>Galleria Comunale d’Arte Moderna, Bologna</dd><dt>Duur</dt><dd>voortijdig stopgezet door de politie</dd><dt>Uitvoerders</dt><dd>Marina Abramović en Ulay (Relation Work); in 2010 in het MoMA hernomen door andere performers</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović en Ulay staan naakt tegenover elkaar in de smalle hoofdingang van het museum, met slechts een kleine opening tussen hun lichamen. Bezoekers die de tentoonstelling willen betreden, moeten zich zijwaarts tussen hen door wringen. Er is geen alternatieve toegang. Elke bezoeker moet kiezen: wend ik mijn gezicht naar de man of naar de vrouw? Een verborgen camera registreert die keuzes.</p>
+<h4>De vier elementen</h4>
+<p>Lichaam (wordt ruimte en object). Het lichaam staat hier niet alleen centraal, het verandert van functie. De twee lichamen worden letterlijk ruimte: samen vormen zij een doorgang, een architecturale structuur. Tegelijk worden ze object: ze staan stil, als obstakel, als grens waar men langs moet. Het lichaam verliest zijn vanzelfsprekende individualiteit en krijgt een ruimtelijke en objectmatige betekenis. Dit is het duidelijkste voorbeeld van de transformatie van elementen uit 2.2.</p>
+<div class="el ruimte"><h5>Ruimte</h5><p>De smalle doorgang dwingt elke bezoeker tot fysieke nabijheid. Men moet kiezen naar wie men kijkt of de blik afwendt. De blik wordt onderdeel van de actie. Bovendien kan je het museum niet binnen zonder langs de kunstenaar te passeren: ook dat is symbolisch.</p></div>
+<div class="el object"><h5>Object</h5><p>Er is geen extern kunstobject. De lichamen zelf functioneren als grens, poort en sculptuur.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Tijd speelt mee in de herhaling: elke bezoeker ervaart hetzelfde kader, maar elke passage is uniek en duurt maar enkele seconden. Voor de performers zelf is het één lange, onbeweeglijke duur.</p></div>
+<h4>Betekenis</h4>
+<p>Het publiek wordt medeplichtig aan de situatie. Men kan niet neutraal blijven, want men moet handelen om binnen te geraken. <i>Imponderabilia</i> toont hoe in performancekunst het lichaam kan transformeren tot ruimte en object, en hoe kijken en bewegen nooit vrijblijvende handelingen zijn. De titel (“onweegbare dingen”) verwijst naar die onmeetbare factoren: schaamte, aantrekking, aarzeling.</p>
+<h3 id="2-6-7-rest-energy-1980" class="sub">2.6.7 Rest Energy (1980)</h3>
+<figure class="beeld"><figcaption>Marina Abramović en Ulay, <i>Rest Energy</i> (1980)<br>ROSC ’80, Dublin. Documentatiefoto.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.stedelijk.nl/en/collection/13993-ulay-marina-abramovic-rest-energy">Bekijk bij Stedelijk Museum Amsterdam</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1980</dd><dt>Plaats</dt><dd>ROSC ’80, Dublin</dd><dt>Duur</dt><dd>4 minuten en 10 seconden</dd><dt>Uitvoerders</dt><dd>Marina Abramović en Ulay (Relation Work)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Abramović en Ulay staan tegenover elkaar en houden samen een gespannen boog vast. Zij houdt de boog, hij de pees met de pijl. De pijl is gericht op haar hart. Beiden leunen achterover, waardoor de spanning op de boog maximaal wordt. Enkel hun gewicht en evenwicht houden het wapen in balans. Het minste verlies van controle kan fataal zijn. Kleine microfoons op hun borst versterken hun hartslag en ademhaling.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is hier letterlijk inzet van risico. Abramović legt haar leven in handen van Ulay; haar hart is het doelwit. Ulay draagt de verantwoordelijkheid om de spanning stabiel te houden. De lichamen vormen samen een fragiel evenwichtssysteem. Op het eerste gezicht is er weinig beweging en weinig klank, maar het gaat om potentiële energie. Door de contactmicrofonen hoor je hun ademhaling, hun versnellende hartslag en het schuren van kleding tegen huid. De geluidsband is dus allesbehalve stil: zij vertaalt de intense inspanning, de klank van het potentieel.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte is leeg en geconcentreerd. Alle aandacht gaat naar de gespannen lijn tussen beide lichamen.</p></div>
+<div class="el object"><h5>Object</h5><p>Het object, boog en pijl, is hier essentieel. Het is niet symbolisch maar reëel. Het wapen is functioneel en gevaarlijk. Het object maakt de dreiging concreet en wordt een verlengstuk van beide lichamen: zonder hen valt het, met hen doodt het.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>De performance duurt amper vier minuten, maar de duur wordt intens ervaren. De spanning stapelt zich op in elke seconde. Het publiek voelt de dreiging en beseft dat één kleine fout voldoende is om de situatie te doen kantelen.</p></div>
+<h4>Betekenis</h4>
+<p><i>Rest Energy</i> onderzoekt vertrouwen, afhankelijkheid en kwetsbaarheid binnen een relatie. Liefde wordt niet romantisch voorgesteld, maar als een precair evenwicht tussen vertrouwen en gevaar. De fysieke spanning van de boog wordt een beeld van emotionele spanning. Het werk maakt voelbaar hoe dun de grens is tussen verbinding en vernietiging.</p>
+<h3 id="2-6-8-the-lovers-the-great-wall-walk-1988" class="sub">2.6.8 The Lovers: The Great Wall Walk (1988)</h3>
+<figure class="beeld"><figcaption>Marina Abramović en Ulay, <i>The Lovers: The Great Wall Walk</i> (1988)<br>Documentatiefoto van de tocht op de Chinese Muur.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.theartnewspaper.com/news/abramovic-and-ulay-s-lovers-finally-make-a-return-journey">Bekijk bij The Art Newspaper</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1988 (30 maart tot 27 juni); bedacht in 1983</dd><dt>Plaats</dt><dd>De Chinese Muur, van de Gele Zee (Abramović) en de Gobiwoestijn (Ulay) naar het midden</dd><dt>Duur</dt><dd>90 dagen; elk ongeveer 2.500 km</dd><dt>Uitvoerders</dt><dd>Marina Abramović en Ulay (laatste Relation Work)</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Beiden starten aan tegenovergestelde uiteinden van de Chinese Muur: Abramović in het oosten, aan de Gele Zee, Ulay in het westen, aan de rand van de Gobiwoestijn. Gedurende drie maanden wandelen ze elk ongeveer 2.500 kilometer door een uitgestrekt en zwaar landschap. Oorspronkelijk, in 1983, was het plan om naar elkaar toe te wandelen en in het midden te trouwen. Door jarenlange administratieve vertragingen van de Chinese overheid kon het project pas in 1988 worden uitgevoerd. Tegen die tijd was hun relatie geëindigd. Wanneer ze elkaar in het midden ontmoeten, omhelzen ze elkaar en nemen definitief afscheid.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is drager van duur en afstand. Elke stap is fysiek en mentaal belastend. De lange tocht maakt het afscheid traag en onvermijdelijk.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte is uitzonderlijk geladen. De Chinese Muur, historisch een symbool van grens en scheiding, versterkt het thema van afstand. De uitgestrektheid van het landschap maakt de fysieke afstand concreet voelbaar. Ruimte wordt hier geladen met tijd: elke kilometer is een dag.</p></div>
+<div class="el object"><h5>Object</h5><p>Er is geen klassiek kunstobject. De wandeling zelf, de afgelegde kilometers, de duur en het moment van ontmoeting vormen het werk.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Niet alleen de maandenlange wandeling, maar ook de jarenlange vertraging geven het werk extra betekenis. De tijd die het project nodig had, heeft de betekenis ervan omgekeerd.</p></div>
+<h4>Betekenis</h4>
+<p><i>The Lovers</i> toont hoe ruimte en tijd samen een relationeel proces zichtbaar maken. De fysieke afstand van duizenden kilometers wordt een tastbaar beeld van emotionele afstand. Wat bedoeld was als een ritueel van vereniging, werd een ritueel van afscheid: een viering van liefde eindigt als een monumentaal vaarwel.</p>
+<h3 id="2-6-9-the-artist-is-present-2010" class="sub">2.6.9 The Artist Is Present (2010)</h3>
+<figure class="beeld"><figcaption>Marina Abramović, <i>The Artist Is Present</i> (2010)<br>Museum of Modern Art, New York. Documentatiefoto: een jonge bezoeker neemt plaats tegenover de kunstenaar.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.moma.org/calendar/exhibitions/964">Bekijk bij MoMA</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>2010 (14 maart tot 31 mei)</dd><dt>Plaats</dt><dd>Museum of Modern Art (MoMA), New York, atrium</dd><dt>Duur</dt><dd>ca. 736 uur, verspreid over bijna drie maanden; elke openingsdag van begin tot einde</dd><dt>Uitvoerder</dt><dd>Marina Abramović (solo); meer dan 1.500 bezoekers namen tegenover haar plaats</dd></dl>
+<h4>Wat gebeurt er?</h4>
+<p>Tijdens haar retrospectieve in het MoMA zit Abramović elke dag dat het museum open is, stil aan een tafel in het atrium. Bezoekers mogen één voor één tegenover haar plaatsnemen en haar in stilte aankijken, zo lang ze willen. Er wordt niet gesproken en er is geen fysieke aanraking. Intussen worden elders in het museum haar historische performances hernomen door jonge performers (zie 2.4).</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Het lichaam is volledig aanwezig maar minimaal in beweging. Abramović zit rechtop, geconcentreerd, zonder theatrale expressie. Haar lichaam wordt een plaats van extreme discipline en uithoudingsvermogen. De blik is het belangrijkste middel. Oogcontact vervangt taal. De ontmoeting gebeurt via pure aanwezigheid.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De ruimte van het museum verandert van tentoonstellingsplek in ontmoetingsruimte. De tafel vormt een eenvoudige grens tussen twee lichamen. De lege stoel tegenover haar wordt een uitnodiging. Het publiek is geen passieve toeschouwer, maar actieve deelnemer; de wachtrij in het atrium hoort bij het werk.</p></div>
+<div class="el object"><h5>Object</h5><p>Er is geen tastbaar kunstobject. De gedeelde stilte en blik zijn het werk. De tafel, aanvankelijk onderdeel van de opstelling, werd halverwege zelfs weggenomen.</p></div>
+<p>Tijd (wordt object). Tijd is het fundamentele element van deze performance. De duur is niet alleen lang in absolute zin, maar wordt ook intens ervaren. Elke ontmoeting duurt enkele minuten tot soms een uur. De herhaling dag na dag maakt tijd voelbaar als gewicht. Tijd wordt als het ware een zwaar object dat op haar schouders rust. De fysieke en mentale belasting van het urenlang stilzitten maakt zichtbaar hoe tijd het lichaam vormt en onder druk zet.</p>
+<h4>Betekenis</h4>
+<p><i>The Artist Is Present</i> toont hoe tijd, wanneer zij wordt uitgerekt en geconcentreerd, een bijna materiële aanwezigheid krijgt. Tijd wordt niet enkel gemeten, maar ervaren als druk, als last en tegelijk als ruimte voor intense menselijke verbinding. Opvallend is de radicale gelijkheid: iedereen mag plaatsnemen en iedereen krijgt dezelfde aandacht, rijk of arm, jong of oud, van welke origine ook. In een museum, waar kunst doorgaans achter glas en afstand wordt gehouden, biedt de kunstenaar zichzelf aan als ontmoeting.</p></div>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Performancekunst", "Kunstvorm waarbij een actie of gebeurtenis centraal staat in plaats van een blijvend kunstobject."], ["Tijdskunst (time based art)", "Kunst waarbij tijd een essentieel onderdeel is van het werk. Het kunstwerk ontwikkelt zich in de tijd."], ["Medium", "Het middel of materiaal waarmee een kunstenaar werkt, bijvoorbeeld het lichaam, geluid of ruimte."], ["Real time", "Echte, gedeelde tijd waarin iets gebeurt zonder montage of versnelling."], ["Duur (endurance)", "De lengte van een handeling, in performance bewust ingezet als materiaal; endurance verwijst naar het volhouden tot de grens."], ["Vergankelijkheid", "Het tijdelijke karakter van iets dat niet blijvend is en verdwijnt na afloop."], ["Documentatie", "Foto’s, video’s of teksten die een kunstwerk vastleggen nadat het heeft plaatsgevonden."], ["Archief", "Een verzameling documenten of materiaal waarin kunstwerken worden bewaard voor later."], ["Re-performance", "Herneming van een historische performance door de kunstenaar zelf of door andere performers, volgens de oorspronkelijke instructies."], ["Happening", "Gebeurtenis (jaren vijftig-zestig, Allan Kaprow) waarin het publiek deelneemt en de grens tussen kunst en dagelijks leven vervaagt."], ["Relation Work", "Naam die Abramović en Ulay gaven aan hun gezamenlijke performances (1976-1988) over de relatie tussen twee mensen."], ["Ritueel", "Vaste, symbolisch geladen handeling; bij Beuys krijgt de performance daardoor een bijna sjamanistisch karakter."], ["Narratief", "Een verhalende structuur met begin, midden en einde."], ["Authenticiteit", "Echtheid; het feit dat iets niet gespeeld of nagebootst is, maar werkelijk gebeurt."], ["Participatie", "Actieve deelname van het publiek aan een kunstwerk."], ["Uithoudingsvermogen", "Het vermogen om lichamelijke of mentale inspanning lang vol te houden."], ["Concept", "Het idee of uitgangspunt achter een kunstwerk."], ["Transformatie", "Verandering waarbij iets overgaat in iets anders; hier: het ene element dat het andere wordt."], ["Commercialisering", "Het behandelen van kunst als product dat verkocht moet worden."], ["Dramaturgie", "De opbouw en structuur van een verhaal of voorstelling."], ["Symboliek", "Het gebruik van beelden of voorwerpen die een diepere betekenis hebben."], ["Intimiteit", "Grote nabijheid of persoonlijke verbondenheid tussen mensen."], ["Monumentaal", "Indrukwekkend groot en groots van schaal."], ["Relationeel", "Gericht op de relatie tussen mensen of elementen."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Waarom wordt Marina Abramović “de grootmoeder van de performance” genoemd en welke thema’s staan centraal in haar werk?</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Wie was Ulay en wat bedoelden Abramović en Ulay met Relation Works?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Leg uit waarom performancekunst geen traditioneel kunstobject is. Wat blijft er over na afloop van een performance?</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Wat betekent het dat performance plaatsvindt in real time? Waarom is dit belangrijk?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Kan een performance ook uitgevoerd worden door iemand anders dan de oorspronkelijke kunstenaar? Welke vragen roept dit op? Geef een concreet voorbeeld.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Waarom is documentatie niet hetzelfde als de performance zelf?</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Noem en bespreek de vier basiselementen van performancekunst.</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Leg uit waarom tijd in performancekunst wordt beschouwd als een materiaal.</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Hoe kan een object in performancekunst functioneren, ook al is het werk zelf geen object?</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Op welke manier beïnvloedt de ruimte de betekenis van een performance?</label></li><li><input type="checkbox" id="v0-10" data-vraag="0-10"><label for="v0-10">Waarom behoort het publiek in zekere zin tot het element ‘lichaam’?</label></li><li><input type="checkbox" id="v0-11" data-vraag="0-11"><label for="v0-11">Leg uit wat bedoeld wordt met de transformatie van elementen, bijvoorbeeld lichaam dat ruimte wordt.</label></li><li><input type="checkbox" id="v0-12" data-vraag="0-12"><label for="v0-12">Wat zijn de belangrijkste verschillen tussen performancekunst en theater op het vlak van personage, verhaal en herhaalbaarheid?</label></li><li><input type="checkbox" id="v0-13" data-vraag="0-13"><label for="v0-13">Hoe verschuift performancekunst de aandacht van representatie naar aanwezigheid?</label></li><li><input type="checkbox" id="v0-14" data-vraag="0-14"><label for="v0-14">Waarom ontstond performancekunst als reactie tegen de commercialisering van kunst in de jaren zestig en zeventig?</label></li><li><input type="checkbox" id="v0-15" data-vraag="0-15"><label for="v0-15">Welke rol speelden Joseph Beuys en Allan Kaprow in de ontwikkeling van performancekunst?</label></li><li><input type="checkbox" id="v0-16" data-vraag="0-16"><label for="v0-16">Leg uit wat bedoeld wordt met het spanningsveld tussen ervaring en archief.</label></li><li><input type="checkbox" id="v0-17" data-vraag="0-17"><label for="v0-17">Waarom kan men zeggen dat performancekunst niet draait om wat men bezit, maar om wat men meemaakt?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Analyseer <i>Imponderabilia</i> aan de hand van de vier elementen. Welke transformatie van elementen zie je?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">In welk werk wordt tijd “object”? Leg uit hoe dat gebeurt en waarom je dat zo kan noemen.</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Vergelijk <i>Rest Energy</i> en <i>Breathing In / Breathing Out</i>: hoe wordt afhankelijkheid tussen twee mensen in elk werk zichtbaar gemaakt, en welk element draagt dat het sterkst?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Vergelijk <i>Freeing the Voice</i> en <i>AAA AAA</i>. Wat hebben ze gemeen en wat verandert er wanneer dezelfde handeling door twee mensen wordt uitgevoerd?</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4"><i>Rhythm 0</i> en <i>The Artist Is Present</i> geven het publiek allebei een actieve rol. Leg uit hoe die rol verschilt en wat dat zegt over de relatie tussen kunstenaar en publiek.</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Leg aan de hand van <i>The Lovers</i> uit hoe ruimte en tijd samen betekenis kunnen dragen. Waarom veranderde de betekenis van het werk door de vertraging?</label></li><li><input type="checkbox" id="v1-6" data-vraag="1-6"><label for="v1-6">Geef een voorbeeld van hoe duur de betekenis van een eenvoudige handeling kan veranderen. Kies één werk en beschrijf het kantelmoment.</label></li><li><input type="checkbox" id="v1-7" data-vraag="1-7"><label for="v1-7">Stel: je bekijkt een foto van <i>Rhythm 0</i> in een museum. Wat toont die foto wel en wat toont ze niet? Gebruik de begrippen documentatie, archief en vergankelijkheid.</label></li><li><input type="checkbox" id="v1-8" data-vraag="1-8"><label for="v1-8">Beschrijf een performance die je zelf zou ontwerpen rond één van de vier elementen. Welke handeling, welke ruimte, welke duur, en wat wil je dat de toeschouwer ervaart?</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../conceptuele-kunst/"><span>Vorig onderwerp</span>&larr; Conceptuele kunst</a><a href="../rineke-dijkstra/" style="text-align:right"><span>Volgend onderwerp</span>Rineke Dijkstra, het portret &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-performance",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

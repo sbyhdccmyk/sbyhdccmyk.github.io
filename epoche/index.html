@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De epoché en de ekphrasis</title>
+<meta name="description" content="Je eerste oordeel uitstellen en in woorden vatten wat je ziet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#1-een-grieks-woord-epoche">1 Een Grieks woord: epoché</a></li><li><a href="#2-pyrrho-en-de-sceptici">2 Pyrrho en de sceptici</a></li><li><a href="#3-husserl-tussen-haakjes-zetten">3 Husserl: tussen haakjes zetten</a></li><li><a href="#4-epoche-in-de-kunst">4 Epoché in de kunst</a><ol><li><a href="#4-1-paul-cezanne-mont-sainte-victoire">4.1 Paul Cézanne, Mont Sainte-Victoire</a></li><li><a href="#4-2-kazimir-malevich-suprematist-composition-white-on-white">4.2 Kazimir Malevich, Suprematist Composition: White on White</a></li></ol></li><li><a href="#5-een-kijkmethode-in-vier-stappen">5 Een kijkmethode in vier stappen</a></li><li><a href="#6-ekphrasis-kijken-in-woorden">6 Ekphrasis: kijken in woorden</a></li><li><a href="#7-oefeningen">7 Oefeningen</a></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Leren kijken</p>
+  <h1>De epoché en de ekphrasis</h1>
+  <p class="onder">Je eerste oordeel uitstellen en in woorden vatten wat je ziet</p>
+</header>
+
+<p>Wie een kunstwerk bekijkt, heeft meestal binnen enkele seconden een mening. Mooi of lelijk, knap of saai, en bij moderne kunst vaak: dat kan ik ook. Zo&#x27;n eerste oordeel voelt als het einde van het kijken, maar het is vaak het begin van niet meer kijken. Wat niet in dat oordeel past, zien we niet meer.</p>
+<p>De Griekse filosofen hadden een woord voor het omgekeerde: epoché, het opschorten van je oordeel. In dit hoofdstuk volgen we dat woord van de Griekse sceptici tot de twintigste eeuw, en passen we het toe op twee schilderijen. Daarna leer je een kijkmethode die je bij elk kunstwerk kan gebruiken, en ontdek je met de ekphrasis hoe je wat je ziet in woorden omzet. Het hoofdstuk eindigt met oefeningen.</p>
+<h2 id="1-een-grieks-woord-epoche">1 Een Grieks woord: epoché</h2>
+<p>Het Griekse woord epoché (ἐποχή) komt van het werkwoord epechein: tegenhouden, inhouden. Het betekent dat je je instemming even inhoudt. Je zegt niet dat iets waar is, en ook niet dat het onwaar is. Je laat de vraag open.</p>
+<p>Epoché is dus geen twijfel in de gewone zin, waarbij je eigenlijk al denkt dat iets niet klopt. Het is ook geen onverschilligheid. Wie zijn oordeel opschort, blijft aandachtig kijken en luisteren, maar beslist nog niet. Dat onderscheid is belangrijk voor de rest van dit hoofdstuk.</p>
+<h2 id="2-pyrrho-en-de-sceptici">2 Pyrrho en de sceptici</h2>
+<p>Het begrip hoort bij het scepticisme, een stroming in de Griekse filosofie. De sceptici noemden zich naar Pyrrho van Elis (ca. 360 tot ca. 270 v.Chr.). Volgens de antieke biograaf Diogenes Laërtius was Pyrrho eerst schilder, voor hij filosoof werd. Hij reisde mee met het leger van Alexander de Grote tot in India. Zelf schreef hij niets: wat we van hem weten, komt van zijn leerlingen en latere schrijvers.</p>
+<p>De belangrijkste bron is Sextus Empiricus, een Griekse arts en filosoof uit de tweede of derde eeuw na Christus. In zijn <i>Schetsen van het pyrronisme</i> legt hij uit hoe een scepticus te werk gaat. Bij elke bewering zoekt hij een tegengestelde bewering die even sterk is. Wanneer de argumenten aan beide kanten even zwaar wegen, kan hij niet meer kiezen en schort hij zijn oordeel op. De Grieken noemden dat evenwicht isostheneia: gelijke kracht.</p>
+<p>Het opvallende is wat er dan gebeurt. Volgens Sextus volgt op de epoché een innerlijke rust, ataraxia, zoals een schaduw een lichaam volgt. De scepticus zocht die rust niet rechtstreeks. Hij vond ze pas toen hij ophield met kiezen. Om dat uit te leggen, vertelt Sextus een verhaal over een schilder.</p>
+<aside class="kader"><h4>Apelles en de spons</h4><p>Apelles was de beroemdste schilder van de Griekse oudheid en de hofschilder van Alexander de Grote. Sextus Empiricus vertelt dat Apelles ooit een paard schilderde en het schuim aan de mond van het dier wilde weergeven. Het lukte hem niet. Uiteindelijk gaf hij het op en gooide hij de spons waarmee hij zijn penselen afveegde naar het schilderij. Waar de spons het doek raakte, ontstond precies het schuim dat hij zocht.</p><p>Zo verging het ook de sceptici, schrijft Sextus. Ze zochten rust door eindelijk het juiste antwoord te vinden. Toen dat niet lukte en ze hun oordeel opschortten, kwam de rust vanzelf.</p></aside>
+<h2 id="3-husserl-tussen-haakjes-zetten">3 Husserl: tussen haakjes zetten</h2>
+<p>Meer dan tweeduizend jaar later gaf de Duitse filosoof Edmund Husserl (1859-1938) het woord een nieuwe betekenis. Husserl is de grondlegger van de fenomenologie, de filosofie die onderzoekt hoe dingen aan ons verschijnen. In zijn boek <i>Ideen</i> (1913) beschrijft hij de epoché als een methode.</p>
+<p>In het dagelijkse leven nemen we alles zonder nadenken aan zoals het lijkt: de tafel is een tafel, de berg is een berg, en we weten al wat ze betekenen. Husserl noemt dat de natuurlijke houding. Bij de epoché zet je die houding tussen haakjes. Je ontkent de wereld niet, maar je laat je voorkennis even buiten werking, zodat je kan beschrijven hoe iets werkelijk aan je verschijnt.</p>
+<p>Voor de kunstbeschouwing is dat een bruikbaar idee. Wie een schilderij bekijkt, brengt veel mee: de naam van de kunstenaar, wat hij erover gelezen heeft, wat het kost, wat zijn vrienden ervan vinden. Door dat even tussen haakjes te zetten, ontstaat ruimte om te zien wat er op het doek staat.</p>
+<h2 id="4-epoche-in-de-kunst">4 Epoché in de kunst</h2>
+<p>Sommige kunstenaars maken werken die de kijker als het ware tot epoché dwingen. Hun beelden laten zich niet snel herkennen of afdoen. We bekijken er twee.</p>
+<h3 id="4-1-paul-cezanne-mont-sainte-victoire" class="sub">4.1 Paul Cézanne, Mont Sainte-Victoire</h3>
+<figure class="beeld"><figcaption>Paul Cézanne, <i>Mont Sainte-Victoire</i> (1902-1904)<br>Philadelphia Museum of Art. Olieverf op doek.</figcaption><div class="werk-links"><a class="werk-link" href="https://philamuseum.org/collection/object/102997">Bekijk bij Philadelphia Museum of Art</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1902-1904</dd><dt>Techniek</dt><dd>Olieverf op doek</dd><dt>Afmetingen</dt><dd>Ongeveer 70 x 90 cm</dd><dt>Collectie</dt><dd>Philadelphia Museum of Art</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een berg met een scherpe top rijst op boven een vlakte. Op de voorgrond en in het middenplan zie je velden, bomen en hier en daar een huis, opgebouwd uit vlekken groen, oker en blauw. De lucht is niet egaal, maar bestaat uit dezelfde blokjes kleur als het landschap. De toetsen liggen naast elkaar, zonder dat ze in elkaar overvloeien, en op sommige plaatsen is het doek nog zichtbaar.</p>
+<h4>Kijken alsof het de eerste keer is</h4>
+<p>Paul Cézanne (1839-1906) schilderde de Sainte-Victoire, een berg bij zijn geboortestad Aix-en-Provence, vele tientallen keren, in olieverf en in aquarel. Deze versie maakte hij vanaf de heuvel van Les Lauves, waar zijn atelier stond. Hij keek steeds naar hetzelfde motief, alsof hij het nog nooit gezien had.</p>
+<p>De Franse filosoof Maurice Merleau-Ponty (1908-1961), een leerling van de fenomenologie van Husserl, schreef in 1945 een beroemd essay over hem: <i>Le doute de Cézanne</i> (De twijfel van Cézanne). Volgens Merleau-Ponty probeerde Cézanne te schilderen hoe we de wereld waarnemen, nog voor we hem in begrippen en vaste vormen hebben vastgelegd. Hij schilderde, schrijft Merleau-Ponty, zoals nog nooit iemand geschilderd had. Dat is een epoché met verf: de kennis over hoe een berg eruit hoort te zien wordt tussen haakjes gezet.</p>
+<h4>Betekenis</h4>
+<p>Het schilderij vraagt van de kijker wat Cézanne zelf deed. Wie snel kijkt, ziet een berglandschap en is klaar. Wie blijft kijken, ziet de berg uiteenvallen in kleurvlakken en weer samenkomen. De twijfel van Cézanne is geen zwakte, maar een manier van kijken: hij weigerde aan te nemen dat hij al wist wat hij zag.</p>
+<h3 id="4-2-kazimir-malevich-suprematist-composition-white-on-white" class="sub">4.2 Kazimir Malevich, Suprematist Composition: White on White</h3>
+<figure class="beeld"><figcaption>Kazimir Malevich, <i>Suprematist Composition: White on White</i> (1918)<br>Museum of Modern Art, New York. Olieverf op doek.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.moma.org/collection/works/80385">Bekijk bij Museum of Modern Art</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1918</dd><dt>Techniek</dt><dd>Olieverf op doek</dd><dt>Afmetingen</dt><dd>79,4 x 79,4 cm</dd><dt>Collectie</dt><dd>Museum of Modern Art, New York</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een wit vierkant, schuin gedraaid, op een witte achtergrond. Het vierkant staat niet in het midden, maar is naar de rechterbovenhoek verschoven. Pas wie langer kijkt, ziet dat de twee witten verschillen: het ene is warmer, het andere koeler. De verf is niet glad aangebracht. Je ziet de penseelstreken en de structuur van het oppervlak.</p>
+<h4>De eerste reactie opschorten</h4>
+<p>Kazimir Malevich (1878-1935) was een Russische schilder en de grondlegger van het suprematisme, een kunststroming die vanaf 1915 werkte met zuivere geometrische vormen. Met dit schilderij ging hij nog een stap verder: geen voorwerp, geen kleur, alleen wit op wit.</p>
+<p>Bij zo&#x27;n werk is het eerste oordeel vaak snel klaar: er staat niets op, dit kan iedereen. Precies dat oordeel moet je hier tussen haakjes zetten. Wie het opschort en blijft kijken, merkt dat er wel iets gebeurt: het vierkant lijkt te zweven, de twee witten trekken en duwen, het schuine vlak brengt beweging in een stilstaand beeld. Het Museum of Modern Art beschrijft het als een wit vierkant dat gewichtloos in een wit veld zweeft.</p>
+<h4>Betekenis</h4>
+<p>Malevich wilde schilderkunst die niet naar iets buiten zichzelf verwijst. Daardoor valt de vraag wat het voorstelt weg, en blijft alleen het kijken over. Het schilderij is een oefening in epoché: het geeft de kijker niets om snel te herkennen, en beloont alleen wie de tijd neemt.</p>
+<h2 id="5-een-kijkmethode-in-vier-stappen">5 Een kijkmethode in vier stappen</h2>
+<p>Uit de epoché kan je een eenvoudige methode afleiden om naar elk kunstwerk te kijken. Ze sluit aan bij de manier waarop we in deze cursus werken analyseren: eerst beschrijven wat je ziet, pas daarna de betekenis.</p>
+<ul class="lijst"><li>Merk je eerste oordeel op. Schrijf in één zin op wat je spontaan vindt of denkt. Zet die zin dan letterlijk tussen haakjes: je gooit hem niet weg, maar je laat hem even rusten.</li><li>Beschrijf alleen wat je ziet. Vorm, kleur, licht, materiaal, formaat, de plaats van de dingen op het vlak. Vermijd woorden die al een oordeel bevatten, zoals mooi, lelijk, knap of slordig.</li><li>Zet twee lezingen tegenover elkaar. Bedenk twee verschillende manieren om het werk te begrijpen en zoek voor elk ervan argumenten in wat je ziet, zoals de sceptici dat deden met tegengestelde beweringen.</li><li>Oordeel pas nu. Haal je eerste oordeel weer tussen de haakjes uit. Is het hetzelfde gebleven, of is het veranderd? Wat heb je gezien dat je eerst niet zag?</li></ul>
+<aside class="kader"><h4>Kijkoefening</h4><p>Bekijk een werk dat je niet kent drie minuten lang, zonder te praten en zonder de titel of de naam van de kunstenaar te lezen. Noteer na de eerste tien seconden je eerste oordeel. Noteer daarna alles wat je ziet, zoveel mogelijk details. Lees pas op het einde de titel en vergelijk je eerste oordeel met wat je na drie minuten denkt.</p></aside>
+<p>De epoché maakt een oordeel niet overbodig. Uiteindelijk mag en moet je een mening hebben over een kunstwerk. Maar een oordeel dat volgt op aandachtig kijken, is sterker dan een oordeel dat het kijken vervangt.</p>
+<h2 id="6-ekphrasis-kijken-in-woorden">6 Ekphrasis: kijken in woorden</h2>
+<p>Wie zijn oordeel opschort, moet iets anders doen in de plaats: kijken en beschrijven. Ook voor dat beschrijven hadden de Grieken een woord: ekphrasis. Het komt van ek, uit, en phrazein, zeggen of tonen. Ekphrasis betekent dus: iets helemaal uitspreken, het met woorden laten zien.</p>
+<h4>Een oefening in levendig beschrijven</h4>
+<p>In de Griekse en Romeinse oudheid leerden jongeren spreken en schrijven met vaste oefeningen, de progymnasmata. Ekphrasis was er een van. De retoricaleraar Theon (eerste eeuw na Christus) omschreef ze als een beschrijving die het onderwerp duidelijk voor de ogen van de luisteraar brengt. Het doel was enargeia: een levendigheid zo sterk dat de luisteraar het beschrevene meent te zien. Leerlingen beschreven personen, plaatsen, veldslagen en seizoenen, en ook kunstwerken.</p>
+<h4>Het schild van Achilles</h4>
+<p>Het oudste en beroemdste voorbeeld staat in de <i>Ilias</i> van Homeros. In het achttiende boek smeedt de god Hephaistos een nieuw schild voor de held Achilles, en Homeros beschrijft wat erop te zien is: de aarde, de zee en de hemel met zon, maan en sterren, een stad in vrede met een bruiloft en een rechtszaak, een stad die belegerd wordt, ploegende boeren, de graanoogst, de wijnoogst, een kudde runderen die door leeuwen wordt aangevallen en een grote dans. Rond de rand stroomt de oceaan.</p>
+<p>Opvallend is wat Homeros eigenlijk doet. Hij beschrijft geen stilstaand beeld, maar laat de figuren bewegen, zingen en ruziemaken. Hij vertelt wat er voor en na het afgebeelde moment gebeurt, en zelfs wat je zou horen. Een schild kan dat niet tonen: de dichter voegt het toe.</p>
+<h4>Van de oudheid tot vandaag</h4>
+<p>Later werd ekphrasis vooral de naam voor teksten over kunstwerken. Philostratos schreef in de derde eeuw na Christus de <i>Eikones</i> (Beelden), beschrijvingen van schilderijen in een villa bij Napels. Of die verzameling echt bestond, weten we niet. Ook in de moderne poëzie leeft de traditie. De Britse dichter W.H. Auden schreef in 1938 in Brussel het gedicht <i>Musée des Beaux Arts</i> over het schilderij <i>Landschap met de val van Icarus</i>, toegeschreven aan Pieter Bruegel de Oude, in de Koninklijke Musea voor Schone Kunsten van België. Auden beschrijft hoe de val van Icarus bijna onopgemerkt blijft: de boer ploegt verder, het schip vaart door.</p>
+<h4>Ekphrasis en epoché</h4>
+<p>Ekphrasis en epoché vullen elkaar aan. De epoché is de eerste stap: je houdt je oordeel in en maakt ruimte. In die ruimte begint de ekphrasis: je zet om in woorden wat je ziet. Wat je niet kan benoemen, heb je vaak nog niet echt gezien. Beschrijven dwingt je dus om langer en nauwkeuriger te kijken.</p>
+<p>Toch is er ook een spanning. De klassieke ekphrasis is nooit neutraal. Ze wil de lezer meeslepen en vertelt er daarom een verhaal bij, zoals Homeros bij het schild. Zo sluipen er interpretaties en oordelen in de beschrijving. De epoché houdt de ekphrasis eerlijk: ze vraagt je eerst te beschrijven wat er werkelijk te zien is, en pas daarna te vertellen wat je erin leest. Stap 2 van de kijkmethode is dus een ekphrasis onder epoché: een beschrijving die bij het zichtbare blijft.</p>
+<h2 id="7-oefeningen">7 Oefeningen</h2>
+<p>Voor deze oefeningen gebruik je de twee schilderijen uit dit hoofdstuk of een werk dat je leerkracht kiest. Werk met pen en papier en schrijf in volzinnen.</p>
+<h4>Oefening 1: Het eerste oordeel</h4>
+<p>Kijk tien seconden naar een werk en noteer in één zin je eerste oordeel. Kijk daarna drie minuten verder, in stilte. Noteer opnieuw in één zin wat je nu denkt. Vergelijk beide zinnen: wat is er veranderd, en welk detail heeft dat veroorzaakt?</p>
+<h4>Oefening 2: Beschrijven zonder te oordelen</h4>
+<p>Beschrijf <i>Suprematist Composition: White on White</i> in ongeveer honderd woorden. Je mag geen woord gebruiken dat een oordeel of een gevoel uitdrukt, zoals mooi, saai, knap, vreemd of rustig. Wissel daarna van tekst met een klasgenoot. Onderstreep in diens tekst elk woord waarin toch een oordeel verstopt zit, en bespreek samen hoe je het kan vervangen.</p>
+<h4>Oefening 3: Twee teksten over hetzelfde werk</h4>
+<p>Schrijf over <i>Mont Sainte-Victoire</i> twee korte teksten. De eerste is een zuivere beschrijving: alleen wat je ziet. De tweede is een ekphrasis zoals Homeros ze zou schrijven: maak het landschap levendig en laat de lezer de warmte, de wind of de geluiden voelen. Duid daarna in de tweede tekst alles aan wat niet op het doek te zien is. Wat heb je toegevoegd, en waarom?</p>
+<h4>Oefening 4: Blinde ekphrasis</h4>
+<p>Werk per twee, met de ruggen naar elkaar. Een van jullie krijgt een afbeelding van een kunstwerk die de ander niet mag zien, en beschrijft het zo nauwkeurig mogelijk. De ander tekent wat hij of zij hoort en mag alleen vragen stellen. Vergelijk na tien minuten de tekening met het origineel. Welke woorden werkten goed, en waar liep het mis? Wissel daarna van rol met een ander werk.</p>
+<h4>Oefening 5: Van woord naar beeld</h4>
+<p>Lees de beschrijving van het schild van Achilles in dit hoofdstuk nog eens. Teken in een cirkel hoe jij je het schild voorstelt. Vergelijk je tekening met die van een klasgenoot: welke keuzes heeft Homeros aan jullie verbeelding overgelaten?</p>
+<h4>Oefening 6: Ekphrasis van een werk in het echt</h4>
+<p>Kies tijdens een museum- of tentoonstellingsbezoek één werk. Bekijk het minstens vijf minuten en volg de vier stappen van de kijkmethode. Schrijf thuis een ekphrasis van hoogstens een halve pagina die iemand die het werk nooit zag een zo juist mogelijk beeld geeft. Voeg onderaan in één zin je oordeel toe, en duid aan waar dat oordeel in je tekst al meesprak.</p>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Epoché", "Het opschorten van je oordeel: je zegt niet dat iets waar is en ook niet dat het onwaar is."], ["Scepticisme", "Stroming in de Griekse filosofie die meent dat we over veel vragen geen zekere kennis kunnen hebben en daarom het oordeel opschort."], ["Pyrrhonisme", "Het scepticisme zoals het zich beroept op Pyrrho van Elis en beschreven werd door Sextus Empiricus."], ["Isostheneia", "Gelijke kracht: de toestand waarin argumenten voor en tegen een bewering even zwaar wegen."], ["Ataraxia", "Innerlijke rust of gemoedsrust; volgens de sceptici het gevolg van de epoché."], ["Dogmaticus", "Iemand die zeker meent te weten hoe iets in elkaar zit; het tegendeel van de scepticus."], ["Fenomenologie", "Filosofische stroming, gegrondvest door Edmund Husserl, die onderzoekt hoe dingen aan ons bewustzijn verschijnen."], ["Natuurlijke houding", "Bij Husserl: de gewone, onbevraagde manier waarop we de wereld en haar betekenissen als vanzelfsprekend aannemen."], ["Tussen haakjes zetten", "Bij Husserl: je voorkennis en vooronderstellingen even buiten werking stellen, zonder ze te ontkennen (Duits: Einklammerung)."], ["Motief", "Het onderwerp dat een kunstenaar schildert, zoals de Sainte-Victoire bij Cézanne."], ["Suprematisme", "Kunststroming van Kazimir Malevich, vanaf 1915, die werkt met zuivere geometrische vormen zonder verwijzing naar de zichtbare werkelijkheid."], ["Monochroom", "In één kleur uitgevoerd."], ["Ekphrasis", "Levendige beschrijving in woorden; in de oudheid een retorische oefening, later vooral een tekst over een kunstwerk."], ["Enargeia", "Levendigheid: het doel van de ekphrasis, de lezer of luisteraar het beschrevene laten zien."], ["Progymnasmata", "Vaste schrijf- en spreekoefeningen in het antieke onderwijs in de retorica, waaronder de ekphrasis."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Wat betekent het Griekse woord epoché? Leg uit waarom epoché iets anders is dan twijfel of onverschilligheid.</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Wie was Pyrrho van Elis en waarom weten we zijn ideeën vooral via anderen?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Hoe komt een scepticus volgens Sextus Empiricus tot epoché? Gebruik het begrip isostheneia.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Wat volgt er volgens de sceptici op de epoché, en waarom vergelijkt Sextus dat met een schaduw?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Vertel het verhaal van Apelles en de spons en leg uit wat het zegt over de epoché.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Wat bedoelt Husserl met de natuurlijke houding en wat betekent het om die tussen haakjes te zetten?</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Waarom kan je zeggen dat Cézanne in <i>Mont Sainte-Victoire</i> een epoché met verf toepast? Verwijs naar Merleau-Ponty.</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Welke eerste reactie roept <i>Suprematist Composition: White on White</i> vaak op, en wat zie je als je die reactie opschort?</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Noem de vier stappen van de kijkmethode uit dit hoofdstuk.</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Wat betekent ekphrasis? Leg uit waar het woord vandaan komt en wat het doel was in de antieke retorica.</label></li><li><input type="checkbox" id="v0-10" data-vraag="0-10"><label for="v0-10">Wat beschrijft Homeros op het schild van Achilles, en wat voegt hij toe dat een schild niet kan tonen?</label></li><li><input type="checkbox" id="v0-11" data-vraag="0-11"><label for="v0-11">Hoe verhouden epoché en ekphrasis zich tot elkaar, en waar staan ze met elkaar in spanning?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Pas de vier stappen van de kijkmethode toe op een werk dat je nog niet kent. Schrijf je eerste oordeel en je oordeel na het kijken op en vergelijk ze.</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Vergelijk de epoché bij de Griekse sceptici met die bij Husserl. Wat is hetzelfde, en wat is het doel in elk van beide?</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Vergelijk <i>Mont Sainte-Victoire</i> met <i>Suprematist Composition: White on White</i>. Hoe vraagt elk van beide werken de kijker om zijn oordeel op te schorten?</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Kies een werk uit een vorig hoofdstuk van de cursus. Welke voorkennis of welk eerste oordeel zou je moeten opschorten om het opnieuw te bekijken?</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Is een oordeel na aandachtig kijken altijd beter dan een eerste indruk? Argumenteer en gebruik een voorbeeld.</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Schrijf een ekphrasis van een werk naar keuze. Duid aan welke zinnen zuivere beschrijving zijn en welke interpretatie bevatten.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../de-vier-elementen/"><span>Vorig onderwerp</span>&larr; De vier elementen</a><a href="../iconografie/" style="text-align:right"><span>Volgend onderwerp</span>Iconografie en iconologie &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-epoche",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

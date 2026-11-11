@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Romantiek</title>
+<meta name="description" content="Friedrich en Géricault: gevoel, natuur en drama">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#caspar-david-friedrich">Caspar David Friedrich</a><ol><li><a href="#der-wanderer-uber-dem-nebelmeer">Der Wanderer über dem Nebelmeer</a></li><li><a href="#der-monch-am-meer">Der Monch am Meer</a></li></ol></li><li><a href="#theodore-gericault">Théodore Géricault</a><ol><li><a href="#le-radeau-de-la-meduse">Le Radeau de la Méduse</a></li><li><a href="#la-liberte-guidant-le-peuple">La liberté guidant le peuple</a></li></ol></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / Door de tijd, 1800-1840</p>
+  <h1>Romantiek</h1>
+  <p class="onder">Friedrich en Géricault: gevoel, natuur en drama</p>
+</header>
+
+<p>De romantiek was een allesomvattende cultuurstroming die de eerste helft van de negentiende eeuw (ca. 1800-1850) domineerde. Het was een felle reactie op de Verlichting en het neoclassicisme: waar de voorgangers de rede en de objectieve waarheid aanbaden, stelden de romantici het gevoel, de verbeelding en de subjectieve ervaring centraal. Hoewel de stroming een Europese beweging was, kende zij in Duitsland en Frankrijk een heel eigen karakter.</p>
+<p>De romantiek ontstond in een tijd van enorme politieke en sociale onrust.</p>
+<ul class="lijst"><li>Duitsland (De zoektocht naar identiteit): In de versnipperde Duitse staten was de romantiek aanvankelijk een intellectuele en spirituele beweging (=Sturm und Drang*). Na de bezetting door Napoleon groeide dit uit tot een krachtig cultureel nationalisme. Men zocht naar de eigen wortels in volksverhalen (zoals de gebroeders Grimm*), de eigen taal en de christelijke Middeleeuwen.</li><li>Frankrijk (De nasleep van de Revolutie): In Frankrijk was de romantiek nauwer</li></ul>
+<p>verbonden met politieke strijd. Na de val van Napoleon en de terugkeer van de monarchie heerste er bij de jongere generatie een gevoel van desillusie* en doelloosheid, de zogenaamde &quot;mal du siècle&quot; (de ziekte van de eeuw). Kunst werd een manier om te ontsnappen aan de saaie burgerlijke realiteit of juist om revolutionaire idealen van vrijheid te verkondigen.</p>
+<p>De romantiek was de eerste stroming die direct reageerde op de Industriële Revolutie.</p>
+<ul class="lijst"><li>De opkomst van fabrieken, stoommachines en de trek naar de overvolle, vervuilde steden riep een diepe nostalgie* op. Men zag de industrialisatie als een brute kracht die de menselijke ziel van de natuur scheidde.</li><li>De opkomst van de kunstmarkt: Door de daling van de macht van de kerk en adel als enige opdrachtgevers, begonnen kunstenaars vaker voor de vrije markt te werken. Dit gaf hen meer vrijheid om persoonlijke, emotionele werken te maken, maar zorgde ook voor de figuur van de &quot;onbegrepen, arme kunstenaar&quot;.</li></ul>
+<p>De artistieke taal van de romantiek verschoof van de &quot;dag&quot; (de helderheid van de rede) naar de &quot;nacht&quot; (het mysterie van de ziel).</p>
+<ul class="lijst"><li>Het Sublieme*: Een kernbegrip in de romantiek. Het verwijst naar de ontzagwekkende, soms angstaanjagende kracht van de natuur (stormen, bergen, oceanen) die de mens doet beseffen hoe klein hij is.</li></ul>
+<p>25</p>
+<ul class="lijst"><li>Duitsland (Inwaarts en Spiritueel): De Duitse romantische schilderkunst, met Caspar David Friedrich als boegbeeld, is verstild en contemplatief*. Het landschap wordt een spiegel van de ziel. De nadruk ligt op eenzaamheid, melancholie en de verbondenheid met het goddelijke in de natuur.</li><li>Frankrijk (Dynamisch en Passioneel): De Franse romantiek, aangevoerd door Eugène Delacroix, is veel dramatischer en kleurrijker. Men koos voor gewelddadige scènes, exotische locaties (het Oriëntalisme*) en actuele politieke thema&#x27;s. De penseelvoering werd losser en de kleur kreeg voorrang op de lijn, precies het tegenovergestelde van wat Ingres en David predikten.</li></ul>
+<p>De romantiek was de geboorte van de moderne individualiteit. In Duitsland uitte zich dat in een filosofische terugtocht naar de natuur en het verleden, terwijl het in Frankrijk explodeerde in een passie voor vrijheid, beweging en emotionele overdaad. Beiden deelden echter de fundamentele overtuiging dat het hart een wijzere gids is dan het verstand.</p>
+<h2 id="caspar-david-friedrich">Caspar David Friedrich</h2>
+<p>Caspar David Friedrich (1774-1840) was de meester van de Duitse romantische schilderkunst en een van de meest raadselachtige figuren uit de kunstgeschiedenis. Geboren in Greifswald aan de Oostzee, in een vroom protestants gezin, werd zijn vroege leven getekend door de dood van zijn moeder en broers, wat een blijvende stempel van melancholie op zijn ziel drukte. Hij vestigde zich later in Dresden, waar hij uitgroeide tot de spil van een kring intellectuelen die de natuur niet langer als louter decor zagen, maar als een directe manifestatie van het goddelijke.</p>
+<p>De persoonlijkheid van Friedrich sloot naadloos aan bij zijn werk: hij was een diep introverte, vrome en nogal gereserveerde man. Tijdgenoten omschreven hem als een eenzame wandelaar die urenlang alleen in de natuur doorbracht om de &quot;stem van God&quot; in het landschap te horen. Hij was wars van oppervlakkig vermaak en bezat een zekere koppigheid; hij weigerde bijvoorbeeld om naar Italië te reizen (wat toen de standaard was voor elke kunstenaar) omdat hij vreesde dat de klassieke schoonheid van het zuiden zijn eigen, noordelijke visie zou vertroebelen. Zijn karakter was doordrongen van een protestantse werkethiek en een diepe ernst die geen ruimte liet voor de frivoliteit* van de voorgaande generaties.</p>
+<p>26</p>
+<p>Zijn artistieke ambitie was revolutionair: hij wilde het landschap verheffen tot het niveau van de religieuze geschiedschilderkunst. Voor Friedrich was een schilderij niet een kopie van de buitenwereld, maar een reflectie van de binnenwereld. Hij stelde:</p>
+<p><i>&quot;De schilder moet niet alleen schilderen wat hij voor zich ziet, maar ook wat hij in zich ziet.&quot;</i></p>
+<p>Zijn doel was om de toeschouwer te confronteren met de oneindigheid van de schepping en de nietigheid van de mens. Door het gebruik van de Rückenfigur* ( een personage dat met de rug naar de toeschouwer staat en in de verte staart, dwong hij het publiek om mee te kijken en de spirituele ervaring van het landschap te delen. Hiermee veranderde hij de natuur in een stille kerk, waarin mist, bergen en ruïnes fungeerden als symbolen voor geloof, hoop en de vergankelijkheid van het leven.</p>
+<h3 id="der-wanderer-uber-dem-nebelmeer" class="sub">Der Wanderer über dem Nebelmeer</h3>
+<p>Caspar David Friedrichs &quot;Der Wanderer über dem Nebelmeer&quot; (ca. 1818) is het absolute icoon van de Romantiek geworden. Het schilderij vat de essentie van de negentiende-eeuwse ziel samen: de eenzame mens die geconfronteerd wordt met de overweldigende grootsheid van de schepping.</p>
+<p>27</p>
+<ul class="lijst"><li>Friedrich schilderde het werk rond 1818 in zijn atelier in Dresden.</li><li>Locatie: Het landschap is niet letterlijk één bestaande plek, maar een compositie gebaseerd op schetsen die Friedrich maakte in het Elbezandsteengebergte (Saksisch Zwitserland) in Duitsland en Bohemen. De specifieke rotspunten zijn herleidbaar naar plekken als de Kaiserkrone en de Zirkelstein.</li><li>Historische context: Duitsland was in deze periode herstellende van de Napoleontische oorlogen. Er heerste een sterk gevoel van nationaal bewustzijn en een verlangen naar spirituele verdieping. De natuur werd gezien als een plek waar men kon ontsnappen aan de politieke chaos en de opkomende industrialisatie.</li></ul>
+<p>Het schilderij is meesterlijk opgebouwd om een gevoel van oneindigheid te creëren:</p>
+<ul class="lijst"><li>De Rückenfigur: De man staat centraal met zijn rug naar de toeschouwer. Dit is cruciaal: we zien niet zijn gezicht of zijn specifieke emotie, waardoor hij een symbool wordt voor de <i>mensheid </i>in het algemeen. Wij kijken door zijn ogen naar het landschap. Hij fungeert als een brug tussen de toeschouwer en de natuur.</li><li>Compositie: De compositie is gebaseerd op een omgekeerde driehoek. De donkere rots waarop de wandelaar staat, vormt de basis die naar de kijker toe breder wordt, terwijl de wandelaar de verticale as vormt. Dit contrasteert met de horizontale lagen van de mist en de verre bergketens, wat een enorme dieptewerking geeft.</li><li>Kleur en Licht: Friedrich gebruikt een techniek genaamd <i>luchtperspectief</i>. De voorgrond is donker en scherp gedefinieerd, terwijl de kleuren naar de horizon toe lichter, blauwer en vager worden. Dit versterkt het gevoel van een onmetelijke afstand.</li><li>Symboliek: De wandelaar is elegant gekleed (een donkergroene &#x27;Altdeutsche Tracht&#x27;), wat destijds een politiek statement was voor Duits patriottisme. De rotsen staan voor het aardse, standvastige bestaan, terwijl de nevel en de bergen staan voor het goddelijke, het onbereikbare en de oneindigheid van het hiernamaals.</li></ul>
+<p>Dit schilderij is de ultieme verbeelding van het concept &quot;Het Sublieme&quot; (<i>The Sublime</i>). In de Romantiek was dit het gevoel van ontzag dat gepaard gaat met een vleugje angst wanneer de mens beseft hoe klein en nietig hij is tegenover de woeste, onbeheersbare natuur. Het is de overgang van de ratio (neoclassicisme) naar de pure, overweldigende emotie.</p>
+<p><i>De Wandelaar boven de nevelen </i>blijft relevant omdat het de universele menselijke behoefte verbeeldt om de eigen plek in een onbegrijpelijke wereld te begrijpen. Het is een schilderij dat niet vraagt om analyse, maar om stilte en contemplatie. Het werk hangt tegenwoordig in de Hamburger Kunsthalle.</p>
+<p>28</p>
+<h3 id="der-monch-am-meer" class="sub">Der Monch am Meer</h3>
+<p>Caspar David Friedrichs &quot;De monnik aan de zee&quot; (<i>Der Mönch am Meer</i>), geschilderd tussen 1808 en 1810, is een van de meest radicale en vernieuwende schilderijen uit de westerse kunstgeschiedenis. Het brak met vrijwel alle tradities van de landschapsschilderkunst en vormt de ultieme expressie van de romantische ziel.</p>
+<ul class="lijst"><li>Wanneer en voor wie: Friedrich schilderde het werk in Dresden. Het werd voor het eerst tentoongesteld op de tentoonstelling van de Berlijnse Academie in 1810. Het was een onmiddellijk succes bij het hoogste gezag: de Pruisische koning Frederik Willem III kocht het schilderij (samen met het pendant <i>De abdij in het eikenbos</i>).</li><li>Waar: Het landschap is gebaseerd op het eiland Rügen aan de Oostzee, een plek waar Friedrich vaak kwam om de ruwe natuur en de weidsheid van de zee te bestuderen.</li><li>Historische context: Terwijl Napoleon Europa hertekende, zocht Friedrich naar een spirituele waarheid die losstond van politieke macht. Het schilderij ontstond in een tijd van diepgaande religieuze en filosofische herbezinning; men zocht God niet langer enkel in de kerk, maar direct in de overweldigende natuur.</li></ul>
+<p>29</p>
+<p>Toen het werk voor het eerst werd getoond, schokte het het publiek. De beroemde schrijver Heinrich von Kleist zei dat het kijken naar het schilderij was <i>&quot;alsof men de oogleden waren weggesneden&quot;</i>.</p>
+<ul class="lijst"><li>De Compositie: Het schilderij is extreem horizontaal opgebouwd in drie stroken: het donkere land (de duinen), de zwarte zee en de enorme, grauwe lucht. De horizon is extreem laag geplaatst, waardoor de lucht ongeveer vier vijfde van het doek beslaat. Dit versterkt het gevoel van een verpletterende leegte.</li><li>De Figuur: De monnik is een piepkleine, verticale figuur in een verder horizontale wereld. Hij staat aan de uiterste rand van het land, aan de drempel van de oneindigheid. Zijn nietigheid benadrukt de onmetelijkheid van de kosmos.</li><li>Het ontbreken van kaders: In de traditionele landschapsschilderkunst werden vaak bomen of rotsen aan de zijkanten gebruikt om de blik van de kijker te sturen (repoussoir). Friedrich liet dit weg. Het beeld lijkt links en rechts oneindig door te lopen, wat de toeschouwer een gevoel van desoriëntatie en eenzaamheid geeft.</li><li>Kleurgebruik: De kleuren zijn somber en beperkt: diepzwart, grijsblauw en een bleke, witachtige lucht. Er is geen &#x27;vrolijk&#x27; licht; het is een atmosferische studie van een naderende storm of een eeuwige schemering.</li><li>Het Sublieme: Dit werk is de puurste verbeelding van het sublieme. Waar de <i>Wandelaar boven de nevelen </i>nog een gevoel van triomf uitstraalt, toont de <i>Monnik </i>de existentiële angst en het ontzag voor het absolute. De natuur wordt hier getoond als een onverschillige, grenzeloze macht waar de mens geen enkele controle over heeft.</li><li>Subjectiviteit: Het schilderij gaat niet over de zee, maar over de <i>ervaring </i>van de</li></ul>
+<p>eenzaamheid. Het is een psychologisch landschap.</p>
+<ul class="lijst"><li>Religieuze ervaring: Voor de protestantse Friedrich was de natuur de tempel van God. De monnik die uitkijkt over de zee verbeeldt de individuele mens die probeert contact te maken met het goddelijke, zonder tussenkomst van priesters of gebouwen.</li></ul>
+<p>30</p>
+<p>Mark Rothko, Untitled (Black on Gray), 1969-70, acryl op doek, 203,3 x 175,5 cm, Solomon R. Guggenheim Museum, New York</p>
+<p><i>De monnik aan de zee </i>was zijn tijd ver vooruit. De abstracte indeling in horizontale kleurvlakken zou ruim een eeuw later een enorme inspiratiebron vormen voor modernistische kunstenaars zoals Mark Rothko. Zij zagen in Friedrich de eerste kunstenaar die de emotionele kracht van pure kleur en ruimte begreep om het spirituele weer te geven.</p>
+<p></p>
+<p>Vandaag de dag hangt Monch am Meer in de Alte Nationalgalerie in Berlijn, waar het na een uitvoerige restauratie in 2016 weer in zijn oorspronkelijke, subtiele kleurgradaties te bewonderen is.</p>
+<h2 id="theodore-gericault">Théodore Géricault</h2>
+<p>Théodore Géricault (1791-1824) was de vroege, opvliegende stormvogel van de Franse romantiek. Hoewel hij slechts tweeëndertig jaar leefde en een relatief klein oeuvre naliet, was zijn impact op de Europese kunstgeschiedenis monumentaal.</p>
+<p>Geboren in een welvarende burgerlijke familie in Rouen, trok hij naar Parijs waar hij zich ontwikkelde tot een rebel die weigerde binnen de lijntjes van het heersende neoclassicisme te kleuren. Hij was een autodidact van de beste soort: in plaats van enkel naar zijn leraren te luisteren, bracht hij jaren door in het Louvre</p>
+<p>31</p>
+<p>om de dynamiek van Rubens en de dramatiek van Caravaggio te kopiëren.</p>
+<p>De persoonlijkheid van Géricault was intens, onrustig en doordrenkt van een bijna obsessieve passie voor gevaar en authenticiteit. Hij was de belichaming van de romantische held: een dandy, een uitmuntend ruiter en een man die voortdurend de grenzen van zijn eigen fysieke en mentale uithoudingsvermogen opzocht. Zijn karakter kende diepe dalen van depressie en een morbide fascinatie voor de dood en de menselijke anatomie. Hij was niet tevreden met het schilderen van idealen; hij wilde de rauwe, ongefilterde werkelijkheid voelen. Dit uitte zich in zijn bijna klinische studie van lijken en de menselijke psyche, maar ook in zijn roekeloze levensstijl die uiteindelijk tot zijn vroege dood leidde na een reeks valpartijen van zijn paard.</p>
+<p>Zijn artistieke ambitie was even gedurfd als radicaal: hij wilde de monumentale schaal van de klassieke geschiedschilderkunst gebruiken voor actuele, vaak controversiële gebeurtenissen. Géricault wilde de kunst bevrijden van de &quot;ijzige&quot; perfectie van David en Ingres door er bloed, zweet en emotie in te brengen. Hij streefde naar een stijl waarin de energie van de beweging en de kracht van het licht de kijker fysiek zouden raken. Zijn ambitie was om de heldhaftigheid niet te zoeken bij Romeinse generaals, maar bij gewone mensen in extreme omstandigheden, van schipbreukelingen op een vlot tot patiënten in een krankzinnigengesticht. Hiermee legde hij de basis voor een kunst die de menselijke conditie in al haar glorie en gruwel durfde te tonen.</p>
+<h3 id="le-radeau-de-la-meduse" class="sub">Le Radeau de la Méduse</h3>
+<p>32</p>
+<p>Théodore Géricaults &quot;Het vlot van de Medusa&quot; (<i>Le Radeau de la Méduse</i>), voltooid in 1819, is het absolute keerpunt in de Franse schilderkunst. Het markeert het moment waarop de heroïsche idealen van het neoclassicisme plaatsmaakten voor de rauwe, emotionele werkelijkheid van de Romantiek.</p>
+<ul class="lijst"><li>Wanneer en voor wie: Géricault schilderde dit monumentale doek (bijna 5 bij 7 meter) tussen 1818 en 1819. In tegenstelling tot veel tijdgenoten schilderde hij dit niet in opdracht. Hij financierde het project zelf, wat hem de volledige artistieke vrijheid gaf om een uiterst controversieel onderwerp te kiezen.</li><li>Het schandaal (De Context): Het schilderij is gebaseerd op een waargebeurde scheepsramp uit 1816. Het fregat <i>Méduse </i>liep voor de kust van Mauritanië aan de grond. De kapitein, een incompetente edelman die zijn positie aan politieke vriendjespolitiek te danken had, nam de reddingsboten voor zichzelf en de officieren. De overige 147 opvarenden werden op een provisorisch vlot achtergelaten. Na 13 dagen van honger, dorst, waanzin en kannibalisme waren er nog slechts 15 overlevenden. De ramp was een enorme politieke schande voor de herstelde Franse monarchie.</li><li>De voorbereiding: Géricault bereidde zich obsessief voor. Hij interviewde</li></ul>
+<p>overlevenden, liet een schaalmodel van het vlot bouwen en ging zelfs zo ver dat hij afgehakte ledematen en hoofden uit het mortuarium naar zijn atelier bracht om de kleur van rottend vlees en de fysionomie van de dood nauwkeurig te kunnen bestuderen.</p>
+<p>Picturale analyse:</p>
+<ul class="lijst"><li>De dubbele piramide: De compositie is opgebouwd rond twee piramidale vormen.</li><li>De linkerpiramide wordt gevormd door de mast en de touwen; het staat voor de fysieke dreiging van de zee en de wanhoop.</li><li>De rechterpiramide wordt gevormd door de lichamen van de schipbreukelingen, die eindigt in de zwarte man die met een rode doek zwaait naar een stipje aan de horizon (het reddingsschip <i>Argus</i>). Dit staat voor de overgang van wanhoop naar hoop.</li><li>Dynamiek en Beweging: In plaats van de statische rust van het neoclassicisme, zien we hier een kolkende massa. De lichamen zijn verstrengeld en de diagonale lijnen trekken de kijker direct de diepte van de woeste zee in.</li><li>Chiaroscuro (Licht-donker): Géricault maakt gebruik van een dramatisch licht dat doet denken aan Caravaggio. Het benadrukt de bleke, lijkachtige huid van de stervenden en creëert een theatrale, onheilspellende sfeer.</li></ul>
+<p>33</p>
+<ul class="lijst"><li>Het naakt: De figuren zijn gespierd en doen denken aan de beelden van Michelangelo, maar Géricault gebruikt deze klassieke lichamen niet om schoonheid te tonen, maar om het verval en de gruwel van de menselijke conditie te benadrukken.</li></ul>
+<p>koppeling romantiek:</p>
+<ul class="lijst"><li>Actualiteit als Geschiedenis: Géricault brak de regel dat alleen bijbelse of klassieke verhalen op zo&#x27;n enorm formaat mochten worden geschilderd. Hij verhief een actuele, politiek gevoelige schipbreuk tot een universeel epos over lijden.</li><li>De Anti-Held: Er is geen centrale, nobele held. De &quot;helden&quot; van dit schilderij zijn anonieme slachtoffers van verraad en natuurkrachten. De keuze om een zwarte man (Jean Charles) de leidende figuur van de hoop te maken, was in 1819 bovendien een krachtig politiek en abolitionistisch statement.</li><li>Emotionele Impact: Het doel van het werk is niet om de toeschouwer te onderwijzen over deugdzaamheid, maar om hem te schokken. De nabijheid van de lijken op de voorgrond dwingt de kijker om de gruwel bijna fysiek te ervaren.</li><li>Mens versus Natuur: Het schilderij verbeeldt het romantische thema van de nietige mens die overgeleverd is aan de genadeloze, sublieme krachten van de oceaan.</li></ul>
+<p>Toen het schilderij in 1819 in de Salon van Parijs hing, werd het zowel geprezen om zijn kracht als verguisd om zijn &quot;lelijkheid&quot; en politieke lading. Géricault had de deur opengezet voor een kunstvorm die de waarheid belangrijker vond dan de schoonheid. Tegenwoordig is het een van de meest bezochte werken in het Louvre.</p>
+<p>34</p>
+<h3 id="la-liberte-guidant-le-peuple" class="sub">La liberté guidant le peuple</h3>
+<p>Eugène Delacroix’ &quot;De Vrijheid leidt het volk&quot; (<i>La Liberté guidant le peuple</i>), geschilderd in 1830, is misschien wel het meest herkenbare schilderij van de Franse kunst. Het is een zinderende compositie die politieke hartstocht combineert met de artistieke vernieuwing van de Romantiek.</p>
+<ul class="lijst"><li>Wanneer en voor wie: Delacroix schilderde het werk in de herfst van 1830, direct na de gebeurtenissen. Het werd aangekocht door de Franse staat onder de nieuwe &quot;burgerkoning&quot; Louis-Philippe voor de troonzaal, maar werd al snel uit het zicht gehaald omdat het te opruiend en revolutionair werd geacht.</li><li>Historische context: Het schilderij herdenkt de Juli-revolutie van 1830 (ook wel de <i>Trois Glorieuses </i>genoemd). Gedurende drie dagen kwam het volk van Parijs in opstand tegen de reactionaire koning Karel X, die de persvrijheid had ingetrokken en de kieswetten had aangepast.</li><li>Persoonlijke motivatie: Hoewel Delacroix zelf niet actief meevocht op de barricaden, was hij een vurig aanhanger van de liberale zaak. Hij schreef aan zijn broer: <i>&quot;Als ik niet voor het vaderland heb gevochten, zal ik er tenminste voor schilderen.&quot;</i></li></ul>
+<p>35</p>
+<p>Het schilderij bruist van de energie en breekt met de statische tradities van het verleden:</p>
+<ul class="lijst"><li>De Centrale Figuur (Marianne): De vrouw in het midden is geen echt persoon, maar een allegorie van de Vrijheid. Zij draagt de Phrygische muts (symbool van bevrijding) en zwaait met de Tricolore, de Franse vlag. Opvallend is dat zij met blote borsten en blote voeten wordt afgebeeld; dit maakt haar enerzijds goddelijk als een Griekse overwinning-godin, maar anderzijds ook volks en aards door de haargroei onder haar oksels, een detail dat critici destijds schokte.</li><li>De Piramidecompositie: Net als Géricault bouwt Delacroix zijn werk op in een</li></ul>
+<p>piramidevorm, met de vlag als het hoogste punt. De basis van de piramide wordt gevormd door de lijken op de voorgrond, wat de hoge prijs van de vrijheid benadrukt.</p>
+<ul class="lijst"><li>Sociale Eenheid: Delacroix toont een dwarsdoorsnede van de samenleving die zij aan</li></ul>
+<p>zij vecht:</p>
+<ul class="lijst"><li>De man met de hoge hoed en het geweer (de burgerij/intellectueel).</li><li>De man met de sabel (de arbeider).</li><li>De jongen met de twee pistolen (de straatjongen van Parijs, de inspiratie voor Gavroche in <i>Les Misérables</i>).</li><li>Atmosfeer: Het schilderij is gehuld in rook en stof, wat een gevoel van onmiddellijk gevaar en actie geeft. De kleuren van de Franse vlag (rood, wit, blauw) komen overal in het schilderij subtiel terug, zelfs in de kleding van de stervende man die naar de Vrijheid opkijkt.</li><li>Emotie en Dynamiek: In tegenstelling tot de koele berekening van het neoclassicisme, is dit werk een explosie van beweging en geluid. Je kunt het geschreeuw en de kanonsschoten bijna horen.</li><li>Kleurgebruik: Delacroix was een &#x27;colorist&#x27;. Hij gebruikte kleur niet alleen om in te vullen, maar om emotie over te dragen en diepte te creëren, vaak met een losse, vliegende penseelstreek die de energie van de revolutie weerspiegelt.</li><li>Actualiteit: De Romantiek koos vaak voor eigentijdse, heftige thema&#x27;s in plaats van veilige scènes uit de verre oudheid.</li></ul>
+<p>Het beeld van de Vrijheid is een universeel symbool geworden voor opstand en hoop, en wordt nog steeds voortdurend geciteerd in de populaire cultuur:</p>
+<p>Banksy: De beroemde straatkunstenaar heeft meermaals gerefereerd aan de iconografie van opstand. Een bekend voorbeeld is zijn muurschildering in Calais (bij de jungle) waar hij de Franse vlag en de figuren van Delacroix gebruikt om de vluchtelingencrisis aan te karten. Ook</p>
+<p>36</p>
+<p>zijn algemene stijl ( de eenzame rebel die iets gooit (vaak bloemen in plaats van een steen) leunt zwaar op de &quot;straatjongen&quot; uit Delacroix&#x27; werk.</p>
+<p>Delacroix’ meesterwerk overstijgt de specifieke historische gebeurtenis van 1830. Het is het ultieme beeld geworden van het geloof dat verandering mogelijk is wanneer mensen uit alle lagen van de bevolking de handen ineenslaan. Het hangt tegenwoordig prominent in het Louvre.</p>
+<p>37</p>
+
+
+
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../neoclassicisme/"><span>Vorig onderwerp</span>&larr; Neoclassicisme</a><a href="../modernisme/" style="text-align:right"><span>Volgend onderwerp</span>Modernisme &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-romantiek",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>
