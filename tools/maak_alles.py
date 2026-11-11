@@ -39,6 +39,7 @@ def opschonen(blokken):
         if t in ("h2", "h3", "h1"): skip = False
         if t == "h4" and b["tekst"].lower().startswith(("samengevat", "samenvatting", "besluit")): skip = True
         if skip: continue
+        if t in ("p", "li") and re.match(r"^\[\s*afbeelding", b.get("tekst", ""), re.I): continue
         if t in ("p", "h4", "h2") and b["tekst"].lower().strip(" :") in ("inhoudstafel",): continue
         uit.append(b)
     # alinea's die midden in een zin zijn afgebroken weer samenvoegen

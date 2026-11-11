@@ -3,7 +3,7 @@
 # type: "youtube" (via youtube-nocookie), "vimeo", "archive" (Internet Archive)
 MEDIA = {
  "muziek": [
-  ("4-2-1-jaws-1975", "youtube", "BePfzCOMRZQ", "John Williams, Main Title (Jaws, 1975)", "YouTube, kanaal van John Williams", "Luister naar de twee lage noten die een halve toon van elkaar liggen."),
+  ("4-2-1-jaws-1975", "youtube", "BePfzCOMRZQ", "John Williams, Main Title (Jaws, 1975)", "Officiële opname via YouTube Music", "Luister naar de twee lage noten die een halve toon van elkaar liggen."),
   ("4-3-2-le-sacre-du-printemps-1913", "youtube", "EkwqPJZe8ms", "Igor Stravinsky, Le Sacre du printemps (1913)", "London Symphony Orchestra, dirigent Sir Simon Rattle", "Volledige uitvoering. Begin bij de fagot in de inleiding."),
   ("4-4-1-prelude-in-des-groot-op-28-nr-15-1838-1839", "youtube", "R2d2spnXyLA", "Frédéric Chopin, Prelude op. 28 nr. 15 (1838-1839)", "Steinway & Sons, gespeeld door Lang Lang", ""),
   ("oefening-1-bernard-herrmann-psycho-1960", "youtube", "BYnPGS9Ev8w", "Alfred Hitchcock, Psycho (1960): de douchescène", "Universal Pictures", "Luister eerst zonder naar het beeld te kijken, en bekijk het daarna opnieuw met beeld."),
