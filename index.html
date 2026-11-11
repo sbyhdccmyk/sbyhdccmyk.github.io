@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kunst bekijken: leerstof</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Zelfde witte zaal als de hoofdstukken: één kolom, grijze kaders, rood accent. */
+  --wand:#ffffff;--inkt:#141414;--zacht:#5f5f5f;--kader:#f2f2f2;--lijn:#bfbfbf;--rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 5rem}
+.vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.2rem}
+h1{font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.05;margin:0 0 .8rem;text-wrap:balance}
+.intro{color:var(--zacht);max-width:36rem;margin:0 0 3rem}
+h2{font-size:1.4rem;margin:3rem 0 .8rem;padding-top:.8rem;border-top:1px solid var(--inkt)}
+ul.hoofdstukken{list-style:none;margin:0;padding:0;display:grid;gap:.8rem}
+ul.hoofdstukken a{display:block;padding:1rem 1.1rem;background:var(--kader);border:1px solid var(--lijn);text-decoration:none;color:inherit}
+ul.hoofdstukken a:hover{border-color:var(--inkt)}
+ul.hoofdstukken a:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.titel{font-weight:700;font-size:1.2rem;display:block}
+.onder{font-style:italic;color:var(--zacht);display:block}
+.meta{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block;margin-bottom:.3rem}
+.binnenkort{color:var(--zacht);font-style:italic;margin:0}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+</style>
+</head>
+<body>
+<main>
+  <p class="vak">Kunstbeschouwing / Esthetica</p>
+  <h1>Kunst bekijken</h1>
+  <p class="intro">Leerstof van S. Ben Yakoub voor Kunstbeschouwing en Esthetica. Elk hoofdstuk bevat de volledige tekst, een woordenschat en voorbeeldvragen. De kunstwerken bekijk je via de links naar de musea die ze bewaren.</p>
+
+  <h2>Hoofdstukken</h2>
+  <ul class="hoofdstukken">
+    <li><a href="rineke-dijkstra/">
+      <span class="meta">Esthetica 5 / Kunstbeschouwing 4</span>
+      <span class="titel">Rineke Dijkstra, het portret</span>
+      <span class="onder">Fotografie, lichaam, blik en het tussenmoment</span>
+    </a></li>
+  </ul>
+  <p class="binnenkort">Meer hoofdstukken volgen.</p>
+
+  <footer><p>Schooljaar 2026-2027. Samengesteld door S. Ben Yakoub.</p></footer>
+</main>
+</body>
+</html>

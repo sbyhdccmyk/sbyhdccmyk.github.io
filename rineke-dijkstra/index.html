@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rineke Dijkstra, het portret</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="pagina">
+
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak">Inhoud</p>
+  <ol>
+    <li><a href="#inleiding">Inleiding</a></li>
+    <li><a href="#fotografie">1 Fotografie als kunst</a></li>
+    <li><a href="#kijken">2 Hoe kijk je naar een portret?</a></li>
+    <li><a href="#werkwijze">3 Werkwijze</a></li>
+    <li><a href="#werken">4 Analyse van werken</a>
+      <ol>
+        <li><a href="#marnixbad">4.1 Self-Portrait, Marnixbad</a></li>
+        <li><a href="#beach">4.2 Beach Portraits</a></li>
+        <li><a href="#venus">Contrapost en Venus Pudica</a></li>
+        <li><a href="#bullfighters">4.3 Bullfighters</a></li>
+        <li><a href="#olivier">4.4 Olivier</a></li>
+        <li><a href="#geschilderd">Het geschilderde portret</a></li>
+        <li><a href="#park">4.5 Park Portraits</a></li>
+        <li><a href="#manet">Manet</a></li>
+        <li><a href="#buzzclub">4.6 The Buzzclub</a></li>
+      </ol>
+    </li>
+    <li><a href="#woordenschat">Woordenschat</a></li>
+    <li><a href="#vragen">Voorbeeldvragen</a></li>
+    <li><a href="#verder">Verder kijken</a></li>
+  </ol>
+</nav>
+
+<main>
+<header class="titel">
+  <p class="vak">Esthetica 5 / Kunstbeschouwing 4</p>
+  <h1>Rineke Dijkstra, het portret</h1>
+  <p class="onder">Fotografie, lichaam, blik en het tussenmoment</p>
+
+  <section class="tijdlijn" aria-label="Tijdlijn van de besproken werken">
+    <h2>De zes werken in de tijd</h2>
+    <div class="tl-rij"><a href="#marnixbad">Self-Portrait, Marnixbad</a><div class="tl-spoor"><span class="tl-balk keerpunt" style="grid-column:1/2" title="1991"></span></div></div>
+    <div class="tl-rij"><a href="#beach">Beach Portraits</a><div class="tl-spoor"><span class="tl-balk" style="grid-column:2/7" title="vanaf 1992, bekendste beelden tot 1996"></span></div></div>
+    <div class="tl-rij"><a href="#bullfighters">Bullfighters</a><div class="tl-spoor"><span class="tl-balk" style="grid-column:4/5" title="1994"></span><span class="tl-balk" style="grid-column:10/11" title="2000"></span></div></div>
+    <div class="tl-rij"><a href="#buzzclub">The Buzzclub / Mysteryworld</a><div class="tl-spoor"><span class="tl-balk" style="grid-column:6/8" title="1996-1997"></span></div></div>
+    <div class="tl-rij"><a href="#olivier">Olivier</a><div class="tl-spoor"><span class="tl-balk" style="grid-column:10/14" title="2000-2003"></span></div></div>
+    <div class="tl-rij"><a href="#park">Park Portraits</a><div class="tl-spoor"><span class="tl-balk" style="grid-column:13/17" title="2003-2006"></span></div></div>
+    <div class="tl-rij" aria-hidden="true"><span></span><div class="tl-as"><span>91</span><span>92</span><span>93</span><span>94</span><span>95</span><span>96</span><span>97</span><span>98</span><span>99</span><span>00</span><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div></div>
+    <p class="tl-noot">Het rode blokje is het keerpunt: het zelfportret van 1991. Klik op een titel om naar de analyse te gaan.</p>
+  </section>
+</header>
+
+<section id="inleiding">
+<h2>Inleiding: wie is Rineke Dijkstra?</h2>
+<p>Rineke Dijkstra werd in 1959 geboren in Sittard, in Nederlands Limburg. Van 1981 tot 1986 studeerde zij fotografie aan de Gerrit Rietveld Academie in Amsterdam. Daarna werkte zij een aantal jaren in opdracht: portretten voor bedrijven, jaarverslagen en tijdschriften. Dat werk leerde haar het vak, maar het beviel haar niet. De beelden moesten verkopen, zij stond in dienst van een opdrachtgever en moest toepassen wat die vroeg.</p>
+<p>Rond 1990 besliste zij zich volledig op eigen werk te richten. Het keerpunt kwam na een fietsongeluk in 1990, waarbij een auto haar aanreed en zij haar heup verwondde. Tijdens haar revalidatie, in juni 1991, fotografeerde zij zichzelf in het Marnixbad in Amsterdam, uitgeput en kwetsbaar, net uit het zwembad (<i>Self-Portrait, Marnixbad, Amsterdam, Netherlands, June 19, 1991</i>). Dat beeld is het begin van haar hele oeuvre: vanaf dan gebruikt zij fotografie niet langer als illustratie, maar als een onderzoek naar wat een portret van een mens vandaag kan zijn.</p>
+<p>In 1992 begon zij aan de reeks <i>Beach Portraits</i>, jongeren op stranden in Europa en de Verenigde Staten. Die reeks maakte haar internationaal bekend. Daarna volgden onder meer <i>Bullfighters</i> (1994 en 2000), <i>The Buzzclub, Liverpool, UK / Mysteryworld, Zaandam, NL</i> (1996-1997), <i>Olivier, The French Foreign Legion</i> (2000-2003) en de <i>Park Portraits</i> (2003-2006). Haar werk werd getoond in onder meer het Stedelijk Museum Amsterdam (2005), de Fundació la Caixa in Barcelona, het Art Institute of Chicago en, als grote retrospectieve, het SFMOMA in San Francisco en het Solomon R. Guggenheim Museum in New York (2012). In 2017 ontving zij de Hasselblad Award. Zij woont en werkt in Amsterdam.</p>
+<p>In dit hoofdstuk bekijken we eerst hoe fotografie een kunstvorm werd, daarna hoe je naar een portret van Dijkstra kijkt (lichaam, ruimte, object en tijd) en ten slotte zes werken of reeksen die haar manier van werken duidelijk maken.</p>
+</section>
+
+<section id="fotografie">
+<h2>1 Fotografie als kunst</h2>
+<p>Om het belang van Rineke Dijkstra te begrijpen, moeten we even terug in de tijd. Fotografie ontstond in de negentiende eeuw als een technisch wonder: in 1839 werd het procedé in Frankrijk voor het eerst openbaar gemaakt. Voor het eerst kon een toestel, en niet een kunstenaar, een beeld van de werkelijkheid vastleggen. Dat was revolutionair, maar ook bedreigend. Kunstenaars hadden eeuwenlang geprobeerd de werkelijkheid zo goed mogelijk na te bootsen, een principe dat in de kunstgeschiedenis bekendstaat als mimesis (Grieks voor nabootsing). Plots deed een machine dat automatisch, en in zekere zin veel preciezer.</p>
+<p>Lange tijd gold fotografie daarom als een techniek, niet als kunst: wie een knop indrukt, maakt toch geen kunstwerk? Pas in de twintigste eeuw, en vooral na de Tweede Wereldoorlog, werd fotografie aanvaard als een volwaardige kunstvorm, met een plaats in musea en op de kunstmarkt. Op de kunstacademies ging die erkenning trager. Toen Dijkstra in de jaren tachtig studeerde, werd fotografie daar volgens haar nog niet als kunst beschouwd: de afdeling fotografie was een eiland, een wereld op zichzelf.</p>
+<p>Het is in die context dat Dijkstra haar plaats inneemt. Haar foto's lijken eenvoudig: een meisje op het strand, een soldaat na de training, een stel jongeren in het park. Toch zijn het geen snapshots. Elk beeld is het resultaat van bewuste keuzes over plaats, licht, afstand, houding en moment. Precies daardoor horen haar portretten thuis in de lange traditie van het geschilderde portret, al zijn ze met een camera gemaakt.</p>
+</section>
+
+<section id="kijken">
+<h2>2 Hoe kijk je naar een portret van Dijkstra?</h2>
+<p>Bij Dijkstra is de manier waarop een foto in de ruimte hangt even belangrijk als de foto zelf. Haar werk laat zich daarom goed analyseren met vier elementen: lichaam, ruimte, object en tijd. Zij denkt niet alleen na over wat zij afbeeldt, maar ook over hoe de afbeelding zich als object in de ruimte gedraagt en hoe de kijker er in de tijd mee omgaat. In de analyses in deel 4 keren deze vier elementen telkens terug.</p>
+<figure class="beeld"><figcaption>Rineke Dijkstra, zaalzicht van de reeks <i>Beach Portraits</i><br>De portretten hangen op ooghoogte in een witte zaal, met veel lege ruimte rond elk beeld.</figcaption><div class="werk-links"><a class="werk-link" href="https://depont.nl/en/exhibition/rineke-dijkstra-10-mar-22-july-2018">Bekijk zaalzichten bij Museum De Pont</a></div></figure>
+<h3 class="sub">a. Lichaam</h3>
+<p>Het lichaam van de geportretteerde staat centraal, maar niet in actie. Het spreekt via houding, blik, vermoeidheid, een vlek, een litteken, een spanning in de schouders. Elk lichaam draagt een verhaal dat niet letterlijk wordt verteld, maar wel voelbaar is. Dijkstra toont hoe lichamelijkheid altijd verbonden is met emotie, tijd en herinnering.</p>
+<p>Ook het lichaam van de kijker hoort bij dit element. De foto's zijn groot, soms bijna op ware grootte, en hangen op ooghoogte. Daardoor ontmoet de blik van het model de blik van de kijker rechtstreeks. Je staat tegenover iemand, in dezelfde schaal, in dezelfde ruimte. Die ontmoeting is intens: je kan niet ontsnappen aan de ogen die je aankijken. De blik is wederkerig: de geportretteerde kijkt naar jou terwijl jij naar hem of haar kijkt, en je wordt daardoor zelf deel van het werk.</p>
+
+<h3 class="sub">b. Ruimte</h3>
+<p>De ruimte speelt op twee niveaus. Ten eerste is er de ruimte in de foto: het strand, de doucheruimte, het park, een witte wand. Dijkstra kiest die plaats bewust en houdt de achtergrond eenvoudig, zodat alle aandacht naar de figuur gaat. Vaak is het een tussenruimte: een plek waar je niet verblijft, maar passeert of even stilstaat.</p>
+<p>Ten tweede is er de ruimte waarin de foto hangt. De wanden zijn wit, de omgeving sober, zodat geen visuele prikkels afleiden. Het lege wit werkt als stilte: het concentreert de aandacht en laat het beeld ademen. De afstand tussen kijker en beeld is zorgvuldig gekozen, nooit te dichtbij, nooit te ver. Zo ontstaat een evenwicht tussen nabijheid en afstand, en wordt de ervaring van haar werk niet alleen visueel, maar ook lichamelijk.</p>
+
+<h3 class="sub">c. Object</h3>
+<p>Een foto van Dijkstra is een materieel object: een grote afdruk, in kleur, tot ongeveer 1,40 meter hoog, in een lijst aan een muur. Zij maakt haar beelden met een grootformaatcamera op statief en met flitslicht dat zij combineert met daglicht. Daardoor zijn de details uiterst scherp en komt de figuur los van de achtergrond, bijna zwevend tussen echt en kunstmatig.</p>
+<p>Dat onderstreept de gemaaktheid van het beeld. Het is geen toevallige momentopname, maar een geconstrueerd beeld: Dijkstra kiest het standpunt, het licht, de afstand en de pose. De hand van de kunstenaar is aanwezig, ook al gaat het om fotografie. Op dat punt verhoudt haar werk zich tot de schilderkunst, die per definitie door een kunstenaar is gemaakt. En toch zit er spontaniteit in, omdat zij het juiste moment, de juiste houding en het juiste detail weet te vatten. In die spanning tussen constructie en echtheid ligt een groot deel van de kracht van haar portretten.</p>
+
+<h3 class="sub">d. Tijd</h3>
+<p>Een foto is een stilstaand beeld, maar bij Dijkstra zit er op drie manieren tijd in. Ten eerste kiest zij nooit het hoogtepunt van een actie, maar het moment erna: de stilte waarin iets nog nazindert. De forcado na het gevecht, de danser die even van de dansvloer is gehaald, het lichaam dat herstelt na een ongeval. Ten tweede fotografeert zij dezelfde persoon of hetzelfde soort moment met tussenpozen van maanden of jaren, zoals bij <i>Olivier</i>. De verandering wordt zichtbaar tussen de beelden in. Ten derde zit de tijd in het kijken zelf: haar foto's hangen vaak in reeksen, en terwijl je van het ene beeld naar het andere beweegt, neem je onbewust iets van het vorige mee. Er ontstaat een ritme van kijken, een vertraagde beweging die het werk bijna cinematografisch maakt, ook al staan de beelden stil.</p>
+
+<h3 class="sub">e. Het tussenmoment</h3>
+<p>De vier elementen komen samen in één begrip: het tussenmoment. Dijkstra fotografeert mensen op overgangsmomenten in hun leven. Een meisje tussen kind en volwassene, een jongen tussen individu en soldaat, een moeder vlak na de bevalling, een lichaam tussen ziek en genezen. Telkens toont zij de fragiele zone waarin identiteit nog niet vastligt, maar zich pas vormt. Je kan spreken van een tussenruimte (de plaats), een tussenlichaam (de persoon) en een tussentijd (het moment). Identiteit verschijnt bij haar niet als iets vaststaands, maar als iets dat voortdurend in beweging is. Haar blik daarbij is respectvol: zij oordeelt niet, idealiseert niet en dramatiseert niet, maar kijkt met aandacht.</p>
+</section>
+
+<section id="werkwijze">
+<h2>3 Werkwijze: geconstrueerd, niet toevallig</h2>
+<p>Dijkstra noemt zichzelf een studiofotograaf die op locatie werkt. Zij kiest eerst een plek (een strand, een school, een park, een club) en zoekt daar mensen die iets bijzonders hebben: een stemming, een houding, een moment van echtheid. Zij vraagt hen om voor haar camera te poseren en legt uit wat zij doet. Wie niet wil meewerken, fotografeert zij niet: poseren is voor haar een vorm van openstellen, er moet nieuwsgierigheid zijn tussen haar en het model.</p>
+<p>Zij werkt met een technische camera van 4 x 5 inch op een statief. Zo'n camera is traag en omslachtig: elke opname vraagt een apart vel film, scherpstellen gebeurt met een loep op het matglas en het model mag daarna nauwelijks bewegen. Juist die traagheid helpt. Het model krijgt tijd om tot rust te komen, en het moment waarop iemand niet meer over de pose nadenkt, is voor Dijkstra het spannendste. Zij geeft weinig aanwijzingen en wil dat een houding min of meer onbewust ontstaat. Wel vraagt zij om in de lens te kijken, niet naar haar: zo kijkt het model later naar de kijker.</p>
+<p>Het licht is nooit toevallig. Zij werkt altijd met flits en combineert dat met het daglicht, waarbij het daglicht de overhand houdt. Het lichaam en de voorgrond zijn helder verlicht, de lucht en de achtergrond blijven iets donkerder. Zo komt de figuur los van de omgeving. De achtergrond houdt zij eenvoudig: een klein stukje omgeving volstaat als aanwijzing. De scherpte en de grote afdruk maken details zichtbaar die je in het voorbijgaan niet ziet: het verschil tussen plastic en fluweel, nagellak, een vlek, een rimpel.</p>
+<aside class="kader">
+<h4>Dijkstra over haar eigen werk</h4>
+<p>In twee interviews, met De Standaard (2005) en met Art in America (2012), legt Dijkstra zelf uit hoe zij werkt. Enkele uitgangspunten keren daarin telkens terug.</p>
+<p>Een foto moet op de werkelijkheid lijken, maar toch iets anders zijn. Het moment waarop iemand niet over de pose nadenkt, is het mooiste en het spannendste. Een goede foto blijft boeien: wie er op uitgekeken raakt, heeft geen goed beeld. Er moet gelaagdheid in zitten, zodat de kijker er zijn eigen verhaal in kan zien.</p>
+<p>Over de gelijkenis tussen <i>Kolobrzeg, Poland, July 26, 1992</i> en Botticelli's <i>Geboorte van Venus</i> zegt zij dat zij die pas achteraf ontdekte. Zulke dingen kan je niet plannen: zij heeft vooraf een idee over achtergrond en licht, maar nooit over de persoon. Haar ambitie omschrijft zij als hoopvolle beelden maken, in een tijd van snelle media waarin de eigenheid van mensen vaak verloren gaat.</p>
+</aside>
+</section>
+
+<section id="werken">
+<h2>4 Analyse van belangrijke werken</h2>
+<p>Elke analyse volgt dezelfde opbouw: een feitenfiche, een beschrijving van wat je ziet, de vier elementen (lichaam, ruimte, object, tijd) en ten slotte de betekenis. Oefen jezelf om deze structuur ook toe te passen op een foto die je nog niet kent.</p>
+<div class="kijkfilter" role="group" aria-label="Volg één element door alle werken">
+  <span>Volg één element</span>
+  <button type="button" data-focus="" aria-pressed="true">Alles</button>
+  <button type="button" data-focus="lichaam" aria-pressed="false">Lichaam</button>
+  <button type="button" data-focus="ruimte" aria-pressed="false">Ruimte</button>
+  <button type="button" data-focus="object" aria-pressed="false">Object</button>
+  <button type="button" data-focus="tijd" aria-pressed="false">Tijd</button>
+</div>
+
+<article id="marnixbad">
+<h3>4.1 Self-Portrait, Marnixbad, Amsterdam (1991)</h3>
+<figure class="beeld"><figcaption>Rineke Dijkstra, <i>Self-Portrait, Marnixbad, Amsterdam, Netherlands, June 19, 1991</i> (1991)<br>Zelfportret in de doucheruimte van het zwembad, na een zwemsessie tijdens haar revalidatie.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.sfmoma.org/artwork/2003.231/">Bekijk het werk bij SFMOMA</a></div></figure><dl class="fiche">
+<dt>Jaar</dt><dd>1991 (19 juni); het ongeval dateert van 1990</dd>
+<dt>Plaats</dt><dd>Marnixbad, Amsterdam</dd>
+<dt>Reeks</dt><dd>Zelfstandig werk; begin van het oeuvre</dd>
+<dt>Techniek</dt><dd>Kleurenfoto, grootformaatcamera</dd>
+</dl>
+<h4>Wat zie je?</h4>
+<p>In 1990 werd Dijkstra op de fiets aangereden door een auto. Zij verwondde haar heup en moest revalideren met zwemtherapie. Na een van die sessies, nog nat en uitgeput, fotografeerde zij zichzelf in de doucheruimte van het Marnixbad. Zij draagt een gestreept badpak en een blauwe badmuts, haar huid is nog nat en zij houdt haar handen voor haar mond. Achter haar een muur van witte tegels, enkele lampen en metalen leidingen.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Haar lichaam bevindt zich in een overgangstoestand: niet meer ziek, nog niet volledig genezen. Zij staat rechtop, maar haar houding verraadt vermoeidheid. Het lichaam wordt drager van een verhaal dat we niet kennen: we weten niet wat er is gebeurd, maar we voelen het herstel, de moeheid en de wil om te blijven staan.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De doucheruimte, tussen zwembad en kleedkamer, is een echte tussenruimte: geen plaats om te verblijven, maar om te passeren. Precies die plek kiest zij. De tegels, de voegen, de lampen en de metalen rand van de douchewand vormen vluchtlijnen die allemaal naar één punt leiden: haar gezicht, en meer nog, haar blik. Ook haar handen, voor haar mond, trekken de aandacht naar het gezicht.</p></div>
+<div class="el object"><h5>Object</h5><p>Ondanks de ogenschijnlijk toevallige situatie is dit een zorgvuldig opgebouwd beeld: frontaal, centraal, sober en uitgebalanceerd, zoals een klassiek geschilderd portret. De grote, scherpe afdruk maakt de vochtige huid en de dampende ruimte bijna tastbaar.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het beeld toont niet het ongeval, niet de therapie, maar het moment erna. Het is een stilstand in een proces van herstel.</p></div>
+<h4>Betekenis</h4>
+<p>De combinatie van tussenruimte en tussenlichaam geeft het werk zijn spanning. In dat onbepaalde moment tussen kwetsbaarheid en kracht ligt de intensiteit van het beeld. De foto roept de geschiedenis van het portret op, waarin de blik van de afgebeelde het contactpunt vormt tussen beeld en toeschouwer, maar maakt dat contact directer en lichamelijker: we staan tegenover haar alsof zij nog ademt. Met dit werk legt Dijkstra de basis voor haar hele oeuvre. Vanaf hier zoekt zij telkens naar lichamen tussen twee momenten in.</p>
+</article>
+
+<article id="beach">
+<h3>4.2 Beach Portraits (vanaf 1992)</h3>
+<figure class="beeld"><figcaption>Rineke Dijkstra, <i>Kolobrzeg, Poland, July 26, 1992</i> (1992)<br>Uit de reeks <i>Beach Portraits</i>. Het bekendste beeld van de reeks, vaak vergeleken met Botticelli's Venus.</figcaption><div class="werk-links"><a class="werk-link" href="https://stedelijk.nl/en/collection/2318-rineke-dijkstra-kolobrzeg-polen-26-juli-1992">Bekijk het werk bij het Stedelijk Museum Amsterdam</a><a class="werk-link" href="https://www.tate.org.uk/art/artworks/dijkstra-kolobrzeg-poland-july-26-1992-p78330">Bekijk het werk bij Tate</a></div></figure><dl class="fiche">
+<dt>Jaar</dt><dd>Vanaf 1992; de bekendste beelden dateren van 1992 tot 1996</dd>
+<dt>Plaats</dt><dd>Stranden in Nederland, België, Polen, Oekraïne, Kroatië, Engeland en de Verenigde Staten</dd>
+<dt>Reeks</dt><dd>Beach Portraits, begonnen na een krantenopdracht over de zomer</dd>
+<dt>Techniek</dt><dd>Kleurenfoto's, grootformaatcamera, flits gecombineerd met daglicht</dd>
+</dl>
+<h4>Wat zie je?</h4>
+<p>Jongeren staan rechtop op het strand, frontaal, met de zee en de lucht als achtergrond. Zij dragen zwemkledij en kijken recht in de lens, soms met schroom, soms met een bevreemdende zelfzekerheid. Sommigen zijn vertrouwd met de beeldtaal van magazines en proberen een fotogenieke houding aan te nemen; anderen weten niet goed hoe ze moeten staan en tonen daardoor onbewust meer van zichzelf. Dijkstra kiest precies dat moment waarop iemand nog niet weet hoe te verschijnen.</p>
+<figure class="beeld"><figcaption>Rineke Dijkstra, uit de reeks <i>Beach Portraits</i> (vanaf 1992)<br>Meisje in zwart badpak op het strand. Flitslicht op de figuur en het zand, de lucht en de zee iets donkerder.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.tate.org.uk/collection?aid=2666">Bekijk meer Beach Portraits bij Tate</a></div></figure><h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De jongeren staan op de grens van de volwassenheid: tussen kind en volwassene, in transformatie, met een identiteit die zich nog vormt. Dat tussenlichaam brengt veel beweging in een bij uitstek stilstaand beeld. In <i>Kolobrzeg, Poland, July 26, 1992</i> staat een meisje met één knie licht gebogen, het bekken gekanteld en de schouders in tegengestelde richting: een contrapost, waarover hieronder meer.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het strand is een tussenruimte: niet de zee, niet het land, maar de grens ertussen. De horizon verdeelt het beeld in zand, zee en lucht, zodat de figuur er als enige verticale vorm uitspringt.</p></div>
+<div class="el object"><h5>Object</h5><p>Dijkstra nam een grootformaatcamera en zware flitsinstallaties mee naar het strand. Het lichaam en het zand zijn helder verlicht, de lucht en de zee blijven donkerder. Daardoor lijkt de persoon los te komen van de achtergrond. Het beeld is geconstrueerd, geen snapshot, en verhoudt zich daardoor tot de schilderkunst.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>De reeks liep over verschillende jaren en landen. De situatie was telkens dezelfde, de mensen telkens anders. Elk beeld is een document van een moment in de tijd, maar ook van een leeftijd die voorbijgaat.</p></div>
+<div class="el extra"><h5>Zijn en worden</h5><p>Alles in dit beeld is een tussentoestand: niet de zee, niet het land, maar het strand; niet kind, niet volwassen, maar een tiener. Telkens gaat het niet zozeer om zijn als om worden: zee wordt land, kind wordt volwassene. Op dat kruispunt bevindt deze foto zich, in volle beweging: een stilstaand beeld vol beweging en wording.</p></div>
+<h4>Betekenis</h4>
+<p>Elk portret uit <i>Beach Portraits</i> toont de spanning tussen pose en authenticiteit. Het moment van twijfel, waarop iemand nog niet weet hoe hij of zij zich moet tonen, is tegelijk eerlijk en universeel: iedereen herkent het. De reeks maakte Dijkstra internationaal bekend, onder meer door een tentoonstelling in het MoMA in New York in 1997.</p>
+</article>
+
+<article id="venus">
+<h3 class="verwijzing">Kunsthistorische verwijzing: contrapost en Venus Pudica</h3>
+<p>De houding van het meisje uit Kolobrzeg is een contrapost. Die term komt uit het Italiaans (contrapposto, tegengestelde houding) en verwijst naar een natuurlijke manier van staan: het gewicht rust op één been, het andere been is ontspannen. Daardoor kantelt het bekken licht en komt er een subtiele S-lijn in het lichaam. De houding lijkt ontspannen, maar is in werkelijkheid vol spanning en evenwicht.</p>
+<p>De contrapost ontstond in het oude Griekenland in de vijfde eeuw v.Chr., toen beeldhouwers voor het eerst lichamen weergaven zoals ze zich in het echte leven gedragen. De oudste bewaarde contrapost is de <i>Kritios-jongen</i> (ca. 480 v.Chr.). Ruim een eeuw later, rond 350 v.Chr., paste Praxiteles de houding toe op een naakte godin in zijn <i>Aphrodite van Knidos</i>: een vrouw die haar lichaam deels bedekt met haar hand. Dat type beeld noemen we Venus Pudica (de kuise Venus). Zij lijkt zich bewust van haar eigen lichamelijkheid, maar toont die tegelijk.</p>
+<figure class="beeld"><figcaption>Sandro Botticelli, <i>De geboorte van Venus</i> (ca. 1485)<br>Galleria degli Uffizi, Florence. Venus staat in contrapost op een schelp en bedekt zich in de houding van de Venus Pudica.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.uffizi.it/en/artworks/birth-of-venus">Bekijk het werk bij de Uffizi</a></div></figure><p>In de Renaissance werd die klassieke houding herontdekt, toen kunstenaars opnieuw inspiratie zochten in de Oudheid. Het bekendste voorbeeld is <i>De geboorte van Venus</i> van Sandro Botticelli, vermoedelijk geschilderd rond 1484-1486 in Florence. Het werk hing tot 1815 in de Medici-villa van Castello en bevindt zich sindsdien in de Uffizi.</p>
+<h4>De mythe</h4>
+<p>Venus is de Romeinse naam van de Griekse godin Aphrodite, godin van de liefde, de schoonheid en de vruchtbaarheid. Over haar geboorte bestaan twee verhalen. Bij Homerus is zij een dochter van Zeus en de titane Dione. Het oudere en vreemdere verhaal staat bij Hesiodus: de hemelgod Ouranos werd door zijn zoon Kronos ontmand, viel in de zee en uit het schuim (Grieks aphros) dat daaruit opsteeg, ontstond Aphro-dite. Zij dreef over de golven en kwam volwassen aan land, eerst bij Kythira en daarna op Cyprus, waar zij vereerd werd. Zij is dus letterlijk uit de zee geboren, zonder moeder, als de schoonheid die uit geweld en chaos ontstaat.</p>
+<p>Botticelli schildert het moment van die aankomst. Dat hij het tafereel koppelt aan de lente is geen toeval: de westenwind Zephyrus brengt in de mythologie de lente, zijn bruid Chloris wordt bij Ovidius Flora, de godin van de bloemen, en de Hora van de lente staat klaar met haar bloemenmantel. De geboorte van de godin valt samen met het ontwaken van de natuur. Botticelli schilderde eerder al <i>La Primavera</i> voor dezelfde familie; beide werken hingen samen in de villa van Castello.</p>
+<p>De schelp waarop Venus staat, is een jakobsschelp. In de Oudheid was de schelp een symbool van de vrouwelijke vruchtbaarheid en van de zee waaruit de godin voortkwam; op Romeinse muurschilderingen en sarcofagen verschijnt Venus al in een schelp. Botticelli maakt er een reusachtig, onmogelijk groot voertuig van, een schelp die de godin draagt zoals een boot.</p>
+<h4>Wat zie je?</h4>
+<p>Venus komt, volwassen en naakt, aan land op een reusachtige schelp, na haar geboorte uit de zee. De kust is waarschijnlijk Cyprus of Kythira, de eilanden die in de mythe aan haar gewijd zijn. Links blazen twee gevleugelde windfiguren haar naar de oever: Zephyrus, de westenwind, met in zijn armen een vrouwelijke figuur, Aura (een zachte bries) of Chloris, de bloemennimf die hij huwde. Rond hen dwarrelen rozen, de bloem van Venus. Rechts staat een Hora, een godin van de seizoenen, met een mantel vol bloemen klaar om Venus te bedekken; haar bloemenjurk maakt haar tot de Hora van de lente. Achter haar staan oranjebomen en laurier.</p>
+<h4>De elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Venus staat in contrapost: het gewicht rust op het linkerbeen, het rechterbeen is ontspannen, de heup kantelt. Met haar rechterhand bedekt zij haar borst, met haar lange haar en linkerhand haar schoot: de houding van de Venus Pudica, die Botticelli kende van antieke beelden van dat type. Toch is dit geen klassiek lichaam. De hals en de romp zijn verlengd, de schouders vallen naar beneden en het gewicht rust zo ver op het linkerbeen dat niemand deze houding echt kan aannemen. Venus lijkt eerder te zweven dan te staan.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De figuren werpen geen schaduw, de zee is een vlak patroon van golfjes en het landschap is niet op schaal. Botticelli zocht geen diepte of volume, maar een ritme van lijnen: de golvende contouren van het haar, de mantel en de wapperende kleren.</p></div>
+<div class="el object"><h5>Object</h5><p>Het werk is geschilderd op doek, niet op paneel zoals de meeste schilderijen van Botticelli in die tijd; doek was goedkoper en gebruikelijk voor schilderijen in buitenverblijven. Het haar, de vleugels, de schelp en de stoffen zijn opgehoogd met goud. De groenen van de bomen zijn in de loop der eeuwen donkerder geworden, zodat de kleurbalans nu anders is dan oorspronkelijk.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het schilderij toont één moment uit een verhaal dat in de Oudheid al werd verteld: een Homerische hymne beschrijft hoe de wind Aphrodite over de golven naar Cyprus draagt, waar de Horen haar opwachten en kleden. De Florentijnse dichter Poliziano werkte datzelfde tafereel uit in zijn <i>Stanze</i>, en Botticelli zette het om in beeld.</p></div>
+<h4>Betekenis</h4>
+<p>Lange tijd werd het werk neoplatoons gelezen: Venus staat voor de goddelijke liefde, en de schoonheid van het lichaam trekt de geest van de kijker omhoog naar het geestelijke. Recentere kunsthistorici twijfelen of die filosofie in Florence zo bepalend was, en lezen het schilderij eerder als een huwelijksschilderij of als eerbetoon aan de Medici. Daarop wijzen ook de oranjebomen, die toen mala medica heetten, een woordspeling op de familienaam, en de laurier, een verwijzing naar de naam Lorenzo. Volgens een oude legende leende Venus het gezicht van Simonetta Vespucci, een beroemde schoonheid uit de kring van de Medici, maar dat is nooit bewezen. Wat vaststaat: de compositie is sierlijk en volkomen geconstrueerd. Venus is tijdloos en bijna bovenmenselijk, en toch lichamelijk aanwezig.</p>
+<p>Bij Dijkstra keren die eeuwenoude principes onverwacht terug. Het meisje uit Kolobrzeg neemt spontaan een lichte contrapost aan, op een strand, met de zee achter zich, net als Venus. Maar bij Dijkstra is dat niet de perfecte schoonheid van de klassieke Venus: het is menselijk, zoekend, echt. De contrapost wordt een teken van twijfel en kwetsbaarheid in plaats van ideale harmonie. Dijkstra zegt zelf dat zij de gelijkenis pas achteraf zag: zulke dingen kan je niet plannen.</p>
+</article>
+
+<article id="bullfighters">
+<h3>4.3 Bullfighters (1994 en 2000)</h3>
+<figure class="beeld"><figcaption>Rineke Dijkstra, uit de reeks <i>Bullfighters</i> (1994)<br>Een forcado vlak na het gevecht, met bloed en zand op gezicht en kostuum.</figcaption><div class="werk-links"><a class="werk-link" href="https://stedelijk.nl/en/collection/9837-rineke-dijkstra-vila-franca-de-xira-portugal-may-8-1994">Bekijk een werk uit de reeks bij het Stedelijk Museum Amsterdam</a></div></figure><dl class="fiche">
+<dt>Jaar</dt><dd>1994 en 2000</dd>
+<dt>Plaats</dt><dd>Vila Franca de Xira en Montemor (1994), Vendas Novas (2000), Portugal</dd>
+<dt>Reeks</dt><dd>Bullfighters (forcados)</dd>
+<dt>Techniek</dt><dd>Kleurenfoto's, grootformaatcamera, neutrale achtergrond</dd>
+</dl>
+<h4>Wat zie je?</h4>
+<p>Met een vermoeide blik kijkt een jonge man recht in de camera, vegen bloed op zijn gezicht en zijn kraag. Hij is een forcado: een Portugese stierenvechter die met zeven anderen, ongewapend, in het slotgevecht de stier met de blote handen tot stilstand brengt. Eén van hen vangt de stier op, de rest springt bij om het dier samen te overmeesteren. Het is een ritueel van kracht, risico en samenwerking. Dijkstra fotografeerde de jonge mannen vlak na dat moment van extreme spanning, elk afzonderlijk, tegen een neutrale achtergrond.</p>
+<figure class="beeld"><figcaption>Rineke Dijkstra, uit de reeks <i>Bullfighters</i> (1994)<br>Een tweede forcado, het kostuum besmeurd met zand, de blik nog in de arena.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.centrepompidou.fr/en/ressources/oeuvre/caz9pX4">Bekijk een werk uit de reeks bij het Centre Pompidou</a></div></figure><h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>Elk lichaam draagt de sporen van wat er net is gebeurd: een houding, een blik, een scheur of een vlek in het kostuum. De gezichten zijn rood van inspanning. Sommigen tonen schaamte of ontgoocheling, anderen verbergen hun emoties achter een vage glimlach. Zij weten dat zij bekeken worden, maar kunnen het gevecht dat nog in hun lichaam zit niet uitwissen. De arena en de stier zijn op de achtergrond niet te zien: het gevecht wordt niet letterlijk als context getoond. Toch is het in de foto aanwezig, via het lichaam van de geportretteerde.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De arena en het spektakel zijn verdwenen: Dijkstra haalt de context bewust weg. Zonder die context blijft alleen de persoon over, die het verhaal van wat er is gebeurd belichaamt.</p></div>
+<div class="el object"><h5>Object</h5><p>De besmeurde, geborduurde jasjes en de witte kragen zijn de enige verwijzing naar het ritueel. De scherpe afdruk maakt elke vlek en elke scheur leesbaar.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het gekozen moment, net nadat de adrenaline is weggezakt, is cruciaal. De lichamen blijven gespannen, de geest hangt tussen actie en herinnering. De strijd, het vallen en opstaan, de pijn, de trots: zij worden niet letterlijk getoond, maar resoneren via het portret.</p></div>
+<h4>Betekenis</h4>
+<p>De reeks toont geen heroïek, maar menselijke kwetsbaarheid: het moment waarop trots, vermoeidheid en ontlading samenvallen. Zoals vaak bij Dijkstra gaat het niet om de actie zelf, maar om het precieze tussenmoment dat volgt, de stilte waarin alles nog natrilt.</p>
+</article>
+
+<article id="olivier">
+<h3>4.4 Olivier, The French Foreign Legion (2000-2003)</h3>
+<figure class="beeld"><figcaption>Rineke Dijkstra, <i>Olivier, Quartier Vienot, Marseille, France, July 21, 2000</i> (2000)<br>Het eerste portret van de reeks, op de dag dat Olivier zich aanmeldde bij het Vreemdelingenlegioen.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.tate.org.uk/art/artworks/dijkstra-olivier-quartier-vienot-marseille-july-21-2000-a-p14992">Bekijk het werk bij Tate</a></div></figure><dl class="fiche">
+<dt>Jaar</dt><dd>2000-2003</dd>
+<dt>Plaats</dt><dd>Marseille en Calvi (Frankrijk), Libreville (Gabon), Ivoorkust, Djibouti</dd>
+<dt>Reeks</dt><dd>Olivier, The French Foreign Legion</dd>
+<dt>Techniek</dt><dd>Kleurenfoto's, grootformaatcamera, telkens dezelfde opstelling</dd>
+</dl>
+<h4>Wat zie je?</h4>
+<p>In juli 2000 meldde de Fransman Olivier Silva, toen zeventien of achttien jaar oud, zich aan bij het Franse Vreemdelingenlegioen. Dijkstra fotografeerde hem die eerste dag en volgde hem drie jaar lang, telkens in een andere fase van zijn opleiding en inzet: in de kazerne in Marseille, op Corsica, in Gabon, in Ivoorkust en in Djibouti. Op de eerste foto zien we een verlegen jongen in een zwart T-shirt, met kort haar en een nog wat gesloten houding. In de volgende beelden verschijnt hij in uniform, met een strakkere blik en een zekerdere lichaamshouding.</p>
+<figure class="beeld"><figcaption>Rineke Dijkstra, <i>Olivier, The French Foreign Legion</i> (2000-2003)<br>Acht portretten uit de reeks naast elkaar, van de eerste dag in Marseille (juli 2000) tot Djibouti (juli 2003). Zelfde formaat, zelfde houding, andere mens.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.tate.org.uk/art/artworks/dijkstra-olivier-quartier-monclar-djibouti-july-13-2003-l03756">Bekijk het laatste portret (Djibouti, 2003) bij Tate</a></div></figure><h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De reeks toont letterlijk een transformatie: van individu naar soldaat, van kwetsbare jongeman naar lid van een streng collectief. Discipline, training en militaire orde vormen het lichaam om. Toch blijft onder die nieuwe verschijning iets van de oorspronkelijke persoon zichtbaar.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Elk portret is gemaakt voor een sobere, effen achtergrond die weinig zegt over de plaats waar het werd genomen. De kleur van die achtergrond verschilt, maar de opstelling blijft dezelfde. Juist daardoor valt elke verandering in het lichaam en de persoonlijkheid op: niet de omgeving trekt de aandacht, maar de mens.</p></div>
+<div class="el object"><h5>Object</h5><p>Alle foto's hebben hetzelfde formaat, hetzelfde standpunt en dezelfde frontale houding. Als reeks aan de muur vormen zij één object: een tijdslijn in beelden.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Dit is het element dat de reeks draagt. Tussen de eerste en de laatste foto ontvouwt zich een tijdslijn zonder woorden. De tijd zelf wordt zichtbaar: elke houding, elke blik, elke spanning in het gezicht vertelt iets over wat er is gebeurd.</p></div>
+<h4>Betekenis</h4>
+<p>Het Vreemdelingenlegioen werd in 1831 opgericht door koning Lodewijk Filips voor buitenlandse vrijwilligers in het Franse leger. Het groeide uit tot een mythische eenheid van mannen van over de hele wereld die een nieuw leven wilden beginnen, vaak na een breuk of een mislukt verleden. Dienst in het Legioen betekende een nieuwe identiteit aannemen, in ruil voor discipline, gehoorzaamheid en broederschap. In die context is Olivier niet zomaar een jongen die volwassen wordt, maar iemand die zijn identiteit inruilt voor een uniform en een collectieve rol. Dijkstra oordeelt niet, zij observeert. Zo onderzoekt <i>Olivier</i> opnieuw haar centrale thema: identiteit is geen vast gegeven, maar een beweging, zichtbaar in het lichaam.</p>
+</article>
+
+<article id="geschilderd">
+<h3 class="verwijzing">Kunsthistorische verwijzing: het geschilderde portret</h3>
+<p>Dijkstra vertelt dat zij lang dacht dat oude schilderijen haar niet aanspraken, tot zij in het Rijksmuseum zag wat de schilders daar met licht doen. Wie haar werk naast portretten van vroeger legt, ziet de verwantschap: wat zij met een camera doet, deden schilders eeuwenlang met verf. Twee voorbeelden, een uit de Hollandse zeventiende eeuw en een uit het Zwitserland van rond 1900, maken dat duidelijk.</p>
+<figure class="beeld"><figcaption>Johannes Cornelisz. Verspronck, <i>Portret van Adriana Croes</i> (1644)<br>Rijksmuseum, Amsterdam. Olieverf op doek, 92 x 75 cm.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.rijksmuseum.nl/nl/collectie/SK-A-4998">Bekijk het werk bij het Rijksmuseum</a></div></figure><p>Johannes Verspronck (ca. 1600-1662) was in Haarlem, naast Frans Hals, de portretschilder van de rijke burgerij. Adriana Croes (1599-1656) liet zich in 1644 door hem schilderen, enkele jaren na de dood van haar man, de lakenkoopman Hendrick van Strijp. Zij zit licht gedraaid op een stoel, in een zwart kleed met een witte molensteenkraag en een kapje, de handen rustig in de schoot. De achtergrond is leeg en donker: niets leidt de aandacht af van het gezicht en de handen. Het Rijksmuseum schrijft dat haar gezicht zo echt geschilderd is dat je er haar lief en leed van lijkt te kunnen aflezen.</p>
+<p>Zo'n portret werkt volgens vaste regels. De geportretteerde poseert bewust en kijkt de kijker aan. De kleding zegt wie zij is in de samenleving: een welgestelde weduwe, sober en waardig. De achtergrond is neutraal, en de schilder zet elk detail scherp, van de plooien in de kraag tot de ring aan haar vinger. Leg daar de reeks <i>Olivier</i> naast. Ook daar een neutrale achtergrond, een rustige pose, een blik recht naar de kijker en een kostuum dat een rol uitdrukt: het uniform van het Legioen doet wat het zwarte kleed en de kraag bij Adriana doen. Het verschil zit in de tijd. Verspronck schilderde één moment dat voor altijd moest gelden. Dijkstra fotografeert hetzelfde model telkens opnieuw en laat zien dat zo'n identiteit verandert.</p>
+<figure class="beeld"><figcaption>Ferdinand Hodler, <i>Bezauberter Knabe</i> (1893-1894)<br>Kunsthaus Zürich. Olieverf op doek, 106 x 70 cm. Het model is Hodlers zoon Hector.</figcaption><div class="werk-links"><a class="werk-link" href="https://collection.kunsthaus.ch/multimedia/8/1158-en.pdf">Bekijk de fiche van het Kunsthaus Zürich (pdf)</a></div></figure><p>Ferdinand Hodler (1853-1918) is de bekendste Zwitserse schilder van rond 1900. In <i>Bezauberter Knabe</i> (de betoverde jongen) staat een kind van een jaar of zes, Hodlers zoon Hector, recht voor ons: blootsvoets, in een wit hemdje en een witte korte broek, de armen los langs het lichaam, de handpalmen iets naar voren gedraaid. De achtergrond is bijna leeg, een lichte vlakte met wat bloemen, en rond het hele beeld schilderde Hodler een rand van groene vlekken en bloemen, als een lijst. De jongen kijkt stil voor zich uit, naar iets wat wij niet zien. Hodler maakte het werk als studie voor een groter schilderij over aanbidding, maar het staat op zichzelf als portret.</p>
+<p>Wie dit beeld naast de <i>Beach Portraits</i> legt, ziet bijna dezelfde opstelling: een kind ten voeten uit, frontaal, in licht ondergoed, tegen een achtergrond die tot bijna niets is herleid. Ook hier draagt het lichaam zelf de betekenis: de dunne armen, de onzekere stand van de voeten, het gezicht dat nog niet weet hoe het moet kijken. Hodler schilderde die kwetsbaarheid met verf en gaf er met de bloemenrand iets plechtigs aan. Dijkstra vindt honderd jaar later hetzelfde tussenmoment terug op het strand, maar zonder symboliek: geen bloemen, geen rand, alleen flitslicht, zand en zee.</p>
+<p>Wat kunstenaars vroeger deden met het geschilderde portret, doet Dijkstra nu met de camera: een mens laten stilstaan, poseren en terugkijken, tegen een achtergrond die niet afleidt, op een formaat waarop je hem of haar werkelijk ontmoet. Zij verandert de techniek, niet de vraag. De vraag blijft dezelfde: wie is deze mens, en wat laat het lichaam daarvan zien?</p>
+</article>
+
+<article id="park">
+<h3>4.5 Park Portraits (2003-2006)</h3>
+<figure class="beeld"><figcaption>Rineke Dijkstra, uit de reeks <i>Park Portraits</i> (2003-2006)<br>Een meisje en een jongen zitten in het gras van een stadspark; het rode jasje is het enige felle accent.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.mariangoodman.com/exhibitions/305-rineke-dijkstra-park-portraits/">Bekijk de Park Portraits bij Marian Goodman Gallery</a></div></figure><dl class="fiche">
+<dt>Jaar</dt><dd>2003-2006</dd>
+<dt>Plaats</dt><dd>Vondelpark (Amsterdam), Parc de la Ciutadella (Barcelona), Sefton Park (Liverpool), Prospect Park (New York), Retiro (Madrid)</dd>
+<dt>Reeks</dt><dd>Park Portraits</dd>
+<dt>Techniek</dt><dd>Kleurenfoto's, grootformaatcamera, zachter flitslicht</dd>
+</dl>
+<h4>Wat zie je?</h4>
+<p>Al in 1998-2000 fotografeerde Dijkstra jongeren in het Tiergarten in Berlijn. Vanaf 2003 richtte zij haar aandacht opnieuw op stadsparken, in Europa, de Verenigde Staten en China. Ook hier fotografeert zij jongeren, maar nu zittend of liggend in het gras, omringd door bomen en zacht, gefilterd licht. De omgeving is weelderig maar niet spectaculair: gewone plekken waar mensen samenkomen, praten, dromen, wachten. In hun houdingen voel je relaties en onuitgesproken emoties: vriendschap, verliefdheid, verveling, afzondering.</p>
+<figure class="beeld"><figcaption>Rineke Dijkstra, <i>Vondelpark, Amsterdam, June 10, 2005</i> (2005)<br>Uit de reeks <i>Park Portraits</i>. Vier jongeren zitten en liggen in het gras aan een vijver. De voorgrond, het middenplan en de achtergrond zijn in balans.</figcaption><div class="werk-links"><a class="werk-link" href="https://mariangoodman.com/artists/40-rineke-dijkstra/works/37781">Bekijk het werk bij Marian Goodman Gallery</a></div></figure><h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De lichamen zijn ontspannen en tegelijk bewust van de camera. Omdat de jongeren elkaar hebben, zijn zij minder kwetsbaar dan de eenzame figuren op het strand. Een hand, een blik, een houding vormt het centrum van de aandacht.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>Het park is een tussenruimte: niet thuis, niet op school, niet volledig openbaar en niet privé. Het is een plek van tijdelijke vrijheid, waar jongeren zich even terugtrekken, zoeken, uitrusten of zich tonen. Anders dan op het strand is de achtergrond nu rijk en diep, als een landschap.</p></div>
+<div class="el object"><h5>Object</h5><p>De flits is in deze reeks minder opvallend, het licht valt door de bladeren op de huid. De foto's ademen rust, maar ook een latente spanning. Dijkstra zegt dat deze beelden heel groot mogen worden: het beeld van een warme dag die eeuwig lijkt te duren.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Het moment is een pauze in de dag, net na school, en tegelijk een pauze in het leven: de open ruimte tussen kindertijd en volwassenheid.</p></div>
+<h4>Betekenis</h4>
+<p>De foto's lijken eenvoudig, maar zij bevatten een rijke sociale en psychologische gelaagdheid. Het park wordt een spiegel van de menselijke conditie, en Dijkstra toont die zonder oordeel of moraal, met een stille, respectvolle aandacht voor aanwezigheid, licht en tijd.</p>
+</article>
+
+<article id="manet">
+<h3 class="verwijzing">Kunsthistorische verwijzing: Manet</h3>
+<figure class="beeld"><figcaption>Édouard Manet, <i>Le Déjeuner sur l'herbe</i> (1863)<br>Musée d'Orsay, Parijs. Twee geklede mannen en een naakte vrouw op het gras; een tweede vrouw baadt op de achtergrond.</figcaption><div class="werk-links"><a class="werk-link" href="https://artsandculture.google.com/asset/twELHYoc3ID_VA">Bekijk het werk van het Musée d'Orsay op Google Arts &amp; Culture</a></div></figure><p>De compositie van de parkportretten roept schilderijen uit de negentiende eeuw op, in het bijzonder Manets <i>Le Déjeuner sur l'herbe</i> (1863). Het werk veroorzaakte destijds een schandaal, niet omdat het een naakt toonde, dat was in de kunst al eeuwen gebruikelijk, maar omdat Manet het naakt in een eigentijdse, herkenbare context plaatste. Hij haalde de mythologische sluier weg en confronteerde de toeschouwer met de moderniteit zelf: gewone mensen, gewone lichamen, in een gewone ruimte.</p>
+<p>Manet nam voor zijn compositie een oud voorbeeld over: een zestiende-eeuwse gravure van Marcantonio Raimondi naar een ontwerp van Rafaël, met drie figuren die op dezelfde manier in het gras zitten. Hij gebruikte dus een klassiek motief en zette het in zijn eigen tijd. Dijkstra speelt in haar <i>Park Portraits</i> met diezelfde erfenis: haar jongeren liggen in het gras zoals de figuren bij Manet, maar in de concrete stilte van een park in de eenentwintigste eeuw. Zij verwijst zelf naar het schilderij wanneer zij over de Vondelparkfoto's spreekt.</p>
+</article>
+
+<article id="buzzclub">
+<h3>4.6 The Buzzclub, Liverpool, UK / Mysteryworld, Zaandam, NL (1996-1997)</h3>
+<figure class="beeld"><figcaption>Rineke Dijkstra, <i>The Buzzclub, Liverpool, UK / Mysteryworld, Zaandam, NL</i> (1996-1997)<br>Videostill. Een meisje danst voor een witte wand in een geïmproviseerde studio achter in de club.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.macba.cat/en/obra/r1658-the-buzz-club-liverpool-england--mysteryworld-zaandam-nl-1996-97/">Bekijk het werk bij MACBA Barcelona</a></div></figure><dl class="fiche">
+<dt>Jaar</dt><dd>1996-1997</dd>
+<dt>Plaats</dt><dd>The Buzz Club, Liverpool, en Mysteryworld, Zaandam</dd>
+<dt>Reeks</dt><dd>Eerste videowerk van Dijkstra</dd>
+<dt>Techniek</dt><dd>Video-installatie op twee schermen, continu licht, vaste camera</dd>
+</dl>
+<h4>Wat zie je?</h4>
+<p>Naast foto's maakt Dijkstra ook video's. <i>The Buzzclub / Mysteryworld</i> bestaat uit twee schermen waarop jongeren dansen voor een witte achtergrond. Dijkstra haalde hen even weg van de dansvloer; zij dansen op de muziek die in de club klinkt. Dijkstra had eerst foto's genomen in de club, maar vond dat er in de foto te veel ontbrak: de beweging en de sfeer. Daarom keerde zij terug met een videocamera en bouwde zij achter in de club een kleine studio, eigenlijk gewoon een kamer met een witte muur. De video volgt het verloop van een avond: de dj kondigt verjaardagen aan, de jongeren beginnen te dansen en de avond groeit naar een climax.</p>
+<h4>De vier elementen</h4>
+<div class="el lichaam"><h5>Lichaam</h5><p>De dans wordt een vorm van zelfpresentatie: de jongeren tonen wie zij willen zijn, zonder dat zij dat volledig kunnen controleren. Zij weten dat zij gefilmd worden, maar verliezen zich toch even in de muziek. Het is intiem, bevreemdend, soms ontroerend.</p></div>
+<div class="el ruimte"><h5>Ruimte</h5><p>De club, het publiek en de lichtshow zijn weg. De witte wand isoleert elke danser, net zoals het strand en de neutrale achtergrond dat doen in de foto's. De camera staat vast, op ooghoogte, en kijkt niet van bovenaf.</p></div>
+<div class="el object"><h5>Object</h5><p>In plaats van flits gebruikt Dijkstra continu licht en een eenvoudige videocamera. Het beeld is minder scherp en minder geconstrueerd dan haar foto's, maar de opstelling blijft dezelfde: een observatie van een specifieke persoon in een specifieke situatie.</p></div>
+<div class="el tijd"><h5>Tijd</h5><p>Een foto is een fractie van een seconde, een video duurt. Geluid en beweging komen erbij. Zo kan Dijkstra tonen wat in de foto ontbrak: de ontwikkeling van een avond, van tien uur tot de climax.</p></div>
+<h4>Betekenis</h4>
+<p>Ook in deze video gaat het over authenticiteit en over de blik. Dansen wordt een vorm van portretteren: een moment van zuivere aanwezigheid, waarin de controle over het eigen beeld even wegvalt. Het werk toont dat Dijkstra's vragen niet aan het medium gebonden zijn: ook met een bewegend beeld zoekt zij het tussenmoment waarin iemand zich onbewust toont.</p>
+</article>
+</section>
+
+<section id="woordenschat">
+<h2>Woordenschat</h2>
+<div class="hulp">
+  <label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label>
+  <input type="search" id="zoekwoord" placeholder="Zoek een woord">
+  <button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button>
+</div>
+<dl class="woorden" id="woordenlijst"></dl>
+<p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p>
+</section>
+
+<section id="vragen">
+<h2>Voorbeeldvragen</h2>
+<p class="teller" id="teller"></p>
+<h3 class="sub">A. Kennis en inzicht</h3>
+<ol class="vragen" id="vragenA"></ol>
+<h3 class="sub">B. Toepassing en vergelijking</h3>
+<ol class="vragen" id="vragenB"></ol>
+</section>
+
+<section id="verder">
+<h2>Verder kijken en lezen</h2>
+<ul class="links">
+  <li><span class="soort">Video</span><a href="https://frick.org/tags/general/rineke_dijkstra">Rineke Dijkstra en Hans den Hartog Jager: The Dutch Tradition of Portraiture</a><p>The Frick Collection. Gesprek in het Engels over Dijkstra en de Hollandse portrettraditie.</p></li>
+  <li><span class="soort">Interview met beelden</span><a href="https://global.canon/en/newcosmos/interview/rineke-dijkstra/index.html">Interview met Rineke Dijkstra</a><p>Canon New Cosmos of Photography (2019). In het Engels, met videostills uit onder meer <i>The Buzz Club / Mystery World</i>.</p></li>
+  <li><span class="soort">Overzicht</span><a href="https://www.mariangoodman.com/artists/40">Rineke Dijkstra bij Marian Goodman Gallery</a><p>De galerie van de kunstenaar, met biografie en werken.</p></li>
+</ul>
+</section>
+
+<footer>
+<p>Versie 11-11-2026. Esthetica 5 / Kunstbeschouwing 4, schooljaar 2026-2027. Samengesteld door S. Ben Yakoub. Titels van kunstwerken staan cursief.</p>
+</footer>
+</main>
+</div>
+
+<script>
+// Kijkfilter: volg één element door alle werken.
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(knop){
+  knop.addEventListener("click",function(){
+    var f=knop.getAttribute("data-focus");
+    if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}
+    document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===knop?"true":"false");});
+  });
+});
+
+// Woordenschat
+var WOORDEN=[
+["Mimesis","Nabootsing van de werkelijkheid; het principe dat de kunst eeuwenlang bepaalde en dat de fotografie in de negentiende eeuw leek over te nemen."],
+["Portret","Afbeelding van een bepaalde persoon, waarin niet alleen het uiterlijk, maar ook houding, blik en karakter een rol spelen."],
+["Grootformaatcamera","Camera die werkt met losse vellen film van 4 x 5 inch; traag, op statief, maar uiterst scherp."],
+["Flitslicht","Kunstmatig licht dat Dijkstra combineert met daglicht, zodat de figuur loskomt van de achtergrond."],
+["Frontaal","Recht van voren, zoals in een klassiek portret; het model kijkt in de lens en dus naar de kijker."],
+["Snapshot","Toevallige, snelle momentopname zonder bewuste constructie; het tegendeel van Dijkstra's werkwijze."],
+["Geconstrueerd beeld","Beeld waarin plaats, licht, afstand en houding bewust zijn gekozen door de kunstenaar."],
+["Tussenmoment","Overgangsmoment tussen twee toestanden: tussen kind en volwassene, tussen actie en rust, tussen ziek en genezen."],
+["Tussenruimte","Plaats waar je niet verblijft, maar passeert of even stilstaat: een doucheruimte, een strand, een park."],
+["Reeks (serie)","Groep werken die samen horen en samen getoond worden; de betekenis ontstaat mee in het kijken van beeld naar beeld."],
+["Presentatie","De manier waarop een werk wordt getoond: formaat, hoogte, afstand, de witte zaal."],
+["Ooghoogte","Hoogte waarop een portret hangt zodat de blik van het model die van de kijker direct ontmoet."],
+["Wederkerige blik","Het model kijkt naar de kijker terwijl die naar het model kijkt; de kijker wordt deel van het werk."],
+["Contrapost","Houding waarbij het gewicht op één been rust en het andere been ontspannen is, met een lichte S-lijn in het lichaam."],
+["Venus Pudica","Beeldtype van de naakte Venus die zich met de hand bedekt (kuise Venus); teruggaand op de Aphrodite van Knidos."],
+["Forcado","Portugese stierenvechter die de stier ongewapend, met de blote handen, tot stilstand brengt."],
+["Vreemdelingenlegioen","Eenheid van het Franse leger (1831) voor buitenlandse vrijwilligers, met een nieuwe identiteit en strenge discipline."],
+["Transformatie","Verandering waarbij iemand of iets overgaat in iets anders; bij Dijkstra zichtbaar in het lichaam."],
+["Identiteit","Wie iemand is; bij Dijkstra geen vast gegeven, maar iets dat voortdurend in beweging is."],
+["Authenticiteit","Echtheid; het moment waarop iemand niet meer over de pose nadenkt."],
+["Videostill","Stilstaand beeld uit een video."],
+["Cinematografisch","Filmisch; de ervaring van beweging en tijd bij het kijken naar een reeks stilstaande beelden."]
+];
+var lijst=document.getElementById("woordenlijst");
+WOORDEN.forEach(function(w){
+  var rij=document.createElement("div");
+  var dt=document.createElement("dt");dt.textContent=w[0];
+  var dd=document.createElement("dd");dd.textContent=w[1];
+  rij.appendChild(dt);rij.appendChild(dd);
+  rij.addEventListener("click",function(){if(lijst.classList.contains("verborgen")){rij.classList.toggle("toon");}});
+  lijst.appendChild(rij);
+});
+document.getElementById("zoekwoord").addEventListener("input",function(e){
+  var q=e.target.value.trim().toLowerCase(),n=0;
+  lijst.querySelectorAll("div").forEach(function(rij){
+    var past=!q||rij.textContent.toLowerCase().indexOf(q)>-1;
+    rij.hidden=!past;if(past){n++;}
+  });
+  document.getElementById("geenwoord").hidden=n>0;
+});
+var oefenknop=document.getElementById("oefenknop");
+oefenknop.addEventListener("click",function(){
+  var aan=lijst.classList.toggle("verborgen");
+  lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});
+  oefenknop.setAttribute("aria-pressed",aan?"true":"false");
+  oefenknop.textContent=aan?"Definities weer tonen":"Definities verbergen om te oefenen";
+});
+
+// Voorbeeldvragen met afvinklijst (wordt alleen in deze browser onthouden).
+var VRAGEN_A=[
+"Waarom werd fotografie in de negentiende eeuw als een bedreiging voor kunstenaars gezien? Gebruik het begrip mimesis.",
+"Wat veranderde er rond 1990 in het werk van Rineke Dijkstra en welke foto markeert dat keerpunt?",
+"Leg uit waarom de presentatie van een foto (formaat, hoogte, witte zaal) bij Dijkstra even belangrijk is als de foto zelf.",
+"Wat bedoelen we met de wederkerige blik? Hoe bereikt Dijkstra die?",
+"Op welke drie manieren zit er tijd in een foto van Dijkstra?",
+"Leg het begrip tussenmoment uit en geef drie voorbeelden uit haar werk.",
+"Waarom zijn de foto's van Dijkstra geen snapshots? Noem minstens vier bewuste keuzes die zij maakt.",
+"Welke rol speelt het flitslicht in haar beelden?",
+"Waarom werkt Dijkstra met een trage grootformaatcamera en wat is daarvan het effect op het model?",
+"Wat is een contrapost en waar komt die houding vandaan?",
+"Wat is een Venus Pudica? Geef een voorbeeld uit de Oudheid en een uit de Renaissance.",
+"Vertel hoe Venus volgens Hesiodus geboren werd en leg uit hoe Botticelli dat verhaal met de lente verbindt. Benoem alle figuren op het schilderij.",
+"Waarom veroorzaakte Manets <i>Le Déjeuner sur l'herbe</i> een schandaal?",
+"Wat is een forcado en waarom koos Dijkstra precies het moment na het gevecht?",
+"Wat is het Vreemdelingenlegioen en waarom geeft die context extra betekenis aan de reeks <i>Olivier</i>?",
+"Waarom maakte Dijkstra na de foto's in de Buzz Club ook een video? Wat kon de video tonen dat de foto niet kon?",
+"Vergelijk Versproncks <i>Portret van Adriana Croes</i> met een portret uit de reeks <i>Olivier</i>: wat doen beide kunstenaars op dezelfde manier en waar verschillen zij?"
+];
+var VRAGEN_B=[
+"Analyseer <i>Self-Portrait, Marnixbad, Amsterdam</i> aan de hand van de vier elementen lichaam, ruimte, object en tijd.",
+"Vergelijk <i>Kolobrzeg, Poland, July 26, 1992</i> met Botticelli's <i>De geboorte van Venus</i>: wat hebben de twee beelden gemeen en waar verschilt de betekenis van de contrapost?",
+"Vergelijk de strandportretten met de parkportretten: welke rol speelt de achtergrond in elke reeks en wat verandert dat voor de figuur?",
+"In <i>Olivier</i> en in <i>Bullfighters</i> staat de tijd centraal, maar op een andere manier. Leg het verschil uit.",
+"Beschrijf hoe de ruimte bij Dijkstra telkens een tussenruimte is. Kies drie werken en leg per werk uit waarom.",
+"Waarom kan je zeggen dat Dijkstra's foto's dichter bij de schilderkunst staan dan bij de snapshot? Geef argumenten uit haar werkwijze en uit de kunstgeschiedenis.",
+"Vergelijk de video <i>The Buzzclub / Mysteryworld</i> met een van de fotoreeksen: wat blijft hetzelfde in de opstelling en wat verandert door het medium?",
+"Stel: je mag één portret van Dijkstra op ware grootte in de klas hangen. Welk werk kies je, op welke hoogte en op welke afstand, en wat wil je dat de kijker ervaart?",
+"Ontwerp zelf een portret in de stijl van Dijkstra: welk tussenmoment, welke plaats, welk licht en welke houding kies je, en waarom?"
+];
+var SLEUTEL="dijkstra-vragen-geoefend";
+var gedaan={};
+try{gedaan=JSON.parse(localStorage.getItem(SLEUTEL)||"{}")||{};}catch(e){gedaan={};}
+function bewaar(){try{localStorage.setItem(SLEUTEL,JSON.stringify(gedaan));}catch(e){}}
+function tel(){
+  var n=Object.keys(gedaan).filter(function(k){return gedaan[k];}).length;
+  document.getElementById("teller").textContent=n+" van "+(VRAGEN_A.length+VRAGEN_B.length)+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";
+}
+function bouw(id,vragen,voor){
+  var ol=document.getElementById(id);
+  vragen.forEach(function(v,i){
+    var sleutel=voor+(i+1);
+    var li=document.createElement("li");
+    var cb=document.createElement("input");cb.type="checkbox";cb.id="vraag-"+sleutel;cb.checked=!!gedaan[sleutel];
+    cb.addEventListener("change",function(){gedaan[sleutel]=cb.checked;bewaar();tel();});
+    var lab=document.createElement("label");lab.htmlFor=cb.id;lab.innerHTML=v;
+    li.appendChild(cb);li.appendChild(lab);ol.appendChild(li);
+  });
+}
+bouw("vragenA",VRAGEN_A,"a");bouw("vragenB",VRAGEN_B,"b");tel();
+
+// Inhoud: markeer waar je bent.
+if("IntersectionObserver" in window){
+  var links={};
+  document.querySelectorAll("nav.inhoud a").forEach(function(a){links[a.getAttribute("href").slice(1)]=a;});
+  var io=new IntersectionObserver(function(items){
+    items.forEach(function(it){
+      if(it.isIntersecting&&links[it.target.id]){
+        Object.keys(links).forEach(function(k){links[k].classList.remove("actief");});
+        links[it.target.id].classList.add("actief");
+      }
+    });
+  },{rootMargin:"-10% 0px -80% 0px"});
+  Object.keys(links).forEach(function(id){var el=document.getElementById(id);if(el){io.observe(el);}});
+}
+</script>
+</body>
+</html>
