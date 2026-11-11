@@ -110,7 +110,8 @@ def doc_naar_blokken(body, fns):
             t = el["table"]; rijen = t["tableRows"]
             if t["rows"] == 1 and t["columns"] == 1:
                 ps = cel_paras(rijen[0]["tableCells"][0])
-                if any(para_info(p)["img"] for p in ps):
+                eerste = next((runs_html(p, fns, [])[1] for p in ps if runs_html(p, fns, [])[1]), "")
+                if any(para_info(p)["img"] for p in ps) or re.match(r"^\[\s*afbeelding", eerste, re.I):
                     f = figuur([p for p in ps if not para_info(p)["img"]], fns)
                     if f: blokken.append(f)
                 else:
