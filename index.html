@@ -3,53 +3,155 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kunst bekijken: leerstof</title>
+<title>Kunst bekijken</title>
+<meta name="description" content="Leren kijken naar kunst: methodes, kunstgeschiedenis van Caravaggio tot nu, kunstvormen en kunstfilosofie.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Zelfde witte zaal als de hoofdstukken: één kolom, grijze kaders, rood accent. */
-  --wand:#ffffff;--inkt:#141414;--zacht:#5f5f5f;--kader:#f2f2f2;--lijn:#bfbfbf;--rood:#c8102e;
+  /* Kaarslicht: een donkere aanhef rond De La Tour, daarna de witte zaal van de hoofdstukken. Eén warm accent. */
+  --nacht:#0d0a07;
+  --was:#f3e6cc;
+  --vlam:#e0a248;
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --display:"Cormorant Garamond","Georgia",serif;
   --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
   --data:"IBM Plex Mono","Consolas","Courier New",monospace;
   color-scheme:light;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
-main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 5rem}
-.vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.2rem}
-h1{font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.05;margin:0 0 .8rem;text-wrap:balance}
-.intro{color:var(--zacht);max-width:36rem;margin:0 0 3rem}
-h2{font-size:1.4rem;margin:3rem 0 .8rem;padding-top:.8rem;border-top:1px solid var(--inkt)}
-ul.hoofdstukken{list-style:none;margin:0;padding:0;display:grid;gap:.8rem}
-ul.hoofdstukken a{display:block;padding:1rem 1.1rem;background:var(--kader);border:1px solid var(--lijn);text-decoration:none;color:inherit}
-ul.hoofdstukken a:hover{border-color:var(--inkt)}
-ul.hoofdstukken a:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
-.titel{font-weight:700;font-size:1.2rem;display:block}
-.onder{font-style:italic;color:var(--zacht);display:block}
-.meta{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block;margin-bottom:.3rem}
-.binnenkort{color:var(--zacht);font-style:italic;margin:0}
-footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--vlam);outline-offset:3px}
+
+/* Aanhef */
+.aanhef{position:relative;background:var(--nacht);color:var(--was);overflow:hidden;min-height:min(46rem,88vh);display:grid;align-items:end}
+.aanhef img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 38%}
+.aanhef::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,10,7,.94) 0%,rgba(13,10,7,.78) 34%,rgba(13,10,7,.15) 68%,rgba(13,10,7,0) 100%),linear-gradient(0deg,rgba(13,10,7,.85) 0%,rgba(13,10,7,0) 40%)}
+.aanhef-tekst{position:relative;z-index:1;max-width:72rem;width:100%;margin:0 auto;padding:6rem 1.5rem 2.5rem}
+.aanhef .eyebrow{font-family:var(--data);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vlam);margin:0 0 1rem}
+.aanhef h1{font-family:var(--display);font-weight:600;font-size:clamp(3.2rem,9vw,6.5rem);line-height:.95;margin:0 0 1.2rem;max-width:12ch;text-wrap:balance}
+.aanhef .intro{max-width:34rem;font-size:1.2rem;color:var(--was);margin:0 0 2rem}
+.aanhef .bijschrift{font-size:.85rem;color:rgba(243,230,204,.72);margin:0;max-width:34rem}
+.aanhef .bijschrift i{color:var(--was)}
+
+/* Vier deuren */
+.deuren{width:calc(100% - 3rem);max-width:69rem;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--lijn);border:1px solid var(--lijn);transform:translateY(-1.5rem);position:relative;z-index:2}
+.deur{background:var(--wand);padding:1.3rem 1.2rem 1.4rem;text-decoration:none;display:flex;flex-direction:column;gap:.35rem}
+.deur:hover{background:#fbf6ec}
+.deur .nr{font-family:var(--data);font-size:.72rem;color:var(--rood)}
+.deur .d-titel{font-family:var(--display);font-weight:600;font-size:1.65rem;line-height:1.05}
+.deur .d-tekst{font-size:.98rem;color:var(--zacht);line-height:1.4}
+
+main{max-width:72rem;margin:0 auto;padding:1.5rem 1.5rem 5rem}
+section{margin-top:4.5rem;scroll-margin-top:1.5rem}
+.kop{display:grid;grid-template-columns:minmax(0,18rem) minmax(0,1fr);gap:2rem;border-top:1px solid var(--inkt);padding-top:1rem;margin-bottom:1.6rem}
+.kop .nr{font-family:var(--data);font-size:.75rem;color:var(--rood);display:block;margin-bottom:.3rem}
+h2{font-family:var(--display);font-weight:600;font-size:2.4rem;line-height:1;margin:0;text-wrap:balance}
+.kop p{margin:.2rem 0 0;color:var(--zacht);max-width:40rem}
+
+ul.kaarten{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:.9rem}
+.kaart{display:flex;flex-direction:column;gap:.3rem;height:100%;padding:1rem 1.1rem 1.1rem;border:1px solid var(--lijn);background:var(--wand);text-decoration:none}
+a.kaart{border-color:var(--inkt);border-left:4px solid var(--vlam)}
+a.kaart:hover{background:#fbf6ec}
+.kaart.later{background:var(--kader);color:var(--zacht)}
+.k-titel{font-weight:700;font-size:1.15rem;line-height:1.25;color:var(--inkt)}
+.later .k-titel{color:#3a3a3a}
+.k-onder{font-size:.98rem;line-height:1.4}
+.k-ga{margin-top:auto;padding-top:.6rem;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase}
+a.kaart .k-ga{color:var(--rood)}
+a.kaart .k-ga::after{content:" \2192"}
+.periode{font-family:var(--data);font-size:.72rem;color:var(--rood)}
+
+/* Tijdlijn */
+ol.tijdlijn{list-style:none;margin:0;padding:0;border-left:2px solid var(--inkt);margin-left:6.5rem}
+ol.tijdlijn li{position:relative;padding:0 0 .9rem 1.4rem}
+ol.tijdlijn li::before{content:"";position:absolute;left:-.42rem;top:1.15rem;width:.7rem;height:.7rem;border-radius:50%;background:var(--wand);border:2px solid var(--inkt)}
+ol.tijdlijn li.on::before{background:var(--vlam);border-color:var(--vlam)}
+ol.tijdlijn .jaar{position:absolute;left:-6.5rem;top:.9rem;width:5.6rem;text-align:right;font-family:var(--data);font-size:.8rem;font-variant-numeric:tabular-nums}
+ol.tijdlijn .kaart{max-width:40rem}
+
+/* Kunstvormen */
+.vormen{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:1.5rem 2rem}
+.vorm h3{font-size:1.05rem;margin:0 0 .4rem;padding-bottom:.3rem;border-bottom:1px solid var(--lijn)}
+.vorm ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.25rem;font-size:1rem}
+.vorm a{font-weight:700;text-decoration-color:var(--vlam);text-underline-offset:3px}
+.later-tekst{color:var(--zacht)}
+
+footer{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-size:.9rem;color:var(--zacht);display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
+
+@media (max-width:56rem){
+  .deuren{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kop{grid-template-columns:minmax(0,1fr);gap:.6rem}
+}
+@media (max-width:34rem){
+  .aanhef img{object-position:72% 30%}
+  .aanhef::after{background:linear-gradient(0deg,rgba(13,10,7,.96) 0%,rgba(13,10,7,.8) 45%,rgba(13,10,7,.2) 80%)}
+  .deuren{grid-template-columns:minmax(0,1fr);transform:none;margin-top:1rem}
+  ol.tijdlijn{margin-left:.4rem}
+  ol.tijdlijn .jaar{position:static;display:block;width:auto;text-align:left;margin-bottom:.2rem}
+  ol.tijdlijn li::before{top:.35rem}
+}
 </style>
 </head>
 <body>
+
+<header class="aanhef">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Penitent_Magdalen_MET_DT7252.jpg/1920px-The_Penitent_Magdalen_MET_DT7252.jpg"
+       srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Penitent_Magdalen_MET_DT7252.jpg/960px-The_Penitent_Magdalen_MET_DT7252.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Penitent_Magdalen_MET_DT7252.jpg/1920px-The_Penitent_Magdalen_MET_DT7252.jpg 1920w"
+       sizes="100vw" alt="Een vrouw zit in het donker, het hoofd in de hand, en kijkt naar een kaars die weerspiegelt in een spiegel. Op haar schoot ligt een schedel.">
+  <div class="aanhef-tekst">
+    <p class="eyebrow">Leren kijken naar kunst</p>
+    <h1>Kunst bekijken</h1>
+    <p class="intro">Van Caravaggio tot nu: hoe je naar een kunstwerk kijkt, wat er in de kunstgeschiedenis gebeurde, en wat filosofen over kunst dachten. Voor iedereen die meer wil zien.</p>
+    <p class="bijschrift">Georges de La Tour, <i>De boetvaardige Magdalena</i> (ca. 1640). The Metropolitan Museum of Art, New York. Publiek domein. <a href="https://www.metmuseum.org/art/collection/search/436839">Bekijk het werk bij het museum</a>.</p>
+  </div>
+</header>
+
+<nav class="deuren" aria-label="Vier ingangen">
+  <a class="deur" href="#kijken"><span class="nr">01</span><span class="d-titel">Leren kijken</span><span class="d-tekst">Methodes om elk kunstwerk te benaderen</span></a>
+  <a class="deur" href="#tijd"><span class="nr">02</span><span class="d-titel">Door de tijd</span><span class="d-tekst">Van de barok tot de kunst van vandaag</span></a>
+  <a class="deur" href="#vormen"><span class="nr">03</span><span class="d-titel">Kunstvormen</span><span class="d-tekst">Schilderkunst, foto, film, performance en meer</span></a>
+  <a class="deur" href="#denken"><span class="nr">04</span><span class="d-titel">Denken over kunst</span><span class="d-tekst">Wat filosofen en schrijvers over kunst zeiden</span></a>
+</nav>
+
 <main>
-  <p class="vak">Kunstbeschouwing / Esthetica</p>
-  <h1>Kunst bekijken</h1>
-  <p class="intro">Leerstof van S. Ben Yakoub voor Kunstbeschouwing en Esthetica. Elk hoofdstuk bevat de volledige tekst, een woordenschat en voorbeeldvragen. De kunstwerken bekijk je via de links naar de musea die ze bewaren.</p>
+<section id="kijken">
+  <div class="kop"><div><span class="nr">01</span><h2>Leren kijken</h2></div>
+  <p>Begin hier. Deze hoofdstukken geven je een manier van kijken die je bij elk kunstwerk kan gebruiken, oud of nieuw.</p></div>
+  <ul class="kaarten"><li><div class="kaart later" aria-disabled="true"><span class="k-titel">De vier elementen</span><span class="k-onder">Tijd, ruimte, lichaam en object: een manier van kijken die bij elk kunstwerk werkt</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">De epoché en de ekphrasis</span><span class="k-onder">Je eerste oordeel uitstellen en in woorden vatten wat je ziet</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Iconografie en iconologie</span><span class="k-onder">Betekenis lezen in een kunstwerk met het stappenplan van Panofsky</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Viktor Sjklovski</span><span class="k-onder">De kunst van het vreemdmaken</span><span class="k-ga">Binnenkort online</span></div></li></ul>
+</section>
 
-  <h2>Hoofdstukken</h2>
-  <ul class="hoofdstukken">
-    <li><a href="rineke-dijkstra/">
-      <span class="meta">Esthetica 5 / Kunstbeschouwing 4</span>
-      <span class="titel">Rineke Dijkstra, het portret</span>
-      <span class="onder">Fotografie, lichaam, blik en het tussenmoment</span>
-    </a></li>
-  </ul>
-  <p class="binnenkort">Meer hoofdstukken volgen.</p>
+<section id="tijd">
+  <div class="kop"><div><span class="nr">02</span><h2>Door de tijd</h2></div>
+  <p>Stromingen en kunstenaars in de volgorde waarin ze verschenen, van de schilders van het licht rond 1600 tot een video-installatie van vandaag.</p></div>
+  <ol class="tijdlijn"><li class=""><span class="jaar">ca. 1600</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Caravaggio en de barok</span><span class="k-onder">Licht, donker en de rauwe werkelijkheid</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">1715-1780</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Rococo</span><span class="k-onder">Watteau en Fragonard: spel, verleiding en melancholie</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">1780-1830</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Neoclassicisme</span><span class="k-onder">David en Ingres: terug naar de Oudheid</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">1800-1840</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Romantiek</span><span class="k-onder">Friedrich en Géricault: gevoel, natuur en drama</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">1850-1915</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Modernisme</span><span class="k-onder">Van het realisme en Manet over het impressionisme tot de abstracte kunst</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">vanaf 1913</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Marcel Duchamp</span><span class="k-onder">De readymade: een voorwerp wordt kunst</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">1916-1924</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Dada</span><span class="k-onder">Een houding, geen stijl: van Zürich tot Parijs</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">vanaf 1919</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Architectuur en design</span><span class="k-onder">Het Bauhaus, Le Corbusier en Tadao Ando</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">1955-1970</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Popart</span><span class="k-onder">Andy Warhol, de Factory en The Velvet Underground</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">vanaf 1965</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Conceptuele kunst</span><span class="k-onder">Het idee als kunstwerk: Joseph Kosuth en Marcel Broodthaers</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">vanaf 1970</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Performance als tijdskunst</span><span class="k-onder">Marina Abramović en Ulay</span><span class="k-ga">Binnenkort online</span></div></li><li class="on"><span class="jaar">1991-2006</span><a class="kaart" href="rineke-dijkstra/"><span class="k-titel">Rineke Dijkstra, het portret</span><span class="k-onder">Fotografie, lichaam, blik en het tussenmoment</span><span class="k-ga">Lees het hoofdstuk</span></a></li><li class=""><span class="jaar">vanaf 1996</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Ron Mueck en mimesis</span><span class="k-onder">Mensfiguren van huid en haar, op de verkeerde schaal</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">2012</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Film als tijdskunst</span><span class="k-onder">Montage en filmtaal, aan de hand van de kortfilm Swimmer</span><span class="k-ga">Binnenkort online</span></div></li><li class=""><span class="jaar">2026</span><div class="kaart later" aria-disabled="true"><span class="k-titel">Anouk De Clercq</span><span class="k-onder">Love that Moves the Sun: een video-installatie om in te wandelen</span><span class="k-ga">Binnenkort online</span></div></li></ol>
+</section>
 
-  <footer><p>Schooljaar 2026-2027. Samengesteld door S. Ben Yakoub.</p></footer>
+<section id="vormen">
+  <div class="kop"><div><span class="nr">03</span><h2>Kunstvormen</h2></div>
+  <p>Dezelfde onderwerpen, gesorteerd volgens het medium. Handig als je wil weten hoe fotografie, film of performance werkt.</p></div>
+  <div class="vormen"><div class="vorm"><h3>Schilderkunst</h3><ul><li><span class="later-tekst">De epoché en de ekphrasis</span></li><li><span class="later-tekst">Iconografie en iconologie</span></li><li><span class="later-tekst">Caravaggio en de barok</span></li><li><span class="later-tekst">Rococo</span></li><li><span class="later-tekst">Neoclassicisme</span></li><li><span class="later-tekst">Romantiek</span></li><li><span class="later-tekst">Modernisme</span></li><li><span class="later-tekst">Dada</span></li><li><span class="later-tekst">Popart</span></li><li><span class="later-tekst">Viktor Sjklovski</span></li><li><span class="later-tekst">Susan Sontag</span></li><li><span class="later-tekst">Gilles Deleuze</span></li><li><span class="later-tekst">Junichiro Tanizaki</span></li></ul></div><div class="vorm"><h3>Beeldhouwkunst en objecten</h3><ul><li><span class="later-tekst">Marcel Duchamp</span></li><li><span class="later-tekst">Conceptuele kunst</span></li><li><span class="later-tekst">Ron Mueck en mimesis</span></li></ul></div><div class="vorm"><h3>Fotografie</h3><ul><li><a href="rineke-dijkstra/">Rineke Dijkstra, het portret</a></li><li><span class="later-tekst">Walter Benjamin</span></li><li><span class="later-tekst">Roland Barthes</span></li></ul></div><div class="vorm"><h3>Performance</h3><ul><li><span class="later-tekst">Dada</span></li><li><span class="later-tekst">Performance als tijdskunst</span></li></ul></div><div class="vorm"><h3>Film en video</h3><ul><li><a href="rineke-dijkstra/">Rineke Dijkstra, het portret</a></li><li><span class="later-tekst">Film als tijdskunst</span></li><li><span class="later-tekst">Anouk De Clercq</span></li></ul></div><div class="vorm"><h3>Architectuur en design</h3><ul><li><span class="later-tekst">Architectuur en design</span></li></ul></div><div class="vorm"><h3>Muziek</h3><ul><li><span class="later-tekst">Popart</span></li><li><span class="later-tekst">Muziek: luisteren naar tijd</span></li></ul></div></div>
+</section>
+
+<section id="denken">
+  <div class="kop"><div><span class="nr">04</span><h2>Denken over kunst</h2></div>
+  <p>Korte inleidingen op een denker of een tekst, telkens toegepast op twee kunstwerken.</p></div>
+  <ul class="kaarten"><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Marcel Duchamp</span><span class="k-onder">De readymade: een voorwerp wordt kunst</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Immanuel Kant</span><span class="k-onder">Het schone, het aangename en het sublieme</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Viktor Sjklovski</span><span class="k-onder">De kunst van het vreemdmaken</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Walter Benjamin</span><span class="k-onder">Het aura en de kopie: kunst in het tijdperk van de reproductie</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Susan Sontag</span><span class="k-onder">Tegen de interpretatie: kijken naar wat er is</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Roland Barthes</span><span class="k-onder">Studium en punctum: wat een foto met je doet</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Arthur Danto</span><span class="k-onder">De kunstwereld: wat maakt een voorwerp tot kunst?</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Gilles Deleuze</span><span class="k-onder">De scheppende daad als verzet</span><span class="k-ga">Binnenkort online</span></div></li><li><div class="kaart later" aria-disabled="true"><span class="k-titel">Junichiro Tanizaki</span><span class="k-onder">Lof der schaduw: schoonheid in het halfdonker</span><span class="k-ga">Binnenkort online</span></div></li></ul>
+</section>
+
+<footer>
+  <p>Samengesteld door Sammy Ben Yakoub. 1 van 27 hoofdstukken staan online, de rest volgt.</p>
+  <p>De kunstwerken bekijk je via links naar de musea die ze bewaren.</p>
+</footer>
 </main>
 </body>
 </html>
