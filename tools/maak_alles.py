@@ -5,6 +5,7 @@ sys.path.insert(0, str(HIER))
 from omzetten import *
 from onderwerpen import ONDERWERPEN
 from herschrijvingen import HERSCHRIJF
+import media
 
 DOCS = pathlib.Path("/tmp/docs")
 SITE = HIER.parent
@@ -133,6 +134,30 @@ GEBOUWD = {}
 def schrijf(slug, inhoud, woorden, vragen, extra):
     GEBOUWD[slug] = (strepen(inhoud), strepen([{"type":"x","items":woorden}])[0]["items"], vragen, [(t, strepen(b)) for t, b in extra])
 
+def voeg_media_toe(slug, html_):
+    items = media.MEDIA.get(slug, [])
+    if not items: return html_
+    for anker, tp, mid, titel, bron, uitleg in items:
+        pos = html_.find(f'id="{anker}"')
+        if pos < 0: print("  ANKER NIET GEVONDEN", slug, anker); continue
+        nxt = [i for i in (html_.find(t, pos + 10) for t in ('<h2 id=', '<h3 id=', '<section', '<nav class="hoofdstuk-nav"')) if i > 0]
+        at = min(nxt)
+        html_ = html_[:at] + media.blok(tp, mid, titel, bron, uitleg) + "\n" + html_[at:]
+    html_ = html_.replace("</style>", media.CSS + "</style>", 1)
+    html_ = html_.replace("</script>\n</body>", media.JS + "</script>\n</body>")
+    return html_
+
+def dijkstra_media():
+    p = SITE / "rineke-dijkstra" / "index.html"
+    s = p.read_text(encoding="utf-8")
+    if 'class="media"' in s: return
+    blokken = "".join(media.blok(*x) for x in media.DIJKSTRA)
+    s = s.replace('<ul class="links">', blokken + '\n<ul class="links">', 1)
+    s = s.replace('<h2>Verder kijken en lezen</h2>', '<h2>Verder kijken en luisteren</h2>', 1)
+    s = s.replace("</style>", media.CSS + "</style>", 1)
+    s = s.replace("</script>\n</body>", media.JS + "</script>\n</body>")
+    p.write_text(s, encoding="utf-8")
+
 def render_alles():
     seq = [s for s in volgorde() if s in GEBOUWD or s == "rineke-dijkstra"]
     for slug, (inhoud, woorden, vragen, extra) in GEBOUWD.items():
@@ -146,6 +171,7 @@ def render_alles():
             if oud_e not in html_: print("  NIET GEVONDEN", slug, oud[:60]); continue
             html_ = html_.replace(oud_e, nieuw_e)
         html_ = re.sub(r"<p>\s*</p>", "", html_)
+        html_ = voeg_media_toe(slug, html_)
         (SITE / slug).mkdir(exist_ok=True)
         (SITE / slug / "index.html").write_text(html_, encoding="utf-8")
         print(f"{slug:24} {len(html_)//1024:4} kB  {len(woorden):3} woorden  {sum(len(g['vragen']) for g in vragen):3} vragen  {html_.count('class=\"beeld\"'):3} beelden  {html_.count('werk-link'):3} links")
@@ -187,3 +213,4 @@ for slug, begin in KBS4.items():
     schrijf(slug, zonder_woorden(opschonen(d["blokken"])), [], [], [])
 
 render_alles()
+dijkstra_media()

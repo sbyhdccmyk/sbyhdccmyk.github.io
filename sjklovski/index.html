@@ -158,6 +158,19 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 .hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
 .hoofdstuk-nav a{text-decoration:none;font-weight:700}
 .hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+
+figure.media{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn)}
+.media-scherm{position:relative;aspect-ratio:16/9;background:#0d0a07;overflow:hidden}
+.media-scherm.audio{aspect-ratio:auto;height:9rem}
+.media-scherm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media-start{position:absolute;inset:0;width:100%;height:100%;border:0;background:radial-gradient(circle at 50% 45%,#3a2a16 0%,#0d0a07 70%);color:#f3e6cc;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:1rem;text-align:center}
+.media-start:hover .knop,.media-start:focus-visible .knop{background:#e0a248;color:#0d0a07}
+.media-start .knop{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e0a248;color:#e0a248;padding:.45rem 1rem;font-family:var(--data);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.media-start .knop::before{content:"";width:0;height:0;border-left:.6rem solid currentColor;border-top:.38rem solid transparent;border-bottom:.38rem solid transparent}
+.media-start .m-titel{font-size:1.05rem;max-width:30rem;line-height:1.3}
+.media-start .m-noot{font-size:.78rem;opacity:.7;max-width:30rem}
+figure.media figcaption{font-size:1rem;line-height:1.4;padding:.6rem .2rem 0;text-align:center}
+figure.media .m-bron{display:block;font-size:.9rem;color:var(--zacht)}
 </style>
 </head>
 <body>
@@ -211,6 +224,7 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 <p>Alles op de tafel toont kennis, rijkdom en macht. De schedel herinnert eraan dat dat alles vergaat: het schilderij is een memento mori, een herinnering aan de dood. Omdat de schedel vreemd gemaakt is, moet de kijker er letterlijk voor van plaats veranderen. Zo wordt de boodschap geen versiering, maar een ervaring.</p>
 <aside class="kader"><h4>Opdracht</h4><p>Kies een voorwerp dat je elke dag gebruikt, zoals je tas, een tandenborstel of je gsm. Beschrijf het in tien zinnen alsof je het voor het eerst ziet en niet weet waarvoor het dient, zoals het paard van Tolstoj. Gebruik de naam van het voorwerp niet. Laat iemand anders raden wat het is.</p></aside>
 
+<figure class="media"><div class="media-scherm"><button type="button" class="media-start" data-type="youtube" data-id="paA8hqqQ-_w" data-titel="Hans Holbein de Jonge, De ambassadeurs (1533)"><span class="knop">Afspelen</span><span class="m-titel">Hans Holbein de Jonge, De ambassadeurs (1533)</span><span class="m-noot">Wordt geladen van YouTube wanneer je klikt.</span></button></div><figcaption>Hans Holbein de Jonge, De ambassadeurs (1533)<span class="m-bron">The National Gallery, Londen (Engels). <a href="https://www.youtube.com/watch?v=paA8hqqQ-_w">Bekijk bij YouTube</a></span><span class="m-bron">Let op hoe de schedel pas leesbaar wordt als je van opzij kijkt.</span></figcaption></figure>
 <section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Russisch formalisme", "Groep Russische literatuuronderzoekers vanaf ongeveer 1915 die literatuur bestudeerden vanuit de vorm en de gebruikte kunstgrepen."], ["Procédé", "Werkwijze of kunstgreep waarmee een kunstwerk gemaakt is."], ["Automatisering", "Bij Sjklovski: het proces waarbij herhaalde handelingen en waarnemingen onbewust worden."], ["Vreemdmaking (ostranenie)", "Kunstgreep waarbij iets vertrouwds op een onverwachte manier getoond wordt, zodat we het opnieuw waarnemen."], ["Vertraging", "Bij Sjklovski: het bewust moeilijker maken van de vorm, zodat de waarneming langer duurt."], ["Allegorisch portret", "Portret waarin iemand voorgesteld wordt als een figuur uit de mythologie of als een begrip."], ["Anamorfose", "Vervormde afbeelding die je alleen juist ziet vanuit een bepaalde hoek of via een spiegel."], ["Memento mori", "Latijn voor gedenk te sterven: een voorwerp of beeld dat aan de dood herinnert, zoals een schedel."]]</script></section>
 <section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Wat verstaat Sjklovski onder automatisering? Geef een voorbeeld uit je eigen leven.</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Wat bedoelt Sjklovski met de uitspraak dat kunst er is om de steen steenachtig te maken?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Wat is vreemdmaking (ostranenie)? Leg uit waarom vertraging daarbij een voordeel is.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Hoe gebruikt Tolstoj volgens Sjklovski vreemdmaking in zijn verhaal over een paard?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Hoe maakt Arcimboldo in <i>Vertumnus</i> het vertrouwde vreemd?</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Wat is een anamorfose en waarom gebruikt Holbein er een in <i>De ambassadeurs</i>?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Vergelijk de vreemdmaking bij Arcimboldo en bij Holbein. Wat wordt telkens vreemd gemaakt, en hoe moet de kijker reageren?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Kies een werk van deze site dat je eerder zag. Welke kunstgreep van vreemdmaking herken je erin?</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Bedenk een kunstwerk voor een plek die je goed kent, dat iets vertrouwds vreemd maakt. Beschrijf het en leg uit wat de kijker daardoor opnieuw zou zien.</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Sjklovski vindt dat kunst de waarneming moeilijker mag maken. Ben je het daarmee eens? Argumenteer.</label></li></ol></section>
 <nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../iconografie/"><span>Vorig onderwerp</span>&larr; Iconografie en iconologie</a><a href="../caravaggio/" style="text-align:right"><span>Volgend onderwerp</span>Caravaggio en de barok &rarr;</a></nav>
@@ -232,6 +246,14 @@ cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change
 if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
 var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
 Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+
+document.querySelectorAll(".media-start").forEach(function(b){b.addEventListener("click",function(){
+  var s=b.parentNode,t=b.dataset.type,id=b.dataset.id,src;
+  if(t==="youtube")src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0";
+  else if(t==="vimeo")src="https://player.vimeo.com/video/"+id+"?autoplay=1&dnt=1";
+  else src="https://archive.org/embed/"+id+"?playlist=1";
+  var f=document.createElement("iframe");f.src=src;f.title=b.dataset.titel;f.allow="autoplay; fullscreen; picture-in-picture; encrypted-media";f.allowFullscreen=true;
+  s.replaceChildren(f);});});
 </script>
 </body>
 </html>

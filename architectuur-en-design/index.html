@@ -158,6 +158,19 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 .hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
 .hoofdstuk-nav a{text-decoration:none;font-weight:700}
 .hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+
+figure.media{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn)}
+.media-scherm{position:relative;aspect-ratio:16/9;background:#0d0a07;overflow:hidden}
+.media-scherm.audio{aspect-ratio:auto;height:9rem}
+.media-scherm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media-start{position:absolute;inset:0;width:100%;height:100%;border:0;background:radial-gradient(circle at 50% 45%,#3a2a16 0%,#0d0a07 70%);color:#f3e6cc;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:1rem;text-align:center}
+.media-start:hover .knop,.media-start:focus-visible .knop{background:#e0a248;color:#0d0a07}
+.media-start .knop{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e0a248;color:#e0a248;padding:.45rem 1rem;font-family:var(--data);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.media-start .knop::before{content:"";width:0;height:0;border-left:.6rem solid currentColor;border-top:.38rem solid transparent;border-bottom:.38rem solid transparent}
+.media-start .m-titel{font-size:1.05rem;max-width:30rem;line-height:1.3}
+.media-start .m-noot{font-size:.78rem;opacity:.7;max-width:30rem}
+figure.media figcaption{font-size:1rem;line-height:1.4;padding:.6rem .2rem 0;text-align:center}
+figure.media .m-bron{display:block;font-size:.9rem;color:var(--zacht)}
 </style>
 </head>
 <body>
@@ -343,6 +356,7 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 <p>Vind je deze kerkzaal mooi, of eerder te leeg en te koud? Welk element in het ontwerp bepaalt jouw oordeel het sterkst?</p>
 <p>Een lid van de gemeente in Ibaraki zit hier elke zondag. Een Europese architectuurtoerist komt één keer kijken en neemt een foto van het kruis. Beleven ze dezelfde ruimte? Wat ziet de ene dat de andere mist?</p>
 <p>Was het de juiste beslissing van de gemeente om glas in het kruis te laten zetten, tegen de wil van de architect in? Wie heeft volgens jou het laatste woord over een gebouw: de architect of de gebruiker?</p>
+<figure class="media"><div class="media-scherm"><button type="button" class="media-start" data-type="youtube" data-id="ucHo12HrQuQ" data-titel="Tadao Ando, Kerk van het Licht, Osaka"><span class="knop">Afspelen</span><span class="m-titel">Tadao Ando, Kerk van het Licht, Osaka</span><span class="m-noot">Wordt geladen van YouTube wanneer je klikt.</span></button></div><figcaption>Tadao Ando, Kerk van het Licht, Osaka<span class="m-bron">Goethe-Institut (Engels). <a href="https://www.youtube.com/watch?v=ucHo12HrQuQ">Bekijk bij YouTube</a></span></figcaption></figure>
 <h3 id="d-21-21-design-sight-2007" class="sub">d. 21_21 Design Sight (2007)</h3>
 <figure class="beeld"><figcaption>Tadao Ando, <i>21_21 Design Sight</i> (2007)<br>Tokyo Midtown, Tokio. Binnenzicht met een betonnen trap, een glazen balustrade en een hoge wand van schoon beton. Ongeveer 80 procent van het gebouw ligt onder de grond.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.2121designsight.jp/en/designsight/architecture.html">Bekijk bij 21_21 DESIGN SIGHT</a><a class="werk-link" href="https://www.gov-online.go.jp/eng/publicity/book/hlj/html/201708/201708_05_en.html">Bekijk bij Highlighting Japan, regering van Japan</a></div></figure>
 <p>Hoe Ando het westerse modernisme en Japan verbindt, zie je ook in <i>21_21 Design Sight</i> in Tokio, een tentoonstellingshuis voor design dat in 2007 openging. De modeontwerper Issey Miyake had in 2003 opgeroepen om in Japan een plaats voor design te maken. Zijn idee “A Piece of Cloth”, kleding uit één stuk stof, inspireerde Ando: het dak is één gevouwen stalen plaat van 54 meter lang, die als een stuk stof over het gebouw ligt. Om het park eromheen niet te verstoren, verdween ongeveer 80 procent van het gebouw onder de grond.<sup class="bron"><a href="https://www.2121designsight.jp/en/designsight/architecture.html" title="Bron: 21_21 DESIGN SIGHT">bron</a></sup><sup class="bron"><a href="https://www.gov-online.go.jp/eng/publicity/book/hlj/html/201708/201708_05_en.html" title="Bron: Highlighting Japan, regering van Japan">bron</a></sup> Binnen spreekt Ando dezelfde taal als in de <i>Kerk van het Licht</i>: glad beton met een strak raster van bekistingsgaatjes en licht dat langs een hoge wand naar beneden valt.</p>
@@ -408,6 +422,14 @@ cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change
 if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
 var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
 Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+
+document.querySelectorAll(".media-start").forEach(function(b){b.addEventListener("click",function(){
+  var s=b.parentNode,t=b.dataset.type,id=b.dataset.id,src;
+  if(t==="youtube")src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0";
+  else if(t==="vimeo")src="https://player.vimeo.com/video/"+id+"?autoplay=1&dnt=1";
+  else src="https://archive.org/embed/"+id+"?playlist=1";
+  var f=document.createElement("iframe");f.src=src;f.title=b.dataset.titel;f.allow="autoplay; fullscreen; picture-in-picture; encrypted-media";f.allowFullscreen=true;
+  s.replaceChildren(f);});});
 </script>
 </body>
 </html>

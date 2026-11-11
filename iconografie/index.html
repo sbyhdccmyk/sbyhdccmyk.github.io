@@ -158,6 +158,19 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 .hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
 .hoofdstuk-nav a{text-decoration:none;font-weight:700}
 .hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+
+figure.media{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn)}
+.media-scherm{position:relative;aspect-ratio:16/9;background:#0d0a07;overflow:hidden}
+.media-scherm.audio{aspect-ratio:auto;height:9rem}
+.media-scherm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media-start{position:absolute;inset:0;width:100%;height:100%;border:0;background:radial-gradient(circle at 50% 45%,#3a2a16 0%,#0d0a07 70%);color:#f3e6cc;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:1rem;text-align:center}
+.media-start:hover .knop,.media-start:focus-visible .knop{background:#e0a248;color:#0d0a07}
+.media-start .knop{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e0a248;color:#e0a248;padding:.45rem 1rem;font-family:var(--data);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.media-start .knop::before{content:"";width:0;height:0;border-left:.6rem solid currentColor;border-top:.38rem solid transparent;border-bottom:.38rem solid transparent}
+.media-start .m-titel{font-size:1.05rem;max-width:30rem;line-height:1.3}
+.media-start .m-noot{font-size:.78rem;opacity:.7;max-width:30rem}
+figure.media figcaption{font-size:1rem;line-height:1.4;padding:.6rem .2rem 0;text-align:center}
+figure.media .m-bron{display:block;font-size:.9rem;color:var(--zacht)}
 </style>
 </head>
 <body>
@@ -250,6 +263,7 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 <div class="tabel"><table><tr><th>Genre</th><th>Wat je ziet</th><th>Mogelijke tweede laag</th></tr><tr><td>Portret</td><td>Een bepaalde persoon</td><td>De persoon als mythologische figuur of personificatie</td></tr><tr><td>Landschap</td><td>De natuur</td><td>Een verhaal uit de Bijbel of de mythologie dat zich in de natuur afspeelt</td></tr><tr><td>Stadsgezicht</td><td>Een stad of gebouwen</td><td>Een bestaande stad of een verzonnen decor met een boodschap</td></tr><tr><td>Stilleven</td><td>Levenloze voorwerpen</td><td>Een vanitas over de vergankelijkheid</td></tr><tr><td>Interieur</td><td>Een binnenruimte</td><td>Voorwerpen die iets zeggen over de bewoners of een moraal dragen</td></tr><tr><td>Genrestuk</td><td>Een tafereel uit het dagelijks leven</td><td>Een les of waarschuwing, vaak uit een emblemenboek</td></tr></table></div>
 <figure class="beeld"><figcaption>Jan van Eyck, <i>Het Arnolfini-portret</i> (1434)<br>National Gallery, Londen. Olieverf op paneel, 82 x 60 cm.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait">Bekijk bij National Gallery, Londen</a></div></figure>
 <p>Het Arnolfini-portret van Jan van Eyck is daar het schoolvoorbeeld van. Op het eerste gezicht is het een dubbelportret van een rijk koppel in een slaapkamer. Maar bijna elk voorwerp is al gelezen als teken: de ene brandende kaars in de luchter, het hondje aan hun voeten als beeld van trouw, de afgelegde klompen die van de kamer een gewijde plek maken, de vruchten op de vensterbank, de spiegel met de kleine lijdensscènes errond en de deftige handtekening boven de spiegel: Johannes de Eyck fuit hic, Jan van Eyck was hier. Of het werk een huwelijk afbeeldt, een verloving of gewoon een welgesteld koppel, daarover zijn de specialisten het tot vandaag niet eens. Precies daarom is het zo&#x27;n goed oefenstuk.</p>
+<figure class="media"><div class="media-scherm"><button type="button" class="media-start" data-type="youtube" data-id="wM6d9BOj4Ww" data-titel="Jan van Eyck, Het Arnolfini-portret (1434)"><span class="knop">Afspelen</span><span class="m-titel">Jan van Eyck, Het Arnolfini-portret (1434)</span><span class="m-noot">Wordt geladen van YouTube wanneer je klikt.</span></button></div><figcaption>Jan van Eyck, Het Arnolfini-portret (1434)<span class="m-bron">The National Gallery, Londen (Engels). <a href="https://www.youtube.com/watch?v=wM6d9BOj4Ww">Bekijk bij YouTube</a></span><span class="m-bron">Een conservator bekijkt de symbolen in het schilderij van dichtbij.</span></figcaption></figure>
 <h2 id="3-8-niet-overdrijven-niet-te-snel-tevreden-zijn">3.8 Niet overdrijven, niet te snel tevreden zijn</h2>
 <p>Nu je weet hoeveel betekenis er in een kunstwerk kan zitten, is de verleiding groot om overal een verborgen boodschap te zoeken. Dat is een valkuil. Niet elk werk verbergt een symboliek en niet elk detail betekent iets. Soms is een stilleven gewoon een mooi geschilderde opstelling van vruchten en bloemen, en soms is een hond gewoon de hond van de familie. Een goede iconograaf kan bewijzen wat hij beweert: met de tekst waar het verhaal vandaan komt, of met andere werken waarin hetzelfde motief dezelfde betekenis heeft.</p>
 <p>Tegelijk mag je niet te snel tevreden zijn. Wie vluchtig kijkt, loopt voorbij aan betekenissen die er wel degelijk zijn. De kunst van het iconografisch kijken bestaat erin een evenwicht te vinden tussen kritische voorzichtigheid en een open, onderzoekende blik.</p>
@@ -284,6 +298,14 @@ cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change
 if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
 var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
 Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+
+document.querySelectorAll(".media-start").forEach(function(b){b.addEventListener("click",function(){
+  var s=b.parentNode,t=b.dataset.type,id=b.dataset.id,src;
+  if(t==="youtube")src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0";
+  else if(t==="vimeo")src="https://player.vimeo.com/video/"+id+"?autoplay=1&dnt=1";
+  else src="https://archive.org/embed/"+id+"?playlist=1";
+  var f=document.createElement("iframe");f.src=src;f.title=b.dataset.titel;f.allow="autoplay; fullscreen; picture-in-picture; encrypted-media";f.allowFullscreen=true;
+  s.replaceChildren(f);});});
 </script>
 </body>
 </html>

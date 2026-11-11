@@ -158,6 +158,19 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 .hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
 .hoofdstuk-nav a{text-decoration:none;font-weight:700}
 .hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+
+figure.media{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn)}
+.media-scherm{position:relative;aspect-ratio:16/9;background:#0d0a07;overflow:hidden}
+.media-scherm.audio{aspect-ratio:auto;height:9rem}
+.media-scherm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media-start{position:absolute;inset:0;width:100%;height:100%;border:0;background:radial-gradient(circle at 50% 45%,#3a2a16 0%,#0d0a07 70%);color:#f3e6cc;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:1rem;text-align:center}
+.media-start:hover .knop,.media-start:focus-visible .knop{background:#e0a248;color:#0d0a07}
+.media-start .knop{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e0a248;color:#e0a248;padding:.45rem 1rem;font-family:var(--data);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.media-start .knop::before{content:"";width:0;height:0;border-left:.6rem solid currentColor;border-top:.38rem solid transparent;border-bottom:.38rem solid transparent}
+.media-start .m-titel{font-size:1.05rem;max-width:30rem;line-height:1.3}
+.media-start .m-noot{font-size:.78rem;opacity:.7;max-width:30rem}
+figure.media figcaption{font-size:1rem;line-height:1.4;padding:.6rem .2rem 0;text-align:center}
+figure.media .m-bron{display:block;font-size:.9rem;color:var(--zacht)}
 </style>
 </head>
 <body>
@@ -238,6 +251,7 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 <h4>Mueck aan het werk: de film van Gautier Deblonde</h4>
 <p>Mueck laat bijna nooit iemand toe in zijn atelier. Voor de fotograaf Gautier Deblonde, een vriend, maakte hij een uitzondering. Twee jaar lang filmde Deblonde enkele dagen per week hoe Mueck drie nieuwe beelden maakte voor zijn tentoonstelling in de Fondation Cartier in Parijs (2013): <i>Young Couple</i>, <i>Woman with Shopping</i> en <i>Couple under an Umbrella</i>. Er mocht geen interview bij en Deblonde ensceneerde niets. Het werd de film <i>Still Life: Ron Mueck at Work</i> (2013, 48 minuten, zonder gesproken tekst).</p>
 <p>Mueck werkt in stilte. Hij praat niet, luistert naar de radio en naar de geluiden van de straat. Het lange werk in klei doet hij alleen; zijn twee assistenten helpen pas als de mal gegoten is. De film toont hoe uit een klomp klei, door tijd en inspanning, langzaam een mens verschijnt.</p>
+<figure class="media"><div class="media-scherm"><button type="button" class="media-start" data-type="youtube" data-id="g2iPpa4azRc" data-titel="Still Life: Ron Mueck at Work (2013)"><span class="knop">Afspelen</span><span class="m-titel">Still Life: Ron Mueck at Work (2013)</span><span class="m-noot">Wordt geladen van YouTube wanneer je klikt.</span></button></div><figcaption>Still Life: Ron Mueck at Work (2013)<span class="m-bron">Fondation Cartier pour l&#x27;art contemporain, film van Gautier Deblonde. <a href="https://www.youtube.com/watch?v=g2iPpa4azRc">Bekijk bij YouTube</a></span><span class="m-bron">Mueck aan het werk in zijn atelier, zonder commentaar.</span></figcaption></figure>
 <h2 id="1-4-analyse-van-belangrijke-werken">1.4 Analyse van belangrijke werken</h2>
 <p>Elke analyse volgt dezelfde opbouw: een feitenfiche, een beschrijving van wat je ziet, de vier elementen (lichaam, ruimte, object, tijd) en ten slotte de betekenis. De werken staan in chronologische volgorde.</p>
 <h3 id="1-4-1-dead-dad-1996-1997" class="sub">1.4.1 Dead Dad (1996-1997)</h3>
@@ -362,6 +376,14 @@ cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change
 if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
 var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
 Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+
+document.querySelectorAll(".media-start").forEach(function(b){b.addEventListener("click",function(){
+  var s=b.parentNode,t=b.dataset.type,id=b.dataset.id,src;
+  if(t==="youtube")src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0";
+  else if(t==="vimeo")src="https://player.vimeo.com/video/"+id+"?autoplay=1&dnt=1";
+  else src="https://archive.org/embed/"+id+"?playlist=1";
+  var f=document.createElement("iframe");f.src=src;f.title=b.dataset.titel;f.allow="autoplay; fullscreen; picture-in-picture; encrypted-media";f.allowFullscreen=true;
+  s.replaceChildren(f);});});
 </script>
 </body>
 </html>

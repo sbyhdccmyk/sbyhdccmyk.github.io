@@ -158,6 +158,19 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 .hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
 .hoofdstuk-nav a{text-decoration:none;font-weight:700}
 .hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+
+figure.media{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn)}
+.media-scherm{position:relative;aspect-ratio:16/9;background:#0d0a07;overflow:hidden}
+.media-scherm.audio{aspect-ratio:auto;height:9rem}
+.media-scherm iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.media-start{position:absolute;inset:0;width:100%;height:100%;border:0;background:radial-gradient(circle at 50% 45%,#3a2a16 0%,#0d0a07 70%);color:#f3e6cc;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:1rem;text-align:center}
+.media-start:hover .knop,.media-start:focus-visible .knop{background:#e0a248;color:#0d0a07}
+.media-start .knop{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e0a248;color:#e0a248;padding:.45rem 1rem;font-family:var(--data);font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.media-start .knop::before{content:"";width:0;height:0;border-left:.6rem solid currentColor;border-top:.38rem solid transparent;border-bottom:.38rem solid transparent}
+.media-start .m-titel{font-size:1.05rem;max-width:30rem;line-height:1.3}
+.media-start .m-noot{font-size:.78rem;opacity:.7;max-width:30rem}
+figure.media figcaption{font-size:1rem;line-height:1.4;padding:.6rem .2rem 0;text-align:center}
+figure.media .m-bron{display:block;font-size:.9rem;color:var(--zacht)}
 </style>
 </head>
 <body>
@@ -230,6 +243,7 @@ sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decora
 <h4>Een ontmoetingsplaats</h4>
 <p>De Factory was meer dan een werkplaats. Kunstenaars, muzikanten, dichters, acteurs, modellen en verzamelaars liepen er in en uit. Warhol noemde sommigen van hen zijn superstars en liet hen spelen in zijn experimentele films. Tussen 1964 en 1966 filmde hij honderden bezoekers voor zijn <i>Screen Tests</i>: korte filmportretten van enkele minuten waarin iemand zwijgend en bijna onbeweeglijk in de camera kijkt. Warhol zelf bleef vaak een stille toeschouwer, die alles vastlegde met zijn camera en zijn bandrecorder.</p>
 <p>In juni 1968, kort nadat de Factory naar een nieuw adres verhuisd was, werd Warhol er neergeschoten door een vrouw die eerder in een van zijn films had meegespeeld. Hij overleefde, zwaargewond. Daarna werd de toegang strenger en de sfeer zakelijker. Het open en chaotische tijdperk van de zilveren Factory was voorbij.</p>
+<figure class="media"><div class="media-scherm"><button type="button" class="media-start" data-type="youtube" data-id="nAxuvImOpvw" data-titel="13 Most Beautiful: Songs for Andy Warhol&#x27;s Screen Tests"><span class="knop">Afspelen</span><span class="m-titel">13 Most Beautiful: Songs for Andy Warhol&#x27;s Screen Tests</span><span class="m-noot">Wordt geladen van YouTube wanneer je klikt.</span></button></div><figcaption>13 Most Beautiful: Songs for Andy Warhol&#x27;s Screen Tests<span class="m-bron">The Andy Warhol Museum. <a href="https://www.youtube.com/watch?v=nAxuvImOpvw">Bekijk bij YouTube</a></span><span class="m-bron">Warhols Screen Tests met nieuwe muziek, voorgesteld door het museum.</span></figcaption></figure>
 <h3 id="4-3-the-velvet-underground" class="sub">4.3 The Velvet Underground</h3>
 <aside class="kader"><h4>[Afbeelding invoegen]</h4><p>Andy Warhol, hoes voor <i>The Velvet Underground &amp; Nico</i> (1967)</p><p>Verve Records, New York. Offsetdruk met afpelbare sticker.<sup class="bron"><a href="https://www.warhol.org/" title="Bron: The Andy Warhol Museum">bron</a></sup></p></aside>
 <dl class="fiche"><dt>Jaar</dt><dd>1967</dd><dt>Techniek</dt><dd>Platenhoes, offsetdruk met afpelbare sticker</dd><dt>Afmetingen</dt><dd>Ongeveer 31 x 31 cm (lp-hoes)</dd><dt>Uitgave</dt><dd>Verve Records, New York</dd></dl>
@@ -264,6 +278,14 @@ cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change
 if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
 var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
 Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+
+document.querySelectorAll(".media-start").forEach(function(b){b.addEventListener("click",function(){
+  var s=b.parentNode,t=b.dataset.type,id=b.dataset.id,src;
+  if(t==="youtube")src="https://www.youtube-nocookie.com/embed/"+id+"?autoplay=1&rel=0";
+  else if(t==="vimeo")src="https://player.vimeo.com/video/"+id+"?autoplay=1&dnt=1";
+  else src="https://archive.org/embed/"+id+"?playlist=1";
+  var f=document.createElement("iframe");f.src=src;f.title=b.dataset.titel;f.allow="autoplay; fullscreen; picture-in-picture; encrypted-media";f.allowFullscreen=true;
+  s.replaceChildren(f);});});
 </script>
 </body>
 </html>
