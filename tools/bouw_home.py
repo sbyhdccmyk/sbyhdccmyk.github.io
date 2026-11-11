@@ -143,7 +143,7 @@ footer{{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-s
   <div class="aanhef-tekst">
     <p class="eyebrow">Leren kijken naar kunst</p>
     <h1>KIJK NU!</h1>
-    <p class="intro">Van Caravaggio tot nu: hoe je naar een kunstwerk kijkt, wat er in de kunstgeschiedenis gebeurde, en wat filosofen over kunst dachten. Voor iedereen die meer wil zien.</p>
+    <p class="intro">Je kijkt nu, naar kunst van altijd en overal. Je leert hoe je kijkt, hoe je plaatst, hoe je leest. Je leert ervan houden.</p>
     <p class="bijschrift">Gustave Courbet, <i>Le Désespéré</i> (1843-1845). Privécollectie. Publiek domein, afbeelding via <a href="https://commons.wikimedia.org/wiki/File:Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_(1843).jpg">Wikimedia Commons</a>.</p>
   </div>
 </header>
