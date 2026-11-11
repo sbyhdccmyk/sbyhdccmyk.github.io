@@ -6,6 +6,7 @@ from omzetten import *
 from onderwerpen import ONDERWERPEN
 from herschrijvingen import HERSCHRIJF
 import media
+import beelden
 
 DOCS = pathlib.Path("/tmp/docs")
 SITE = HIER.parent
@@ -159,6 +160,12 @@ def dijkstra_media():
     s = s.replace("</script>\n</body>", media.JS + "</script>\n</body>")
     p.write_text(s, encoding="utf-8")
 
+def dijkstra_beelden():
+    p = SITE / "rineke-dijkstra" / "index.html"
+    s, nb = beelden.voeg_toe("rineke-dijkstra", p.read_text(encoding="utf-8"))
+    p.write_text(s, encoding="utf-8")
+    print("rineke-dijkstra beelden:", nb)
+
 def render_alles():
     seq = [s for s in volgorde() if s in GEBOUWD or s == "rineke-dijkstra"]
     for slug, (inhoud, woorden, vragen, extra) in GEBOUWD.items():
@@ -173,6 +180,7 @@ def render_alles():
             html_ = html_.replace(oud_e, nieuw_e)
         html_ = re.sub(r"<p>\s*</p>", "", html_)
         html_ = voeg_media_toe(slug, html_)
+        html_, nb = beelden.voeg_toe(slug, html_)
         (SITE / slug).mkdir(exist_ok=True)
         (SITE / slug / "index.html").write_text(html_, encoding="utf-8")
         print(f"{slug:24} {len(html_)//1024:4} kB  {len(woorden):3} woorden  {sum(len(g['vragen']) for g in vragen):3} vragen  {html_.count('class=\"beeld\"'):3} beelden  {html_.count('werk-link'):3} links")
@@ -215,3 +223,4 @@ for slug, begin in KBS4.items():
 
 render_alles()
 dijkstra_media()
+dijkstra_beelden()
