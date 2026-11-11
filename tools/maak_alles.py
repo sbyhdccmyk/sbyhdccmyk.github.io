@@ -4,6 +4,7 @@ HIER = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HIER))
 from omzetten import *
 from onderwerpen import ONDERWERPEN
+from herschrijvingen import HERSCHRIJF
 
 DOCS = pathlib.Path("/tmp/docs")
 SITE = HIER.parent
@@ -37,7 +38,7 @@ def opschonen(blokken):
         if t in ("h2", "h3", "h1"): skip = False
         if t == "h4" and b["tekst"].lower().startswith(("samengevat", "samenvatting", "besluit")): skip = True
         if skip: continue
-        if t == "p" and b["tekst"].lower() in ("inhoudstafel",): continue
+        if t in ("p", "h4", "h2") and b["tekst"].lower().strip(" :") in ("inhoudstafel",): continue
         uit.append(b)
     # alinea's die midden in een zin zijn afgebroken weer samenvoegen
     samen = []
@@ -140,6 +141,11 @@ def render_alles():
         volgende = (seq[k + 1], INFO[seq[k + 1]][1]) if k + 1 < len(seq) else None
         meta = {"slug": slug, "titel": o[1], "ondertitel": o[2], "eyebrow": eyebrow(o)}
         html_ = maak_pagina(meta, inhoud, woorden, vragen, extra, vorige, volgende)
+        for oud, nieuw in HERSCHRIJF.get(slug, []):
+            oud_e, nieuw_e = html.escape(oud, quote=False), html.escape(nieuw, quote=False)
+            if oud_e not in html_: print("  NIET GEVONDEN", slug, oud[:60]); continue
+            html_ = html_.replace(oud_e, nieuw_e)
+        html_ = re.sub(r"<p>\s*</p>", "", html_)
         (SITE / slug).mkdir(exist_ok=True)
         (SITE / slug / "index.html").write_text(html_, encoding="utf-8")
         print(f"{slug:24} {len(html_)//1024:4} kB  {len(woorden):3} woorden  {sum(len(g['vragen']) for g in vragen):3} vragen  {html_.count('class=\"beeld\"'):3} beelden  {html_.count('werk-link'):3} links")
