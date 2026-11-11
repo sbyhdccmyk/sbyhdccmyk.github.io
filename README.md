@@ -1,4 +1,4 @@
-# Kunst bekijken
+# KIJK NU!
 
 Leerstof van S. Ben Yakoub voor Kunstbeschouwing en Esthetica.
 De website staat op https://sbyhdccmyk.github.io

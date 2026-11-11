@@ -397,13 +397,13 @@ def maak_pagina(meta, inhoud, woorden, vragen, extra=None, vorige=None, volgende
 <body>
 <div class="pagina">
 <nav class="inhoud" aria-label="Inhoud">
-  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; Kunst bekijken</a></p>
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; KIJK NU!</a></p>
   <p class="vak">Inhoud</p>
   <ol>{nav_html}</ol>
 </nav>
 <main>
 <header class="titel">
-  <p class="vak"><a href="../" style="color:inherit">Kunst bekijken</a> / {E(meta.get("eyebrow",""))}</p>
+  <p class="vak"><a href="../" style="color:inherit">KIJK NU!</a> / {E(meta.get("eyebrow",""))}</p>
   <h1>{E(meta["titel"])}</h1>
   <p class="onder">{E(meta.get("ondertitel",""))}</p>
 </header>
