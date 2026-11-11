@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Kaarslicht: een donkere aanhef rond De La Tour, daarna de witte zaal van de hoofdstukken. Eén warm accent. */
+  /* Atelier: een donkere aanhef rond Courbet, daarna de witte zaal van de hoofdstukken. Eén warm accent. */
   --nacht:#0d0a07;
   --was:#f3e6cc;
   --vlam:#e0a248;
@@ -32,15 +32,16 @@ body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);
 a{color:inherit}
 a:focus-visible{outline:2px solid var(--vlam);outline-offset:3px}
 
-/* Aanhef */
-.aanhef{position:relative;background:var(--nacht);color:var(--was);overflow:hidden;min-height:min(46rem,88vh);display:grid;align-items:end}
-.aanhef img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 38%}
-.aanhef::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,10,7,.94) 0%,rgba(13,10,7,.78) 34%,rgba(13,10,7,.15) 68%,rgba(13,10,7,0) 100%),linear-gradient(0deg,rgba(13,10,7,.85) 0%,rgba(13,10,7,0) 40%)}
-.aanhef-tekst{position:relative;z-index:1;max-width:72rem;width:100%;margin:0 auto;padding:6rem 1.5rem 2.5rem}
+/* Aanhef: titel links in het donker, Courbet rechts, zijn blik vrij. */
+.aanhef{position:relative;background:var(--nacht);color:var(--was);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);min-height:min(40rem,84vh);overflow:hidden}
+.aanhef-beeld{position:relative;grid-column:2;grid-row:1;min-height:100%}
+.aanhef-beeld img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%}
+.aanhef-beeld::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--nacht) 0%,rgba(13,10,7,.55) 14%,rgba(13,10,7,0) 34%),linear-gradient(0deg,rgba(13,10,7,.55) 0%,rgba(13,10,7,0) 22%)}
+.aanhef-tekst{grid-column:1;grid-row:1;align-self:end;position:relative;z-index:2;padding:6rem 1.5rem 3rem max(1.5rem,calc((100vw - 72rem)/2 + 1.5rem))}
 .aanhef .eyebrow{font-family:var(--data);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vlam);margin:0 0 1rem}
-.aanhef h1{font-family:var(--display);font-weight:600;font-size:clamp(3.2rem,9vw,6.5rem);line-height:.95;margin:0 0 1.2rem;max-width:12ch;text-wrap:balance}
-.aanhef .intro{max-width:34rem;font-size:1.2rem;color:var(--was);margin:0 0 2rem}
-.aanhef .bijschrift{font-size:.85rem;color:rgba(243,230,204,.72);margin:0;max-width:34rem}
+.aanhef h1{font-family:var(--display);font-weight:600;font-size:clamp(3.2rem,8vw,6.2rem);line-height:.95;margin:0 0 1.2rem;max-width:10ch;text-wrap:balance}
+.aanhef .intro{max-width:30rem;font-size:1.2rem;color:var(--was);margin:0 0 2rem}
+.aanhef .bijschrift{font-size:.85rem;color:rgba(243,230,204,.72);margin:0;max-width:30rem}
 .aanhef .bijschrift i{color:var(--was)}
 
 /* Vier deuren */
@@ -89,12 +90,14 @@ ol.tijdlijn .kaart{max-width:40rem}
 footer{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-size:.9rem;color:var(--zacht);display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
 
 @media (max-width:56rem){
+  .aanhef{grid-template-columns:minmax(0,1fr);min-height:0}
+  .aanhef-beeld{grid-column:1;grid-row:1;aspect-ratio:1500/1228;min-height:0}
+  .aanhef-beeld::before{background:linear-gradient(0deg,var(--nacht) 0%,rgba(13,10,7,0) 30%)}
+  .aanhef-tekst{grid-row:2;padding:1rem 1.5rem 3rem}
   .deuren{grid-template-columns:repeat(2,minmax(0,1fr))}
   .kop{grid-template-columns:minmax(0,1fr);gap:.6rem}
 }
 @media (max-width:34rem){
-  .aanhef img{object-position:72% 30%}
-  .aanhef::after{background:linear-gradient(0deg,rgba(13,10,7,.96) 0%,rgba(13,10,7,.8) 45%,rgba(13,10,7,.2) 80%)}
   .deuren{grid-template-columns:minmax(0,1fr);transform:none;margin-top:1rem}
   ol.tijdlijn{margin-left:.4rem}
   ol.tijdlijn .jaar{position:static;display:block;width:auto;text-align:left;margin-bottom:.2rem}
@@ -105,14 +108,16 @@ footer{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-si
 <body>
 
 <header class="aanhef">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Penitent_Magdalen_MET_DT7252.jpg/1920px-The_Penitent_Magdalen_MET_DT7252.jpg"
-       srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Penitent_Magdalen_MET_DT7252.jpg/960px-The_Penitent_Magdalen_MET_DT7252.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/The_Penitent_Magdalen_MET_DT7252.jpg/1920px-The_Penitent_Magdalen_MET_DT7252.jpg 1920w"
-       sizes="100vw" alt="Een vrouw zit in het donker, het hoofd in de hand, en kijkt naar een kaars die weerspiegelt in een spiegel. Op haar schoot ligt een schedel.">
+  <div class="aanhef-beeld">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_%281843%29.jpg"
+         srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_%281843%29.jpg/960px-Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_%281843%29.jpg 960w, https://upload.wikimedia.org/wikipedia/commons/8/8f/Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_%281843%29.jpg 1500w"
+         sizes="(max-width: 56rem) 100vw, 56vw" alt="Een jonge man met wilde, donkere haren kijkt met wijd open ogen recht naar de kijker. Hij grijpt met beide handen in zijn haar.">
+  </div>
   <div class="aanhef-tekst">
     <p class="eyebrow">Leren kijken naar kunst</p>
     <h1>Kunst bekijken</h1>
     <p class="intro">Van Caravaggio tot nu: hoe je naar een kunstwerk kijkt, wat er in de kunstgeschiedenis gebeurde, en wat filosofen over kunst dachten. Voor iedereen die meer wil zien.</p>
-    <p class="bijschrift">Georges de La Tour, <i>De boetvaardige Magdalena</i> (ca. 1640). The Metropolitan Museum of Art, New York. Publiek domein. <a href="https://www.metmuseum.org/art/collection/search/436839">Bekijk het werk bij het museum</a>.</p>
+    <p class="bijschrift">Gustave Courbet, <i>Le Désespéré</i> (1843-1845). Privécollectie. Publiek domein, afbeelding via <a href="https://commons.wikimedia.org/wiki/File:Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_(1843).jpg">Wikimedia Commons</a>.</p>
   </div>
 </header>
 
