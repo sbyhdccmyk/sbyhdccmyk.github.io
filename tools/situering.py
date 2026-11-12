@@ -120,6 +120,8 @@ def alles():
     n = sum(zet(o[0]) for o in ONDERWERPEN)
     zonder = [o[0] for o in ONDERWERPEN if o[0] not in T and o[7] == "online" and o[0] != "kijkwijzer"]
     print("situering geplaatst bij", n, "hoofdstukken;", "zonder:", zonder or "geen")
+    import verwijzingen
+    verwijzingen.alles()  # kruisverwijzingen opnieuw leggen, ook in het nieuwe blok
 
 if __name__ == "__main__":
     alles()

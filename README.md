@@ -8,3 +8,4 @@ De website staat op https://sbyhdccmyk.github.io
 - `kijkwijzer/`: acht stappen om een kunstwerk te analyseren en te beoordelen
 - `tools/tijdlijnen.py`: per onderwerp de situering in tijd en plaats (periodes, mijlpalen, regio)
 - `tools/situering.py`: zet het blok "Waar en wanneer" bovenaan elk hoofdstuk
+- `tools/verwijzingen.py`: kruisverwijzingen tussen de hoofdstukken (kunstwerken automatisch, namen en begrippen uit de lijsten bovenaan het bestand); elke link opent in een nieuw venster
