@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Het Boeddhabeeld</title>
+<meta name="description" content="Eén beeld door tijden en plaatsen, van de lege troon in Amaravati tot de lege nissen van Bamiyan">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+.beeld .pd{display:block;margin:0 auto .7rem}.beeld .pd img{display:block;max-width:100%;max-height:78vh;width:auto;height:auto;margin:0 auto;box-shadow:0 1px 6px rgba(0,0,0,.18);background:#ddd}.beeld .credit{font-size:.8rem;opacity:.75;margin:.35rem 0 0}.beeld .credit a{color:inherit}</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; KIJK NU!</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#1-wie-was-de-boeddha">1 Wie was de Boeddha?</a></li><li><a href="#2-eeuwen-zonder-beeld">2 Eeuwen zonder beeld</a><ol><li><a href="#2-1-de-lege-troon-van-amaravati">2.1 De lege troon van Amaravati</a></li></ol></li><li><a href="#3-het-eerste-beeld-gandhara-en-mathura">3 Het eerste beeld: Gandhara en Mathura</a><ol><li><a href="#3-1-staande-boeddha-uit-gandhara">3.1 Staande Boeddha uit Gandhara</a></li><li><a href="#3-2-mathura-een-indisch-antwoord">3.2 Mathura: een Indisch antwoord</a></li></ol></li><li><a href="#4-het-beeld-lezen">4 Het beeld lezen</a><ol><li><a href="#4-1-de-kenmerken">4.1 De kenmerken</a></li><li><a href="#4-2-de-handgebaren">4.2 De handgebaren</a></li><li><a href="#4-3-de-houdingen">4.3 De houdingen</a></li></ol></li><li><a href="#5-de-boeddha-van-sarnath">5 De Boeddha van Sarnath</a></li><li><a href="#6-het-beeld-reist">6 Het beeld reist</a><ol><li><a href="#6-1-de-grote-boeddha-van-kamakura">6.1 De Grote Boeddha van Kamakura</a></li></ol></li><li><a href="#7-bamiyan-het-beeld-vernietigd">7 Bamiyan: het beeld vernietigd</a></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">KIJK NU!</a> / Door de tijd, vanaf de 1ste eeuw</p>
+  <h1>Het Boeddhabeeld</h1>
+  <p class="onder">Eén beeld door tijden en plaatsen, van de lege troon in Amaravati tot de lege nissen van Bamiyan</p>
+</header>
+
+<p>Je hebt er al honderden gezien: in een museum, in een tuincentrum, op een reisfoto, in een restaurant. Een zittende figuur met gekruiste benen, de ogen half gesloten, een bult op het hoofd en lange oorlellen. Het Boeddhabeeld is een van de meest gemaakte beelden uit de geschiedenis van de kunst, en op het eerste gezicht lijkt het altijd hetzelfde.</p>
+<p>Wie beter kijkt, ziet dat geen twee beelden gelijk zijn. De handen liggen in de schoot of raken de grond. Het gewaad valt in zware plooien of kleeft aan het lichaam alsof het nat is. Het gezicht lijkt op een Griekse god, op een Indiase prins of op een Japanse monnik. Elk van die verschillen zegt iets: over het moment uit het leven van de Boeddha dat het beeld toont, en over de plaats en de tijd waarin het gemaakt werd.</p>
+<p>In dit hoofdstuk volg je één beeld door vijfentwintig eeuwen en over een heel continent. Je gebruikt daarbij het stappenplan van Panofsky uit het hoofdstuk over iconografie en iconologie. Tot nu toe paste je dat toe op werken uit Europa, bij verhalen die je min of meer kende. Hier doe je het met een beeldtaal die voor de meesten nieuw is.</p>
+<h2 id="1-wie-was-de-boeddha">1 Wie was de Boeddha?</h2>
+<p>Boeddha is geen naam maar een titel. Het woord betekent de ontwaakte: iemand die de werkelijkheid ziet zoals ze is. De man die zo genoemd wordt, heette Siddhartha Gautama. Hij leefde in het noorden van India, waarschijnlijk in de vijfde eeuw voor onze tijdrekening. De precieze jaartallen zijn onzeker.</p>
+<p>Volgens de overlevering was hij een prins die opgroeide in weelde, afgeschermd van alles wat pijn doet. Op vier ritten buiten het paleis zag hij een oude man, een zieke, een dode en een rondtrekkende asceet. Hij verliet het paleis, zocht jarenlang naar een antwoord op het lijden, en vond het op zijn vijfendertigste, zittend onder een boom in Bodh Gaya. Daarna trok hij vijfenveertig jaar rond als leraar. Zijn eerste preek hield hij in het hertenpark van Sarnath. Hij stierf op zijn tachtigste in Kushinagar.</p>
+<p>Die vier plaatsen en momenten komen in de kunst voortdurend terug: de geboorte, de verlichting, de eerste preek en de dood. Wie ze kent, kan de meeste Boeddhabeelden al plaatsen.</p>
+<aside class="kader"><h4>Boeddha, bodhisattva en de lachende Boeddha</h4><p>Niet elke figuur in een boeddhistische tempel is de Boeddha. Een bodhisattva is iemand die het ontwaken heeft bereikt, maar in de wereld blijft om anderen te helpen. Je herkent hem aan zijn kroon, halssnoeren en armbanden. De Boeddha zelf draagt nooit sieraden, alleen een monnikspij.</p><p>De dikke, lachende man met de blote buik die je in restaurants ziet, is evenmin de Boeddha. Het is Budai, in Japan Hotei, een Chinese monnik uit de tiende eeuw die als een verschijning van de toekomstige Boeddha Maitreya wordt vereerd. Met Siddhartha Gautama heeft hij niets te maken.</p></aside>
+<h2 id="2-eeuwen-zonder-beeld">2 Eeuwen zonder beeld</h2>
+<p>Het oudste Boeddhabeeld dat we kennen, is gemaakt in de eerste eeuw van onze tijdrekening. Dat is vier tot vijf eeuwen na de dood van de Boeddha. In de tussentijd bestond er wel boeddhistische kunst, en veel ook: rond de stupa&#x27;s, de grafheuvels waarin zijn relieken bewaard werden, stonden stenen omheiningen vol reliëfs met taferelen uit zijn leven. Alleen de hoofdpersoon ontbreekt. Op de plaats waar je hem verwacht, staat een teken.</p>
+<ul class="lijst"><li>Een lege troon of een lege zetel onder een boom: de verlichting.</li><li>Een wiel: de leer, en de eerste preek.</li><li>Een paar voetafdrukken: hij is hier geweest.</li><li>Een stupa: zijn dood en zijn relieken.</li><li>Een paard zonder ruiter, met een parasol erboven: het vertrek uit het paleis.</li></ul>
+<p>Deze kunst zonder afbeelding van de hoofdfiguur noemen we aniconisch, van het Griekse an (niet) en eikoon (beeld). Waarom de vroege boeddhisten de Boeddha niet toonden, weten we niet zeker. Een geschreven verbod is nooit gevonden. Een vaak gegeven verklaring is dat iemand die het nirvana heeft bereikt, aan elke vorm ontsnapt is: hem een lichaam geven zou hem opnieuw vastleggen. Sommige onderzoekers lezen de reliëfs anders. Volgens hen tonen ze geen scènes uit het leven van de Boeddha, maar pelgrims die later de heilige plaatsen vereren, en is de troon gewoon een troon. De discussie is niet beslecht.</p>
+<h3 id="2-1-de-lege-troon-van-amaravati" class="sub">2.1 De lege troon van Amaravati</h3>
+<figure class="beeld"><a class="pd" href="beelden/amaravati.jpg" title="Grotere versie"><img src="beelden/amaravati.jpg" width="652" height="893" loading="lazy" decoding="async" alt="Amaravati, Gelovigen brengen offers aan de bodhiboom (tweede eeuw)"></a><figcaption>Amaravati, <i>Gelovigen brengen offers aan de bodhiboom</i> (tweede eeuw)<br>The Cleveland Museum of Art, Cleveland. Reliëf van de Grote Stupa van Amaravati.</figcaption><p class="credit">Publiek domein. Afbeelding: The Cleveland Museum of Art, Open Access</p><div class="werk-links"><a class="werk-link" href="https://www.clevelandart.org/art/1970.43">Bekijk bij The Cleveland Museum of Art</a></div></figure>
+<p>Dit reliëf komt van de Grote Stupa van Amaravati, in het zuiden van India. Gelovigen brengen offers aan een boom, en nergens is de Boeddha te zien. Het British Museum bewaart van dezelfde stupa een steen die nog meer vertelt. Je bekijkt hem via de bronlink.<sup class="bron"><a href="https://www.britishmuseum.org/blog/power-patronage-great-shrine-amaravati" title="Bron: British Museum">bron</a></sup> De fiche en de bespreking hieronder gaan over die steen.</p>
+<dl class="fiche"><dt>Datering</dt><dd>Ca. 50 v.Chr. (zijde met de troon) en ca. 250 n.Chr. (keerzijde)</dd><dt>Herkomst</dt><dd>Grote Stupa van Amaravati, Andhra Pradesh, India</dd><dt>Materiaal</dt><dd>Kalksteen</dd><dt>Bewaarplaats</dt><dd>British Museum, Londen</dd></dl>
+<h4>Wat zie je?</h4>
+<p>In het midden van de steen staat een lege troon. Erachter rijst een boom op, op de trede ervoor staan twee voetafdrukken. Links en rechts knielen gelovigen met de handen tegen elkaar. Boven de boom zweven twee hemelse wezens. Alle lichamen en blikken zijn naar het midden gericht, naar een plek waar niemand zit.</p>
+<h4>Wat stelt het voor?</h4>
+<p>De boom is de bodhiboom van Bodh Gaya, waaronder Siddhartha de verlichting bereikte. De troon is de zetel waarop hij zat. De voetafdrukken dragen elk een wiel, het teken van de leer. Samen zeggen de drie tekens dat de Boeddha aanwezig is, zonder dat hij te zien is. De gelovigen maken het gebaar van eerbied, de handen tegen elkaar voor de borst. De compositie werkt zoals bij een troonzaal: alles wijst naar de belangrijkste plaats. Dat die plaats leeg blijft, maakt ze niet zwakker. De kijker vult ze zelf in.</p>
+<h4>Twee kanten, twee tijden</h4>
+<p>Deze steen heeft een keerzijde. Rond 250, drie eeuwen later, werd de steen omgedraaid en opnieuw gebruikt. Op de nieuwe kant staat de stupa zelf afgebeeld, en in de poort staat de Boeddha, nu als mens. Eén steen toont zo de twee manieren om hem aanwezig te maken: eerst met tekens, later met een lichaam. Wat er in de tussentijd veranderd is, lees je in het volgende deel.</p>
+<h2 id="3-het-eerste-beeld-gandhara-en-mathura">3 Het eerste beeld: Gandhara en Mathura</h2>
+<p>In de eerste en tweede eeuw van onze tijdrekening verschijnen de eerste beelden van de Boeddha als mens. Dat gebeurt op twee plaatsen ongeveer tegelijk, in hetzelfde rijk maar met een totaal verschillend resultaat. Gandhara ligt in het noordwesten, in het huidige Pakistan en Afghanistan. Mathura ligt in het hart van Noord-India, aan de rivier de Yamuna. Beide hoorden bij het rijk van de Kushana&#x27;s. Welke van de twee het eerst was, is een oude twistvraag onder kunsthistorici.</p>
+<p>Dat er net dan een beeld komt, heeft ook met het geloof te maken. In deze eeuwen groeit een vorm van boeddhisme waarin de Boeddha meer wordt dan een gestorven leraar: een wezen dat je kan vereren en aanroepen. Wie wil vereren, wil een gezicht zien.</p>
+<h3 id="3-1-staande-boeddha-uit-gandhara" class="sub">3.1 Staande Boeddha uit Gandhara</h3>
+<figure class="beeld"><a class="pd" href="beelden/gandhara.jpg" title="Grotere versie"><img src="beelden/gandhara.jpg" width="900" height="1200" loading="lazy" decoding="async" alt="Gandhara, Boeddha (derde eeuw)"></a><figcaption>Gandhara, <i>Boeddha</i> (derde eeuw)<br>The Metropolitan Museum of Art, New York. Schist, mogelijk uit het klooster van Takht-i-Bahi.</figcaption><p class="credit">Publiek domein. Afbeelding: The Metropolitan Museum of Art, Open Access</p><div class="werk-links"><a class="werk-link" href="https://www.metmuseum.org/toah/works-of-art/2014.188">Bekijk bij The Metropolitan Museum of Art</a></div></figure>
+<dl class="fiche"><dt>Datering</dt><dd>Derde eeuw</dd><dt>Herkomst</dt><dd>Gandhara, mogelijk het klooster van Takht-i-Bahi (Pakistan)</dd><dt>Materiaal</dt><dd>Schist, een grijze leisteen</dd><dt>Hoogte</dt><dd>92,7 cm</dd><dt>Bewaarplaats</dt><dd>The Metropolitan Museum of Art, New York</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een man staat rechtop, het gewicht op één been, de andere knie licht gebogen. Hij draagt een lang gewaad dat beide schouders bedekt en in zware, diepe plooien over het lichaam valt. Onder de stof tekenen zich de borst, de buik en de knie af. Het haar golft en is boven op het hoofd samengebonden tot een knot. Het gezicht is glad en jong, met een rechte neus, zware oogleden en een kleine mond. Tussen de wenkbrauwen zit een stip. Achter het hoofd staat een ronde schijf. De rechterhand is afgebroken.</p>
+<h4>De Griekse invloed</h4>
+<p>Zet dit beeld naast een Romeins keizerbeeld of een Griekse Apollo en je ziet de verwantschap. De houding met het gewicht op één been heet contrapposto en is een Griekse uitvinding. De plooien volgen de regels van de Griekse en Romeinse beeldhouwkunst: de stof is een toga geworden. Het golvende haar en het gezicht komen uit dezelfde traditie.</p>
+<p>Dat is geen toeval. Alexander de Grote trok tussen 327 en 325 voor onze tijdrekening door deze streek. Na hem bleven er eeuwenlang Griekse koninkrijken bestaan, en via de handelswegen bleef het contact met de Romeinse wereld levendig. De beeldhouwers van Gandhara kenden de Griekse en Romeinse vormentaal en gebruikten ze voor een Indiaas onderwerp. De kunst die daaruit ontstond, noemen we Grieks-boeddhistisch.</p>
+<h4>Betekenis</h4>
+<p>De vorm is Grieks, de inhoud niet. De knot op het hoofd is de ushnisha, het teken van de hogere kennis van de Boeddha. De stip is de urna, de schijf een aureool. De lange oorlellen herinneren aan de zware oorringen die de prins aflegde. De ontbrekende rechterhand was vrijwel zeker opgeheven met de palm naar voren: vrees niet. Het museum merkt ook op dat het beeld uit de vroege, naturalistische fase van Gandhara stamt. Tegen het einde van de derde eeuw worden de beelden strakker en minder levensecht.</p>
+<h3 id="3-2-mathura-een-indisch-antwoord" class="sub">3.2 Mathura: een Indisch antwoord</h3>
+<p>In Mathura ziet de Boeddha er heel anders uit. Het bekendste vroege voorbeeld is de zittende Boeddha van Katra, van het einde van de eerste eeuw, in het museum van Mathura. De beeldhouwers werkten er in de plaatselijke rode zandsteen met lichte vlekken. Ze kenden de Griekse beeldtaal niet of hadden ze niet nodig. Hun voorbeeld waren de yaksha&#x27;s, de krachtige natuurgeesten uit de oudere Indiase beeldhouwkunst.</p>
+<p>De Boeddha van Mathura zit kaarsrecht, met brede schouders en een gespannen borst, alsof hij net heeft ingeademd. Het gewaad is zo dun dat het bijna onzichtbaar is en laat de rechterschouder bloot. Het hoofd is glad, met één opgerolde haarlok bovenop. Hij kijkt de bezoeker recht aan en glimlacht. De rechterhand is opgeheven.</p>
+<div class="tabel"><table><tr><th></th><th>Gandhara</th><th>Mathura</th></tr><tr><td>Steen</td><td>Grijze schist</td><td>Rode zandsteen met vlekken</td></tr><tr><td>Gewaad</td><td>Zwaar, met diepe plooien, over beide schouders</td><td>Dun en glad, rechterschouder bloot</td></tr><tr><td>Haar</td><td>Golvend, samengebonden in een knot</td><td>Glad hoofd met één opgerolde lok</td></tr><tr><td>Blik</td><td>Naar binnen gekeerd, oogleden half gesloten</td><td>Recht naar de kijker, met een glimlach</td></tr><tr><td>Lichaam</td><td>Naar Grieks en Romeins voorbeeld</td><td>Naar het voorbeeld van de Indiase yaksha&#x27;s</td></tr></table></div>
+<p>De twee scholen hebben elkaar snel beïnvloed. Uit hun ontmoeting groeit in de eeuwen daarna het beeld dat heel Azië zal overnemen.</p>
+<h2 id="4-het-beeld-lezen">4 Het beeld lezen</h2>
+<p>Een Boeddhabeeld is geen portret. Niemand wist hoe Siddhartha eruit had gezien. De beeldhouwers bouwden zijn lichaam op uit vaste tekens, zoals een christelijke schilder een heilige herkenbaar maakt met een attribuut. Wie de tekens kent, kan elk beeld lezen, waar het ook gemaakt is.</p>
+<h3 id="4-1-de-kenmerken" class="sub">4.1 De kenmerken</h3>
+<p>De oude teksten sommen tweeëndertig lichaamskenmerken van een groot man op. Enkele daarvan vind je op bijna elk beeld terug.</p>
+<ul class="lijst"><li>De ushnisha: de bult of knot boven op het hoofd, teken van hogere kennis.</li><li>De urna: de stip of krul tussen de wenkbrauwen, waaruit licht straalt.</li><li>De lange oorlellen: uitgerekt door de oorringen van de prins, die hij heeft afgelegd.</li><li>Het haar in kleine krullen die naar rechts draaien, omdat hij het als asceet kort afsneed.</li><li>De monnikspij zonder sieraden, over één of over beide schouders.</li><li>De lotus als zetel: een bloem die zuiver uit de modder opstijgt.</li><li>Het aureool achter het hoofd, soms een vlammende krans rond het hele lichaam.</li></ul>
+<h3 id="4-2-de-handgebaren" class="sub">4.2 De handgebaren</h3>
+<p>De handen van een Boeddhabeeld spreken. Elk gebaar, in het Sanskriet mudra, heeft een vaste betekenis en verwijst vaak naar één moment uit zijn leven.</p>
+<div class="tabel"><table><tr><th>Mudra</th><th>Wat je ziet</th><th>Wat het zegt</th></tr><tr><td>Dhyana</td><td>Beide handen in de schoot, de rechter op de linker, palmen omhoog</td><td>Meditatie</td></tr><tr><td>Bhumisparsha</td><td>De rechterhand hangt over de knie en raakt de grond</td><td>De verlichting: de aarde is getuige</td></tr><tr><td>Abhaya</td><td>De rechterhand opgeheven, de palm naar voren</td><td>Vrees niet, bescherming</td></tr><tr><td>Varada</td><td>De hand hangt neer, de open palm naar voren</td><td>Geven, mededogen</td></tr><tr><td>Dharmachakra</td><td>Beide handen voor de borst, duim en wijsvinger tegen elkaar</td><td>Het wiel van de leer draaien: de eerste preek</td></tr><tr><td>Vitarka</td><td>Eén hand opgeheven, duim en wijsvinger in een cirkel</td><td>Onderricht, uitleg</td></tr></table></div>
+<h3 id="4-3-de-houdingen" class="sub">4.3 De houdingen</h3>
+<p>De Boeddha wordt in vier houdingen getoond. Zittend met gekruiste benen mediteert of onderwijst hij. Staand ontvangt hij de gelovige of zegent hij. Lopend, een houding die vooral in Thailand geliefd is, trekt hij als leraar door de wereld. Liggend op de rechterzij, het hoofd op de hand, sterft hij en gaat hij het nirvana binnen. Die laatste houding verwar je gemakkelijk met slapen of rusten. De context beslist: twee bomen, treurende monniken en dieren wijzen op de dood.</p>
+<h2 id="5-de-boeddha-van-sarnath">5 De Boeddha van Sarnath</h2>
+<p>In de vierde en vijfde eeuw, onder de Gupta-koningen, vloeien de vondsten van Gandhara en Mathura samen tot één evenwichtig type. Kunsthistorici spreken van het klassieke Indiase Boeddhabeeld. Het beroemdste voorbeeld werd gevonden op de plaats van de eerste preek. Je leest het hier met de drie stappen van Panofsky.</p>
+<figure class="beeld"><a class="pd" href="beelden/sarnath.jpg" title="Grotere versie"><img src="beelden/sarnath.jpg" width="960" height="1229" loading="lazy" decoding="async" alt="Sarnath, De Boeddha houdt zijn eerste preek (vijfde eeuw)"></a><figcaption>Sarnath, <i>De Boeddha houdt zijn eerste preek</i> (vijfde eeuw)<br>Archeologisch Museum, Sarnath. Zandsteen. Foto via Wikimedia Commons.</figcaption><p class="credit">Foto via <a href="https://commons.wikimedia.org/wiki/File:Buddha_in_Sarnath_Museum_(Dhammajak_Mutra).jpg">Wikimedia Commons</a>. Maker en licentie staan op die pagina</p><div class="werk-links"><a class="werk-link" href="https://mapacademy.io/?p=3055">Bekijk bij MAP Academy</a></div></figure>
+<dl class="fiche"><dt>Datering</dt><dd>Vijfde eeuw, Guptaperiode</dd><dt>Vindplaats</dt><dd>Sarnath, bij Varanasi (India), opgegraven in 1904-1905</dd><dt>Materiaal</dt><dd>Zandsteen</dd><dt>Hoogte</dt><dd>160 cm</dd><dt>Bewaarplaats</dt><dd>Archeologisch Museum, Sarnath</dd></dl>
+<h4>Stap 1: wat zie je?</h4>
+<p>Een figuur zit met gekruiste benen op een zetel, de voetzolen naar boven. Het lichaam is glad en slank, zonder spieren of plooien. Het gewaad is alleen te zien aan een fijne lijn bij de hals, de polsen en de enkels. De handen zijn voor de borst samengebracht, de vingers raken elkaar. De ogen zijn neergeslagen. Het hoofd is bedekt met kleine krullen en draagt een bult. Erachter staat een grote ronde schijf, rijk versierd met bladranken, met links en rechts een zwevende figuur. Onderaan, op de sokkel, knielen kleine figuren aan weerszijden van een wiel, met twee dieren ernaast.</p>
+<h4>Stap 2: wat stelt het voor?</h4>
+<p>De handen maken de dharmachakra mudra: de Boeddha draait het wiel van de leer. Dat gebaar hoort bij één gebeurtenis, de eerste preek. De sokkel bevestigt het. Het wiel in het midden is de leer zelf. De twee dieren zijn herten: het hertenpark van Sarnath. Vijf van de knielende figuren zijn de gezellen die zijn eerste monniken werden. De vrouw en het kind naast hen zijn waarschijnlijk de schenkers van het beeld. Ushnisha, krullen, lange oorlellen en aureool maken de figuur tot de Boeddha.</p>
+<h4>Stap 3: waarom zo?</h4>
+<p>Vergelijk met het beeld uit Gandhara. De Griekse plooien zijn verdwenen, de spieren ook. Het lichaam is geen lichaam van vlees meer, maar een gladde, rustige vorm. De beeldhouwer wil geen mens tonen die preekt, maar de toestand van volkomen rust van waaruit de leer gesproken wordt. Het beeld stond bovendien in Sarnath zelf, op de plaats waar het verhaal zich afspeelde. Een pelgrim die ervoor stond, zag de gebeurtenis en de plek samenvallen. In deze vorm, slank, glad en naar binnen gekeerd, is de Boeddha daarna door heel Azië nagevolgd.</p>
+<h2 id="6-het-beeld-reist">6 Het beeld reist</h2>
+<p>Het boeddhisme verspreidde zich met monniken en handelaars. Naar het noorden volgde het de zijderoute door Centraal-Azië naar China, waar in de vijfde en zesde eeuw duizenden beelden in de rotswanden van Yungang en Longmen werden uitgehouwen. Via Korea bereikte het in de zesde eeuw Japan. Naar het zuiden ging het over zee naar Sri Lanka, Birma, Thailand, Cambodja en Java, waar rond het jaar 800 de Borobudur verrees, een berg van steen met honderden Boeddhabeelden.</p>
+<p>Overal bleven de tekens dezelfde: de ushnisha, de oorlellen, de mudra&#x27;s. Daardoor herken je de Boeddha in elk land. Tegelijk kreeg hij overal het gezicht van de mensen die hem maakten. In China worden de ogen smaller en het gewaad een Chinees hofkleed. In Thailand loopt de ushnisha uit in een vlam en wordt het lichaam soepel en lang. In Japan wordt het gezicht rond en ernstig. Iconografie en stijl gaan hier elk hun eigen weg: de eerste blijft, de tweede verandert.</p>
+<h3 id="6-1-de-grote-boeddha-van-kamakura" class="sub">6.1 De Grote Boeddha van Kamakura</h3>
+<figure class="beeld"><a class="pd" href="beelden/kamakura.jpg" title="Grotere versie"><img src="beelden/kamakura.jpg" width="960" height="1280" loading="lazy" decoding="async" alt="Grote Boeddha van Kamakura (1252)"></a><figcaption><i>Grote Boeddha van Kamakura</i> (1252)<br>Tempel Kotoku-in, Kamakura, Japan. Brons. Foto via Wikimedia Commons.</figcaption><p class="credit">Foto: Dirk Beyer, via <a href="https://commons.wikimedia.org/wiki/File:Kamakura_Budda_Daibutsu_front_1885.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.5/deed.nl">CC BY-SA 2.5</a></p><div class="werk-links"><a class="werk-link" href="https://www.kotoku-in.jp/en/">Bekijk bij Kotoku-in</a></div></figure>
+<dl class="fiche"><dt>Datering</dt><dd>1252</dd><dt>Plaats</dt><dd>Tempel Kotoku-in, Kamakura (Japan)</dd><dt>Materiaal</dt><dd>Brons, oorspronkelijk verguld</dd><dt>Hoogte</dt><dd>Ruim 11 meter, ruim 13 meter met de sokkel</dd><dt>Voorstelling</dt><dd>Amida, de Boeddha van het Reine Land</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een reusachtige bronzen figuur zit in de open lucht, met bomen en heuvels achter zich. De benen zijn gekruist, de handen rusten in de schoot. Het hoofd buigt licht naar voren, de ogen zijn bijna gesloten. Het gewaad valt in regelmatige, brede plooien over beide schouders en laat de borst open. Het brons is groen verweerd. Aan de voet van het beeld zijn de bezoekers niet groter dan een van de vingers.</p>
+<h4>Wat stelt het voor?</h4>
+<p>De handen liggen in de dhyana mudra, het gebaar van de meditatie. Bij dit beeld vormen de wijsvingers en duimen van elke hand bovendien twee cirkels. Aan die variant herken je Amida, in het Sanskriet Amitabha. Dat is niet de historische Boeddha Siddhartha, maar een hemelse Boeddha die heerst over het Reine Land in het westen. Wie zijn naam met vertrouwen aanroept, wordt daar na de dood herboren. In het Japan van de dertiende eeuw, geteisterd door oorlog en rampen, was dat geloof bijzonder geliefd, ook bij gewone mensen.</p>
+<h4>Betekenis</h4>
+<p>Het beeld was niet bedoeld om buiten te staan. Het zat in een houten hal. Die werd meer dan eens door stormen vernield en volgens de overlevering in 1498 voorgoed weggespoeld. Sindsdien zit de Boeddha onder de blote hemel. Voor veel bezoekers is dat net wat het beeld zo sterk maakt: de volkomen rust van de meditatie, midden in wind en regen. Dat is een betekenis die de makers niet voorzien hadden. Een kunstwerk kan er in de loop van zijn geschiedenis betekenissen bij krijgen.</p>
+<h2 id="7-bamiyan-het-beeld-vernietigd">7 Bamiyan: het beeld vernietigd</h2>
+<figure class="beeld"><a class="pd" href="beelden/bamiyan.jpg" title="Grotere versie"><img src="beelden/bamiyan.jpg" width="960" height="792" loading="lazy" decoding="async" alt="De grote Boeddha van Bamiyan voor en na de vernietiging"></a><figcaption>De grote Boeddha van Bamiyan voor en na de vernietiging<br>Bamiyan, Afghanistan. Foto&#x27;s uit 1963 en 2008, via Wikimedia Commons.</figcaption><p class="credit">Foto&#x27;s via <a href="https://commons.wikimedia.org/wiki/File:Taller_Buddha_of_Bamiyan_before_and_after_destruction.jpg">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.nl">CC BY-SA 3.0</a>. De makers staan op die pagina</p><div class="werk-links"><a class="werk-link" href="https://whc.unesco.org/en/list/208/">Bekijk bij UNESCO Werelderfgoed</a></div></figure>
+<dl class="fiche"><dt>Datering</dt><dd>Zesde tot begin zevende eeuw</dd><dt>Plaats</dt><dd>Vallei van Bamiyan, Afghanistan</dd><dt>Techniek</dt><dd>Uit de rotswand gehouwen, afgewerkt met leem en stucwerk en beschilderd</dd><dt>Hoogte</dt><dd>Ongeveer 55 meter en 38 meter</dd><dt>Vernietigd</dt><dd>Maart 2001</dd></dl>
+<h4>Wat stond er?</h4>
+<p>De vallei van Bamiyan ligt in het midden van Afghanistan, op een oude handelsweg tussen India, Perzië en China. In een rotswand van meer dan een kilometer lang waren twee staande Boeddha&#x27;s uitgehouwen, elk in een eigen nis. De grootste was ongeveer 55 meter hoog, de kleinste 38 meter. Het lichaam was uit de rots gehakt. De plooien van het gewaad waren erop aangebracht in leem, afgewerkt met stucwerk en beschilderd. In die plooien herken je nog de verre echo van Gandhara. De Chinese monnik Xuanzang, die de vallei rond 630 bezocht, beschreef hoe de beelden schitterden van het goud. Rondom lagen honderden grotten waar monniken woonden.</p>
+<h4>Maart 2001</h4>
+<p>Op 26 februari 2001 beval mullah Omar, de leider van de taliban die toen het grootste deel van Afghanistan bestuurden, de vernietiging van alle beelden in het land. Regeringen, musea en ook islamitische geleerden uit andere landen probeerden hem op andere gedachten te brengen. In maart werden de twee Boeddha&#x27;s met artillerie en dynamiet opgeblazen. Het duurde weken. De taliban filmden het en verspreidden de beelden zelf.</p>
+<h4>Waarom een beeld vernietigen?</h4>
+<p>Het opzettelijk vernietigen van beelden heet iconoclasme, letterlijk het breken van beelden. De taliban gaven een religieuze reden: de beelden waren afgoden, en afgoden horen niet te bestaan. Toch stonden de Boeddha&#x27;s er al veertien eeuwen, waarvan ongeveer duizend jaar in een islamitisch land, en in Bamiyan woonden al lang geen boeddhisten meer die ze vereerden. Onderzoekers wijzen daarom ook op andere motieven: woede over de internationale sancties, de wens om de wereld te tonen wie de baas was, en de zekerheid dat net dit de aandacht van de hele wereld zou trekken.</p>
+<p>Dat laatste zegt iets over beelden. Wie een beeld vernietigt, vindt het niet onbelangrijk. Hij erkent net dat het macht heeft. In Europa is dat niet anders geweest: tijdens de Beeldenstorm van 1566 werden in onze streken in enkele weken tijd honderden kerken leeggehaald.</p>
+<h4>Lege nissen</h4>
+<p>In 2003 plaatste UNESCO de vallei van Bamiyan op de Werelderfgoedlijst en tegelijk op de lijst van het bedreigde werelderfgoed. Daar staat ze in 2026 nog altijd op. Sinds 2021 besturen de taliban het land opnieuw en bewaken ze de plek die ze zelf verwoestten. Over de vraag of de beelden herbouwd moeten worden, is geen akkoord. Voorstanders willen de vallei haar gezicht teruggeven. Tegenstanders vinden dat een reconstructie de geschiedenis uitwist, en dat de lege nissen zelf een monument geworden zijn. In 2015 werd een van de Boeddha&#x27;s één nacht lang met licht in zijn nis geprojecteerd.</p>
+<p>Vergelijk de lege nis met de lege troon van Amaravati. In beide gevallen kijk je naar een plaats waar de Boeddha niet te zien is. De eerste leegte is gekozen, de tweede is aangedaan.</p>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Aniconisch", "Zonder afbeelding van de hoofdfiguur. In de vroegste boeddhistische kunst wordt de Boeddha alleen met tekens getoond."], ["Aureool", "Lichtkrans of schijf achter het hoofd van een heilige figuur."], ["Bodhiboom", "De boom in Bodh Gaya waaronder Siddhartha de verlichting bereikte."], ["Bodhisattva", "Iemand die het ontwaken heeft bereikt maar in de wereld blijft om anderen te helpen. Draagt sieraden en een kroon."], ["Boeddha", "De ontwaakte. Titel van Siddhartha Gautama, en van andere ontwaakten zoals Amida."], ["Contrapposto", "Staande houding met het gewicht op één been, uit de Griekse beeldhouwkunst."], ["Gandhara", "Streek in het huidige Pakistan en Afghanistan waar de Boeddha met Griekse en Romeinse vormen werd afgebeeld."], ["Guptaperiode", "Tijdperk in Noord-India, ongeveer 320 tot 550, waarin het klassieke Boeddhabeeld ontstond."], ["Iconoclasme", "Het opzettelijk vernietigen van beelden om religieuze of politieke redenen."], ["Mathura", "Stad in Noord-India waar de Boeddha naar Indiaas voorbeeld werd afgebeeld, in rode zandsteen."], ["Mudra", "Vast handgebaar met een vaste betekenis."], ["Nirvana", "Het uitdoven van begeerte en lijden, het einde van de wedergeboorten."], ["Stupa", "Halfbolvormig bouwwerk boven relieken van de Boeddha."], ["Urna", "Stip of krul tussen de wenkbrauwen van de Boeddha."], ["Ushnisha", "Bult of knot boven op het hoofd van de Boeddha, teken van hogere kennis."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Wat betekent het woord boeddha, en waarom is het geen naam?</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Wat is aniconische kunst? Geef drie tekens waarmee de vroege boeddhistische kunst de Boeddha aanwezig maakt en zeg waar elk teken voor staat.</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Waarom werd de Boeddha in de eerste eeuwen niet afgebeeld? Geef twee verklaringen en leg uit waarom de vraag niet beslist is.</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Beschrijf de steen met de lege troon uit Amaravati, in het British Museum. Wat is er bijzonder aan de keerzijde van de steen?</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Welke Griekse en Romeinse kenmerken herken je in de <i>Boeddha</i> uit Gandhara? Verklaar hoe die vormen in deze streek terechtkwamen.</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Noem vier verschillen tussen een Boeddha uit Gandhara en een Boeddha uit Mathura.</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Wat is een ushnisha, wat is een urna, en waarom heeft de Boeddha lange oorlellen?</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Hoe onderscheid je een Boeddha van een bodhisattva?</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Welke mudra hoort bij de verlichting, welke bij de eerste preek en welke bij de meditatie? Beschrijf telkens wat je ziet.</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Welke elementen op de sokkel van <i>De Boeddha houdt zijn eerste preek</i> bevestigen het onderwerp van het beeld?</label></li><li><input type="checkbox" id="v0-10" data-vraag="0-10"><label for="v0-10">Wie is Amida, en waaraan herken je hem bij de <i>Grote Boeddha van Kamakura</i>?</label></li><li><input type="checkbox" id="v0-11" data-vraag="0-11"><label for="v0-11">Wat gebeurde er in maart 2001 in Bamiyan? Welke redenen worden daarvoor gegeven?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Je krijgt een afbeelding van een Boeddhabeeld dat je niet kent. Pas de drie stappen van Panofsky toe. Zoek voor stap 2 het verhaal op dat bij het beeld hoort.</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Vergelijk de <i>Boeddha</i> uit Gandhara met <i>De Boeddha houdt zijn eerste preek</i> uit Sarnath. Wat is in twee eeuwen gebleven en wat is veranderd?</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">In dit hoofdstuk blijft de iconografie gelijk terwijl de stijl verandert. Leg dat uit met twee beelden uit het hoofdstuk.</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Vergelijk de lege troon van Amaravati met de lege nissen van Bamiyan. Wat hebben ze gemeen en waarin verschillen ze?</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">Moeten de Boeddha&#x27;s van Bamiyan herbouwd worden? Geef een argument voor en een argument tegen en neem daarna zelf een standpunt in.</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">De <i>Grote Boeddha van Kamakura</i> kreeg een betekenis die de makers niet voorzien hadden. Leg uit, en zoek een ander kunstwerk op deze site waarvan de betekenis in de loop van de tijd veranderd is.</label></li><li><input type="checkbox" id="v1-6" data-vraag="1-6"><label for="v1-6">Vergelijk het vernietigen van de Boeddha&#x27;s van Bamiyan met de Beeldenstorm van 1566. Wat zegt het vernietigen van een beeld over de macht van beelden?</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../sjklovski/"><span>Vorig onderwerp</span>&larr; Viktor Sjklovski</a><a href="../japanse-meesters/" style="text-align:right"><span>Volgend onderwerp</span>Japanse meesters en hun echo &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-boeddhabeeld",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

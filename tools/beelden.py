@@ -3,6 +3,8 @@
 beelden.json
   bestaand: [slug, n, bestand]  -> afbeelding in de n-de <figure class="beeld"> van die pagina
   nieuw:    [slug, h|t, anker, bestand, regel1, regel2] -> nieuwe figuur na kop (h) of alinea (t)
+  lokaal:   [slug, n, bestand, breedte, hoogte, credit] -> eigen bestand in de map <slug>/beelden/, in de n-de figuur;
+            credit is de html van de bronregel (maker en licentie)
 maten.json: [bestand, breedte, hoogte] (opgevraagd via de Commons-API)
 """
 import hashlib, html, json, re, urllib.parse
@@ -74,6 +76,21 @@ def voeg_toe(slug, s):
             alt = m.group(1).split("<br>")[0] if m else ""
             d = img(b, alt) + d
             d = d.replace("</figcaption>", "</figcaption>" + credit(b), 1)
+            delen[k + 1] = d
+            n += 1
+        s = '<figure class="beeld">'.join(delen)
+    lokaal = [x for x in DATA.get("lokaal", []) if x[0] == slug]
+    if lokaal:
+        delen = s.split('<figure class="beeld">')
+        for _, k, b, w, h, cr in lokaal:
+            d = delen[k + 1]
+            if 'class="pd"' in d:
+                continue
+            m = re.match(r"<figcaption>(.*?)</figcaption>", d, re.S)
+            alt = _zonder_tags(m.group(1).split("<br>")[0]).strip() if m else ""
+            d = (f'<a class="pd" href="beelden/{b}" title="Grotere versie"><img src="beelden/{b}" width="{w}" height="{h}" '
+                 f'loading="lazy" decoding="async" alt="{html.escape(alt, quote=True)}"></a>') + d
+            d = d.replace("</figcaption>", f'</figcaption><p class="credit">{cr}</p>', 1)
             delen[k + 1] = d
             n += 1
         s = '<figure class="beeld">'.join(delen)

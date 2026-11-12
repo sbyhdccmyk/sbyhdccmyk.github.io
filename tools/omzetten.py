@@ -334,6 +334,13 @@ def vragen_uit(blokken):
             huidig["vragen"].append(re.sub(r"^\d+\\?\.\s*", "", b["html"]))
     return [g for g in groepen if g["vragen"]]
 
+def buren_html(vorige, volgende):
+    if not (vorige or volgende): return ""
+    buren = '<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp">'
+    buren += f'<a href="../{vorige[0]}/"><span>Vorig onderwerp</span>&larr; {E(vorige[1])}</a>' if vorige else "<span></span>"
+    buren += f'<a href="../{volgende[0]}/" style="text-align:right"><span>Volgend onderwerp</span>{E(volgende[1])} &rarr;</a>' if volgende else ""
+    return buren + "</nav>"
+
 def maak_pagina(meta, inhoud, woorden, vragen, extra=None, vorige=None, volgende=None, heeft_grijs=False):
     """meta: slug, titel, ondertitel, eyebrow. inhoud: lijst blokken zonder titelpagina."""
     nav, ids = [], set()
@@ -376,12 +383,7 @@ def maak_pagina(meta, inhoud, woorden, vragen, extra=None, vorige=None, volgende
         f'<li><a href="#{sid}">{E(tx)}</a>' + (("<ol>" + "".join(f'<li><a href="#{s}">{E(t)}</a></li>' for s, t in sub) + "</ol>") if 0 < len(sub) <= 14 else "") + "</li>"
         for sid, tx, sub in navitems)
     legende = '<p class="legende"><span>Tekst met een grijze lijn ervoor is uitbreiding of achtergrond.</span></p>' if (heeft_grijs or 'class="uitbreiding"' in body) else ""
-    buren = ""
-    if vorige or volgende:
-        buren = '<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp">'
-        buren += f'<a href="../{vorige[0]}/"><span>Vorig onderwerp</span>&larr; {E(vorige[1])}</a>' if vorige else "<span></span>"
-        buren += f'<a href="../{volgende[0]}/" style="text-align:right"><span>Volgend onderwerp</span>{E(volgende[1])} &rarr;</a>' if volgende else ""
-        buren += "</nav>"
+    buren = buren_html(vorige, volgende)
     pagina = f'''<!DOCTYPE html>
 <html lang="nl">
 <head>

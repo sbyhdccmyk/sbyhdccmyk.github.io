@@ -5,6 +5,8 @@ ONDERWERPEN = [
  ("epoche","De epoché en de ekphrasis","Je eerste oordeel uitstellen en in woorden vatten wat je ziet",["kijken"],None,"",["schilderkunst"],"online"),
  ("iconografie","Iconografie en iconologie","Betekenis lezen in een kunstwerk met het stappenplan van Panofsky",["kijken"],None,"",["schilderkunst"],"online"),
 
+ ("boeddhabeeld","Het Boeddhabeeld","Eén beeld door tijden en plaatsen, van de lege troon in Amaravati tot de lege nissen van Bamiyan",["tijd"],100,"vanaf de 1ste eeuw",["beeldhouwkunst"],"online"),
+ ("japanse-meesters","Japanse meesters en hun echo","Sesshu, Tohaku, Hokusai en Hiroshige, en wat Van Gogh en Jeff Wall van hen leerden",["tijd"],1495,"vanaf 1495",["schilderkunst","fotografie"],"online"),
  ("caravaggio","Caravaggio en de barok","Licht, donker en de rauwe werkelijkheid",["tijd"],1600,"ca. 1600",["schilderkunst"],"online"),
  ("rococo","Rococo","Watteau en Fragonard: spel, verleiding en melancholie",["tijd"],1715,"1715-1780",["schilderkunst"],"online"),
  ("neoclassicisme","Neoclassicisme","David en Ingres: terug naar de Oudheid",["tijd"],1780,"1780-1830",["schilderkunst"],"online"),

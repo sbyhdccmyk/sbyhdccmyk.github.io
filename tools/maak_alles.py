@@ -1,4 +1,4 @@
-# Bouwt alle hoofdstukpagina's uit de opgehaalde Google Docs (in /tmp/docs) en werkt de startpagina bij.
+# Bouwt de hoofdstukpagina's uit de opgehaalde Google Docs (in /tmp/docs). Docs die niet opgehaald zijn, blijven zoals ze zijn.
 import sys, re, json, pathlib
 HIER = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HIER))
@@ -17,6 +17,7 @@ LOS = {  # slug -> doc met één hoofdstuk
  "roland-barthes": "EST5_BARTHES_CLASS_2627", "arthur-danto": "KBS6_DANTO_CLASS_2627", "gilles-deleuze": "KBS6_DELEUZE_CLASS_2627",
  "tanizaki": "EST6_TANIZAKI_CLASS_2627", "conceptuele-kunst": "KBS6_CONCEPTUEEL_CLASS_2627", "popart": "KBS6_POPART_CLASS_2627",
  "duchamp": "KBS6_DUCHAMP_CLASS_2627", "anouk-de-clercq": "CULT_DECLERCQ_CLASS_2627",
+ "boeddhabeeld": "KBS5_BOEDDHABEELD_CLASS_2627", "japanse-meesters": "KBS5_JAPAN_CLASS_2627",
 }
 KBS6 = {"dada": "1", "kant": "2", "architectuur-en-design": "3", "muziek": "4"}
 KBS5 = {"de-vier-elementen": "Inleiding", "ron-mueck": "1", "film": "4", "modernisme": "5"}
@@ -167,7 +168,7 @@ def dijkstra_beelden():
     print("rineke-dijkstra beelden:", nb)
 
 def render_alles():
-    seq = [s for s in volgorde() if s in GEBOUWD or s == "rineke-dijkstra"]
+    seq = [s for s in volgorde() if INFO[s][7] == "online"]
     for slug, (inhoud, woorden, vragen, extra) in GEBOUWD.items():
         o = INFO[slug]; k = seq.index(slug)
         vorige = (seq[k - 1], INFO[seq[k - 1]][1]) if k > 0 else None
@@ -185,8 +186,26 @@ def render_alles():
         (SITE / slug / "index.html").write_text(html_, encoding="utf-8")
         print(f"{slug:24} {len(html_)//1024:4} kB  {len(woorden):3} woorden  {sum(len(g['vragen']) for g in vragen):3} vragen  {html_.count('class=\"beeld\"'):3} beelden  {html_.count('werk-link'):3} links")
 
+def buren_bijwerken():
+    """Vorig/volgend onderaan de pagina's die nu niet opnieuw gebouwd zijn, in lijn brengen met de volgorde."""
+    seq = [s for s in volgorde() if INFO[s][7] == "online"]
+    for k, slug in enumerate(seq):
+        p = SITE / slug / "index.html"
+        if slug in GEBOUWD or not p.exists(): continue
+        s = p.read_text(encoding="utf-8")
+        vorige = (seq[k - 1], INFO[seq[k - 1]][1]) if k > 0 else None
+        volgende = (seq[k + 1], INFO[seq[k + 1]][1]) if k + 1 < len(seq) else None
+        nieuw, n = re.subn(r'<nav class="hoofdstuk-nav".*?</nav>', lambda m: buren_html(vorige, volgende), s, count=1, flags=re.S)
+        if n and nieuw != s:
+            p.write_text(nieuw, encoding="utf-8"); print("buren bijgewerkt:", slug)
+
+def bestaat(pad):
+    if pad.exists(): return True
+    print("  niet opgehaald, overgeslagen:", pad.name); return False
+
 # ---- losse docs
 for slug, naam in LOS.items():
+    if not bestaat(DOCS / f"{naam}.json"): continue
     body, fns = laad_doc(DOCS / f"{naam}.json")
     bl = doc_naar_blokken(body, fns)
     _, rest = voorkant(bl)
@@ -199,28 +218,32 @@ for slug, naam in LOS.items():
     schrijf(slug, zonder_woorden(opschonen(inhoud)), w, v, x)
 
 # ---- jaarcursus 6
-body, fns = laad_doc(DOCS / "KBS6_JAARCURSUS_CLASS_2627.json")
-delen = splits_h1(voorkant(doc_naar_blokken(body, fns))[1])
-for slug, nr in KBS6.items():
-    d = next(d for d in delen if d["titel"].startswith(nr + " "))
-    w, v, x = addendum_per_hoofdstuk(delen, nr)
-    schrijf(slug, zonder_woorden(opschonen(d["blokken"])), w, v, x)
+if bestaat(DOCS / "KBS6_JAARCURSUS_CLASS_2627.json"):
+  body, fns = laad_doc(DOCS / "KBS6_JAARCURSUS_CLASS_2627.json")
+  delen = splits_h1(voorkant(doc_naar_blokken(body, fns))[1])
+  for slug, nr in KBS6.items():
+      d = next(d for d in delen if d["titel"].startswith(nr + " "))
+      w, v, x = addendum_per_hoofdstuk(delen, nr)
+      schrijf(slug, zonder_woorden(opschonen(d["blokken"])), w, v, x)
 
 # ---- jaarcursus 5 (tekstexport)
-tekst = (DOCS.parent / "drive" / "KBS5.md").read_text(encoding="utf-8")
-delen = splits_h1(md_naar_blokken(tekst))
-for slug, nr in KBS5.items():
-    d = next(d for d in delen if d["titel"].startswith(nr + " ") or (nr == "Inleiding" and d["titel"].startswith("Inleiding")))
-    w, v, x = addendum_per_hoofdstuk(delen, nr)
-    schrijf(slug, zonder_woorden(bijschriften_uit_tekst(opschonen(d["blokken"]))), w, v, x)
+if bestaat(DOCS.parent / "drive" / "KBS5.md"):
+  tekst = (DOCS.parent / "drive" / "KBS5.md").read_text(encoding="utf-8")
+  delen = splits_h1(md_naar_blokken(tekst))
+  for slug, nr in KBS5.items():
+      d = next(d for d in delen if d["titel"].startswith(nr + " ") or (nr == "Inleiding" and d["titel"].startswith("Inleiding")))
+      w, v, x = addendum_per_hoofdstuk(delen, nr)
+      schrijf(slug, zonder_woorden(bijschriften_uit_tekst(opschonen(d["blokken"]))), w, v, x)
 
 # ---- jaarcursus 4 (oudere opmaak)
-body, fns = laad_doc(DOCS / "cursus_KBS_4_totaal_jaar_2 (2).json")
-delen = splits_h1(doc_naar_blokken(body, fns))
-for slug, begin in KBS4.items():
-    d = next(d for d in delen if d["titel"].startswith(begin))
-    schrijf(slug, zonder_woorden(opschonen(d["blokken"])), [], [], [])
+if bestaat(DOCS / "cursus_KBS_4_totaal_jaar_2 (2).json"):
+  body, fns = laad_doc(DOCS / "cursus_KBS_4_totaal_jaar_2 (2).json")
+  delen = splits_h1(doc_naar_blokken(body, fns))
+  for slug, begin in KBS4.items():
+      d = next(d for d in delen if d["titel"].startswith(begin))
+      schrijf(slug, zonder_woorden(opschonen(d["blokken"])), [], [], [])
 
 render_alles()
+buren_bijwerken()
 dijkstra_media()
 dijkstra_beelden()

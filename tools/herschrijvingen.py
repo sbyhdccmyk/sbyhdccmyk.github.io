@@ -13,6 +13,16 @@ HERSCHRIJF = {
   ("welke kunstwerken uit de cursus gingen eraan vooraf?", "welke kunstwerken van deze site gingen eraan vooraf?"),
   ("Presenteer je voorwerp in drie zinnen aan de klas, zoals een kunstcriticus.", "Stel je voorwerp in drie zinnen voor aan iemand anders, zoals een kunstcriticus."),
  ],
+ "boeddhabeeld": [
+  (" De verhalen die je nodig hebt, staan in De Bibliotheek, in Boek 11: Boeddhistische verhalen en iconografie.", ""),
+  ("Je bekijkt hem via de voetnoot.", "Je bekijkt hem via de bronlink."),
+  (" Het verhaal vind je in Boek 11 van De Bibliotheek onder De eerste preek in Sarnath.", ""),
+  ("Gebruik voor stap 2 Boek 11 uit De Bibliotheek.", "Zoek voor stap 2 het verhaal op dat bij het beeld hoort."),
+  ("zoek een ander kunstwerk uit de cursus waarvan", "zoek een ander kunstwerk op deze site waarvan"),
+ ],
+ "japanse-meesters": [
+  ("Zo sluit dit hoofdstuk aan bij het volgende, over het modernisme.", "Zo sluit dit hoofdstuk aan bij het hoofdstuk over het modernisme."),
+ ],
  "conceptuele-kunst": [
   ("Wissel je instructie met een klasgenoot en voer elkaars instructie uit op een A3-blad.", "Wissel je instructie met iemand anders en voer elkaars instructie uit op een groot blad."),
   ("of in de uitvoering van je klasgenoot?", "of in de uitvoering door de ander?"),

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Japanse meesters en hun echo</title>
+<meta name="description" content="Sesshu, Tohaku, Hokusai en Hiroshige, en wat Van Gogh en Jeff Wall van hen leerden">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.uitbreiding{color:var(--zacht)}
+p.uitbreiding,div.uitbreiding{border-left:2px solid var(--lijn);padding-left:.8rem}
+.legende{font-size:.95rem;color:var(--zacht);border:1px solid var(--lijn);padding:.6rem .9rem;margin:0 0 1.5rem}
+.legende span{border-left:2px solid var(--lijn);padding-left:.5rem}
+.tabel{overflow-x:auto;margin:1.2rem 0 1.6rem}
+.tabel table{border-collapse:collapse;width:100%;font-size:1rem;line-height:1.4}
+.tabel th,.tabel td{border:1px solid var(--lijn);padding:.45rem .6rem;text-align:left;vertical-align:top}
+.tabel th{background:#e7e6e6}
+main ul.lijst,main ol.lijst{margin:0 0 1rem;padding-left:1.4rem}
+main ul.lijst li,main ol.lijst li{margin-bottom:.3rem}
+sup.bron a{font-family:var(--data);font-size:.7rem;color:var(--rood);text-decoration:none}
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+.beeld .pd{display:block;margin:0 auto .7rem}.beeld .pd img{display:block;max-width:100%;max-height:78vh;width:auto;height:auto;margin:0 auto;box-shadow:0 1px 6px rgba(0,0,0,.18);background:#ddd}.beeld .credit{font-size:.8rem;opacity:.75;margin:.35rem 0 0}.beeld .credit a{color:inherit}</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; KIJK NU!</a></p>
+  <p class="vak">Inhoud</p>
+  <ol><li><a href="#1-anders-kijken">1 Anders kijken</a></li><li><a href="#2-inkt-en-leegte">2 Inkt en leegte</a><ol><li><a href="#2-1-sesshu-toyo-landschap-in-gebroken-inkt">2.1 Sesshu Toyo, Landschap in gebroken inkt</a></li><li><a href="#2-2-hasegawa-tohaku-pijnbomen">2.2 Hasegawa Tohaku, Pijnbomen</a></li></ol></li><li><a href="#3-beelden-van-de-vlietende-wereld">3 Beelden van de vlietende wereld</a><ol><li><a href="#3-1-katsushika-hokusai-de-grote-golf-bij-kanagawa">3.1 Katsushika Hokusai, De grote golf bij Kanagawa</a></li><li><a href="#3-2-utagawa-hiroshige-plotse-regenbui-boven-de-ohashi-brug">3.2 Utagawa Hiroshige, Plotse regenbui boven de Ohashi-brug</a></li></ol></li><li><a href="#4-japan-in-parijs">4 Japan in Parijs</a><ol><li><a href="#4-1-vincent-van-gogh-brug-in-de-regen-naar-hiroshige">4.1 Vincent van Gogh, Brug in de regen (naar Hiroshige)</a></li></ol></li><li><a href="#5-een-prent-wordt-een-foto">5 Een prent wordt een foto</a><ol><li><a href="#5-1-katsushika-hokusai-ejiri-in-de-provincie-suruga">5.1 Katsushika Hokusai, Ejiri in de provincie Suruga</a></li><li><a href="#5-2-jeff-wall-a-sudden-gust-of-wind-after-hokusai">5.2 Jeff Wall, A Sudden Gust of Wind (after Hokusai)</a></li></ol></li><li><a href="#6-de-echo-vandaag">6 De echo vandaag</a></li><li><a href="#woordenschat">Woordenschat</a></li><li><a href="#vragen">Oefenvragen</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">KIJK NU!</a> / Door de tijd, vanaf 1495</p>
+  <h1>Japanse meesters en hun echo</h1>
+  <p class="onder">Sesshu, Tohaku, Hokusai en Hiroshige, en wat Van Gogh en Jeff Wall van hen leerden</p>
+</header>
+
+<p>In 1887 zit Vincent van Gogh in Parijs voor een Japanse prent van een brug in de regen. Hij legt er een raster over en schildert ze na, streek voor streek, in olieverf. Ruim een eeuw later zet de Canadese fotograaf Jeff Wall bij Vancouver vier acteurs in een winderig veld en bouwt hij met de computer een andere Japanse prent na, op een formaat van bijna vier meter breed.</p>
+<p>Twee westerse kunstenaars, twee totaal verschillende technieken, en telkens hetzelfde gebaar: kijken naar een Japans beeld en er iets nieuws mee maken. In dit hoofdstuk leer je eerst de Japanse meesters zelf kennen, op hun eigen voorwaarden. Daarna volg je wat er met hun beelden gebeurde toen ze in Europa aankwamen, en wat kunstenaars er vandaag nog mee doen. Zo sluit dit hoofdstuk aan bij het hoofdstuk over het modernisme.</p>
+<h2 id="1-anders-kijken">1 Anders kijken</h2>
+<p>Een Europees schilderij uit de zeventiende eeuw is een venster. De lijst is het kozijn, het lineair perspectief trekt je blik de diepte in, licht en schaduw maken de dingen rond en tastbaar. Je kent dat van Caravaggio. De Japanse beeldtraditie vertrekt van andere afspraken. Wie ze niet kent, vindt de beelden vlak of onaf. Wie ze kent, ziet keuzes.</p>
+<ul class="lijst"><li>De leegte doet mee. Een groot deel van het blad blijft onbeschilderd. Dat wit is geen achtergrond die nog ingevuld moet worden, maar mist, water, lucht of stilte.</li><li>Geen venster, maar een vlak. Er is geen verdwijnpunt en geen slagschaduw. Diepte ontstaat door dingen boven elkaar te plaatsen, of door ze te laten vervagen.</li><li>De lijn draagt het beeld. Vormen worden met een contour getekend en met egale kleur gevuld, zonder overgangen van licht naar donker.</li><li>Asymmetrie. Het belangrijkste staat zelden in het midden. Een tak komt van opzij het beeld in, een figuur wordt door de rand afgesneden.</li><li>Het ogenblik. Regen, wind, mist, bloesem die valt: geliefd is wat net voorbijgaat.</li></ul>
+<p>Ook de dragers zijn anders. Een Japans schilderij hangt niet permanent aan de muur. Het is een rol die je ophangt voor een gelegenheid en weer opbergt, een handrol die je van rechts naar links afrolt, of een kamerscherm dat een ruimte verdeelt. Daarom lees je deze beelden van rechts naar links.</p>
+<h2 id="2-inkt-en-leegte">2 Inkt en leegte</h2>
+<p>De oudste traditie in dit hoofdstuk is de inktschilderkunst. Ze kwam in de dertiende en veertiende eeuw met het zenboeddhisme uit China naar Japan. De schilders waren vaak monniken. Ze werkten met zwarte inkt, water, een penseel en papier of zijde, en met niets anders. Een streek inkt op papier kan je niet verbeteren of wegvegen. Elke aarzeling blijft zichtbaar. De kunst bestaat erin met zo weinig mogelijk streken zo veel mogelijk op te roepen.</p>
+<h3 id="2-1-sesshu-toyo-landschap-in-gebroken-inkt" class="sub">2.1 Sesshu Toyo, Landschap in gebroken inkt</h3>
+<figure class="beeld"><a class="pd" href="beelden/sesshu.jpg" title="Grotere versie"><img src="beelden/sesshu.jpg" width="960" height="1484" loading="lazy" decoding="async" alt="Sesshu Toyo, Landschap in gebroken inkt (1495)"></a><figcaption>Sesshu Toyo, <i>Landschap in gebroken inkt</i> (1495)<br>Nationaal Museum van Tokio. Hangrol, inkt op papier. Foto via Wikimedia Commons.</figcaption><p class="credit">Publiek domein. Afbeelding via Wikimedia Commons</p><div class="werk-links"><a class="werk-link" href="https://emuseum.nich.go.jp/detail?langId=en&amp;content_base_id=101224&amp;content_part_id=0&amp;content_pict_id=0">Bekijk bij e-Museum, Nationale Musea van Japan</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1495</dd><dt>Techniek</dt><dd>Hangrol, inkt op papier</dd><dt>Afmetingen</dt><dd>148,6 x 32,7 cm</dd><dt>Bewaarplaats</dt><dd>Nationaal Museum van Tokio (Nationale Schat)</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een smal, hoog blad. Onderaan staan enkele donkere, natte vegen inkt, met daarboven lichtere vlekken die in het papier uitvloeien. Bovenaan staan regels schrift. Wie langer kijkt, begint te herkennen: de donkere vegen worden bomen en rotsen aan een oever, een paar rechte streepjes een dak, twee haaltjes op het water een bootje. De bleke vlekken erachter zijn bergen in de mist. Meer dan de helft van het beeld is leeg.</p>
+<h4>Hoe is het gemaakt?</h4>
+<p>Sesshu (1420-1506) was een zenmonnik en geldt als de grootste Japanse inktschilder. Hij had in China gestudeerd. Dit werk schilderde hij op zijn zesenzeventigste voor een leerling die na jaren studie naar huis terugkeerde, als een soort getuigschrift. Dat schrijft hij zelf in de tekst bovenaan. Daarboven staan gedichten van zes monniken uit Kyoto.</p>
+<p>De techniek heet gespatte of gebroken inkt. De schilder tekent geen contouren. Hij zet eerst natte, bleke vlekken en plaatst daarin, terwijl het papier nog vochtig is, enkele donkere accenten. Het lijkt achteloos, maar het museum wijst erop dat het beeld een stevige opbouw heeft: de donkere massa onderaan draagt de lichte bergen erboven.</p>
+<h4>Betekenis</h4>
+<p>Het landschap bestaat nergens. Het is geen plek die Sesshu gezien heeft, maar een landschap dat ontstaat terwijl je kijkt. De schilder geeft net genoeg, en de kijker maakt het af. Dat past bij zen, waar inzicht niet uitgelegd kan worden maar door de leerling zelf gevonden moet worden. Een meester die zijn leerling dit meegeeft, zegt: de rest moet je zelf doen.</p>
+<h3 id="2-2-hasegawa-tohaku-pijnbomen" class="sub">2.2 Hasegawa Tohaku, Pijnbomen</h3>
+<figure class="beeld"><a class="pd" href="beelden/tohaku.jpg" title="Grotere versie"><img src="beelden/tohaku.jpg" width="1280" height="598" loading="lazy" decoding="async" alt="Hasegawa Tohaku, Pijnbomen (zestiende eeuw), linkerscherm"></a><figcaption>Hasegawa Tohaku, <i>Pijnbomen</i> (zestiende eeuw), linkerscherm<br>Nationaal Museum van Tokio. Kamerscherm, inkt op papier. Foto via Wikimedia Commons.</figcaption><p class="credit">Publiek domein. Afbeelding via Wikimedia Commons</p><div class="werk-links"><a class="werk-link" href="https://emuseum.nich.go.jp/detail?langId=en&amp;content_base_id=100151&amp;content_part_id=0&amp;content_pict_id=0">Bekijk bij e-Museum, Nationale Musea van Japan</a></div></figure>
+<dl class="fiche"><dt>Datering</dt><dd>Einde zestiende eeuw</dd><dt>Techniek</dt><dd>Twee kamerschermen van elk zes panelen, inkt op papier</dd><dt>Afmetingen</dt><dd>Elk scherm 156,8 x 356 cm</dd><dt>Bewaarplaats</dt><dd>Nationaal Museum van Tokio (Nationale Schat)</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Enkele groepen pijnbomen staan in een dichte mist. De voorste zijn met donkere, ruwe streken gezet, de achterste zijn zo bleek dat ze bijna in het papier verdwijnen. Tussen de groepen is niets: geen grond, geen horizon, geen lucht. In de verte is vaag de top van een besneeuwde berg te zien. De schermen zijn samen meer dan zeven meter breed, en het grootste deel daarvan is leeg papier.</p>
+<h4>De leegte als onderwerp</h4>
+<p>Tohaku (1539-1610) werkte in een tijd van burgeroorlog en van pronkzucht. Zijn rivalen beschilderden de kastelen van de krijgsheren met reusachtige bomen op een achtergrond van bladgoud. Dit werk doet het omgekeerde. Het toont geen bomen, maar de mist ertussen. Het lege papier is hier geen ontbrekende achtergrond, het is vochtige, koude lucht. Wie voor de schermen staat, heeft het gevoel zelf in het bos te lopen en de bomen een voor een te zien opdoemen.</p>
+<p>Over het werk bestaan vragen waar niemand het antwoord op kent. De vellen papier zijn onregelmatig aan elkaar gezet en de zegels zijn later aangebracht. Sommige onderzoekers denken daarom dat het een voorstudie was voor een groter werk, die pas later tot schermen is gemaakt. De inkt is dan weer van de allerbeste kwaliteit. Het museum laat de vraag open.</p>
+<h4>Betekenis</h4>
+<p>In het Japans bestaat een woord voor de ruimte tussen de dingen: ma. Het betekent tussenruimte of pauze, zoals de stilte tussen twee noten. In <i>Pijnbomen</i> is die tussenruimte belangrijker dan de dingen zelf. Onthoud dit beeld. Je komt de leegte verderop in dit hoofdstuk opnieuw tegen, in de fotografie.</p>
+<h2 id="3-beelden-van-de-vlietende-wereld">3 Beelden van de vlietende wereld</h2>
+<p>Twee eeuwen later ziet Japan er anders uit. Het land is in vrede, afgesloten van het buitenland, en Edo, het huidige Tokio, is een van de grootste steden ter wereld. Een nieuwe klasse van kooplui en ambachtslieden heeft geld en vrije tijd. Ze gaat naar het kabukitheater, naar het worstelen en naar de vermaakwijk. Die wereld van voorbijgaand plezier heet ukiyo, de vlietende wereld. De beelden ervan heten ukiyo-e.</p>
+<p>Ukiyo-e zijn kleurenhoutsneden: geen unieke kunstwerken voor een tempel of een kasteel, maar prenten in honderden exemplaren, te koop voor de prijs van een maaltijd. Aan elke prent werkten vier mensen. De uitgever betaalde en bepaalde het onderwerp. De ontwerper maakte de tekening. De blokkensnijder sneed ze uit in kersenhout, met een apart blok voor elke kleur. De drukker bracht de kleuren een voor een op het papier. Alleen de naam van de ontwerper kennen we meestal nog.</p>
+<h3 id="3-1-katsushika-hokusai-de-grote-golf-bij-kanagawa" class="sub">3.1 Katsushika Hokusai, De grote golf bij Kanagawa</h3>
+<figure class="beeld"><a class="pd" href="beelden/hokusai-golf.jpg" title="Grotere versie"><img src="beelden/hokusai-golf.jpg" width="1200" height="807" loading="lazy" decoding="async" alt="Katsushika Hokusai, De grote golf bij Kanagawa (ca. 1830-1832)"></a><figcaption>Katsushika Hokusai, <i>De grote golf bij Kanagawa</i> (ca. 1830-1832)<br>The Metropolitan Museum of Art, New York. Kleurenhoutsnede uit de reeks Zesendertig gezichten op de berg Fuji.</figcaption><p class="credit">Publiek domein. Afbeelding: The Metropolitan Museum of Art, Open Access</p><div class="werk-links"><a class="werk-link" href="https://www.metmuseum.org/art/collection/search/45434">Bekijk bij The Metropolitan Museum of Art</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>Ca. 1830-1832</dd><dt>Techniek</dt><dd>Kleurenhoutsnede, inkt en kleur op papier</dd><dt>Afmetingen</dt><dd>25,7 x 37,9 cm</dd><dt>Reeks</dt><dd>Zesendertig gezichten op de berg Fuji</dd><dt>Bewaarplaats</dt><dd>Onder meer The Metropolitan Museum of Art, New York</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een reusachtige golf rijst links op en krult naar rechts. De schuimkop valt uiteen in tientallen kleine klauwen. Onder de golf liggen drie smalle boten, met roeiers die zich plat tegen de riemen drukken. In het dal van de golf, klein en ver, staat een berg met een witte top. De hemel is leeg en bleek. Het beeld is opgebouwd uit drie tinten blauw, wit, een beetje geel en grijs.</p>
+<h4>Hoe is het gemaakt?</h4>
+<p>Hokusai (1760-1849) was rond de zeventig toen hij aan de reeks begon. Het echte onderwerp is niet de golf maar de berg: de Fuji, de heilige berg van Japan, telkens vanuit een andere plaats gezien. Hier speelt Hokusai met de afstand. De golf is dichtbij en dus enorm, de berg is ver en dus klein, en de schuimvlokken vallen als sneeuw op zijn top.</p>
+<p>Twee dingen in deze prent komen uit Europa. Het diepe blauw is Pruisisch blauw, een kunstmatige kleurstof die pas kort in Japan werd ingevoerd en waarmee de uitgever de reeks aanprees. En de lage horizon met de kleine berg in de verte verraadt dat Hokusai het westerse perspectief kende, van Hollandse prenten die via de handelspost in Nagasaki het land binnenkwamen. Het beroemdste Japanse beeld is dus zelf al een ontmoeting tussen Oost en West.</p>
+<h4>Betekenis</h4>
+<p>Een Europese kijker leest van links naar rechts en volgt de golf. Een Japanse kijker leest van rechts naar links: hij vaart met de boten mee, de golf tegemoet. De prent toont het ogenblik net voor de klap. De berg, die niet beweegt, en de golf, die over een seconde verdwenen is, staan in één beeld: het blijvende en het voorbijgaande.</p>
+<h3 id="3-2-utagawa-hiroshige-plotse-regenbui-boven-de-ohashi-brug" class="sub">3.2 Utagawa Hiroshige, Plotse regenbui boven de Ohashi-brug</h3>
+<figure class="beeld"><a class="pd" href="beelden/hiroshige-regenbui.jpg" title="Grotere versie"><img src="beelden/hiroshige-regenbui.jpg" width="824" height="1200" loading="lazy" decoding="async" alt="Utagawa Hiroshige, Plotse regenbui boven de Ohashi-brug en Atake (1857)"></a><figcaption>Utagawa Hiroshige, <i>Plotse regenbui boven de Ohashi-brug en Atake</i> (1857)<br>The Metropolitan Museum of Art, New York. Kleurenhoutsnede uit de reeks Honderd beroemde gezichten op Edo.</figcaption><p class="credit">Publiek domein. Afbeelding: The Metropolitan Museum of Art, Open Access</p><div class="werk-links"><a class="werk-link" href="https://www.metmuseum.org/art/collection/search/55433">Bekijk bij The Metropolitan Museum of Art</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1857</dd><dt>Techniek</dt><dd>Kleurenhoutsnede, inkt en kleur op papier</dd><dt>Afmetingen</dt><dd>34 x 24,1 cm</dd><dt>Reeks</dt><dd>Honderd beroemde gezichten op Edo</dd><dt>Bewaarplaats</dt><dd>Onder meer The Metropolitan Museum of Art, New York</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Je kijkt van hoog neer op een houten brug die schuin door het beeld loopt. Zes kleine figuren haasten zich erover, gebogen onder hoeden, een strooien mat en een paraplu. Op de rivier duwt een man een vlot voort. De overkant is een grijze schim. De hele prent is bedekt met fijne, donkere lijnen die schuin naar beneden lopen, in twee richtingen die elkaar kruisen. Bovenaan hangt een zwarte band.</p>
+<h4>Hoe is het gemaakt?</h4>
+<p>Hiroshige (1797-1858) was de grote landschapskunstenaar van de houtsnede. Deze prent komt uit zijn laatste reeks. De regen is het moeilijkste deel: honderden haarfijne lijnen die de blokkensnijder een voor een moest laten staan, op twee aparte blokken, zodat ze elkaar als een net kruisen. De zwarte wolk bovenaan en het donkere water zijn met de hand op het blok uitgeveegd, zodat de kleur verloopt. Geen twee afdrukken zijn daardoor helemaal gelijk.</p>
+<h4>Betekenis</h4>
+<p>Er gebeurt niets belangrijks. Geen held, geen verhaal, geen beroemd gebouw: alleen mensen die nat worden. Hiroshige maakt het weer tot onderwerp, en het gevoel dat iedereen kent als een bui losbarst. Let op de middelen: de hoge blik, de diagonaal van de brug tegen de diagonaal van de oever, de figuren klein en zonder gezicht, de egale kleurvlakken. Het zijn net die middelen die dertig jaar later een Nederlander in Parijs zullen treffen.</p>
+<h2 id="4-japan-in-parijs">4 Japan in Parijs</h2>
+<p>Meer dan twee eeuwen lang liet Japan bijna geen buitenlanders toe. Alleen de Nederlanders mochten handel drijven, vanaf één klein eiland in de haven van Nagasaki. In 1853 dwong een Amerikaanse vloot het land zijn havens te openen. Kort daarna stroomden Japanse voorwerpen naar Europa: lakwerk, waaiers, keramiek, en prenten bij duizenden. Op de wereldtentoonstelling van 1867 in Parijs had Japan voor het eerst een eigen paviljoen. In 1872 kreeg de rage een naam: japonisme.</p>
+<p>Voor de jonge schilders in Parijs kwamen de prenten op het juiste moment. Ze zochten een uitweg uit de regels van de academie, en hier lag een beeldtaal die al die regels negeerde en toch werkte. Manet schilderde een Japanse prent en een kamerscherm in de achtergrond van zijn portret van Emile Zola. Degas sneed zijn figuren af met de rand van het doek, zoals in de prenten. Monet verzamelde er meer dan tweehonderd en legde in zijn tuin een Japanse brug aan. Toulouse-Lautrec bouwde zijn affiches op uit egale vlakken en zwarte contouren. Niemand ging er zo ver in als Van Gogh.</p>
+<h3 id="4-1-vincent-van-gogh-brug-in-de-regen-naar-hiroshige" class="sub">4.1 Vincent van Gogh, Brug in de regen (naar Hiroshige)</h3>
+<figure class="beeld"><a class="pd" href="beelden/van-gogh-brug.jpg" title="Grotere versie"><img src="beelden/van-gogh-brug.jpg" width="1280" height="1761" loading="lazy" decoding="async" alt="Vincent van Gogh, Brug in de regen (naar Hiroshige) (1887)"></a><figcaption>Vincent van Gogh, <i>Brug in de regen (naar Hiroshige)</i> (1887)<br>Van Gogh Museum, Amsterdam (Vincent van Gogh Stichting). Olieverf op doek.</figcaption><p class="credit">Publiek domein. Afbeelding: Van Gogh Museum, Amsterdam (Vincent van Gogh Stichting)</p><div class="werk-links"><a class="werk-link" href="https://www.vangoghmuseum.nl/en/collection/s0114V1962">Bekijk bij Van Gogh Museum</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1887</dd><dt>Plaats</dt><dd>Parijs</dd><dt>Techniek</dt><dd>Olieverf op doek</dd><dt>Afmetingen</dt><dd>73 x 54 cm</dd><dt>Bewaarplaats</dt><dd>Van Gogh Museum, Amsterdam</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Dezelfde brug, dezelfde zes figuren, dezelfde man op zijn vlot. Maar de kleuren zijn feller: het water is groen en blauw, de brug geel, de hemel bijna zwart. De regen is geen net van haarlijnen meer, maar bestaat uit dikke streken verf. Rond het beeld loopt een brede groene rand met rode Japanse schrifttekens.</p>
+<h4>Hoe is het gemaakt?</h4>
+<p>Van Gogh en zijn broer Theo kochten in Parijs ongeveer 660 Japanse prenten, voor weinig geld. Vincent hing ze in zijn atelier, organiseerde er een tentoonstelling mee in een café, en kopieerde er drie in olieverf. Hij trok de omtrekken van de prent over met een raster en vergrootte ze op het doek. Omdat zijn doek een andere verhouding had dan de prent, bleef er een rand over. Die vulde hij met schrifttekens die hij van andere prenten overnam. Hij kon ze niet lezen. Ze hebben met de voorstelling niets te maken.</p>
+<div class="tabel"><table><tr><th></th><th>Hiroshige (1857)</th><th>Van Gogh (1887)</th></tr><tr><td>Techniek</td><td>Kleurenhoutsnede, oplage van honderden</td><td>Olieverf op doek, één exemplaar</td></tr><tr><td>Formaat</td><td>34 x 24 cm, om in de hand te houden</td><td>73 x 54 cm, om aan de muur te hangen</td></tr><tr><td>Kleur</td><td>Gedempt, egaal, met verlopen</td><td>Fel, met sterke contrasten</td></tr><tr><td>Oppervlak</td><td>Glad, de hand van de maker onzichtbaar</td><td>Dikke verf, elke streek zichtbaar</td></tr><tr><td>Regen</td><td>Fijne gesneden lijnen</td><td>Geschilderde streken</td></tr></table></div>
+<h4>Betekenis</h4>
+<p>Dit is geen kopie om te bedriegen en geen oefening om te leren tekenen. Van Gogh vertaalt. Hij wil begrijpen hoe een beeld kan werken zonder schaduw, zonder perspectief en zonder overgangen van licht naar donker, en hij probeert het uit in zijn eigen materiaal. Wat hij hier leert, blijft in zijn werk: de sterke contour, de egale felle kleurvlakken, de hoge horizon, de diagonaal. Toen hij enkele maanden later naar Arles verhuisde, schreef hij dat hij in het zuiden het Japan van de prenten hoopte te vinden. Japan was voor hem geen land meer, maar een manier van kijken.</p>
+<p>Vergelijk dit met wat je in het hoofdstuk over iconografie leerde. De voorstelling is dezelfde, de iconografie ook. Toch is het een ander kunstwerk. Wat veranderd is, is alles wat Panofsky bij de vorm rekent, en de plaats, de tijd en de bedoeling van de maker.</p>
+<h2 id="5-een-prent-wordt-een-foto">5 Een prent wordt een foto</h2>
+<p>Het gesprek met de Japanse prent houdt niet op bij het japonisme. Honderd jaar na Van Gogh neemt een fotograaf het over, met de middelen van zijn eigen tijd. Eerst het voorbeeld, dan het antwoord.</p>
+<h3 id="5-1-katsushika-hokusai-ejiri-in-de-provincie-suruga" class="sub">5.1 Katsushika Hokusai, Ejiri in de provincie Suruga</h3>
+<figure class="beeld"><a class="pd" href="beelden/hokusai-ejiri.jpg" title="Grotere versie"><img src="beelden/hokusai-ejiri.jpg" width="1200" height="803" loading="lazy" decoding="async" alt="Katsushika Hokusai, Ejiri in de provincie Suruga (ca. 1830-1832)"></a><figcaption>Katsushika Hokusai, <i>Ejiri in de provincie Suruga</i> (ca. 1830-1832)<br>The Metropolitan Museum of Art, New York. Kleurenhoutsnede uit de reeks Zesendertig gezichten op de berg Fuji.</figcaption><p class="credit">Publiek domein. Afbeelding: The Metropolitan Museum of Art, Open Access</p><div class="werk-links"><a class="werk-link" href="https://www.metmuseum.org/art/collection/search/55735">Bekijk bij The Metropolitan Museum of Art</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>Ca. 1830-1832</dd><dt>Techniek</dt><dd>Kleurenhoutsnede, inkt en kleur op papier</dd><dt>Afmetingen</dt><dd>25,1 x 37,5 cm</dd><dt>Reeks</dt><dd>Zesendertig gezichten op de berg Fuji</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een pad slingert door een vlak landschap met riet. Twee dunne bomen buigen in de wind. Reizigers worstelen zich vooruit. Een van hen grijpt naar zijn hoed, een hoed vliegt al weg, en uit het pak van een vrouw waaien bladen papier, die hoog door de lucht dwarrelen. Een doek is over haar gezicht geslagen. Op de achtergrond staat de Fuji, getekend met één enkele lijn.</p>
+<h4>Betekenis</h4>
+<p>De wind zelf kan je niet tekenen. Hokusai toont hem door wat hij doet: het papier, de hoed, de bladeren, de gebogen ruggen. Daartegenover staat de berg, zonder één wolk, onbewogen. Het is hetzelfde idee als in <i>De grote golf</i>: een ogenblik van paniek tegen een achtergrond die altijd blijft. De toon is hier wel lichter. Het is bijna een grap.</p>
+<h3 id="5-2-jeff-wall-a-sudden-gust-of-wind-after-hokusai" class="sub">5.2 Jeff Wall, A Sudden Gust of Wind (after Hokusai)</h3>
+<figure class="beeld"><figcaption>Jeff Wall, <i>A Sudden Gust of Wind (after Hokusai)</i> (1993)<br>Tate, Londen. Diapositief in lichtbak. © Jeff Wall.</figcaption><div class="werk-links"><a class="werk-link" href="https://www.tate.org.uk/art/artworks/wall-a-sudden-gust-of-wind-after-hokusai-t06951">Bekijk bij Tate</a></div></figure>
+<dl class="fiche"><dt>Jaar</dt><dd>1993</dd><dt>Techniek</dt><dd>Kleurendiapositief in een lichtbak</dd><dt>Afmetingen</dt><dd>Ongeveer 229 x 377 cm</dd><dt>Bewaarplaats</dt><dd>Tate, Londen</dd></dl>
+<h4>Wat zie je?</h4>
+<p>Een vlak, kaal landschap onder een grijze hemel, met een kanaal, akkers en in de verte palen en loodsen. Twee dunne bomen buigen in de wind. Vier figuren staan op de oever. Een vrouw links heeft een sjaal over haar gezicht gekregen, en uit de map in haar handen vliegen tientallen bladen papier in een lange boog de lucht in. Een man in pak kijkt zijn hoed na. Twee anderen duiken ineen. Het beeld is bijna vier meter breed en wordt van achteren verlicht, zodat het straalt als een scherm.</p>
+<h4>Hoe is het gemaakt?</h4>
+<p>Het lijkt een toevalstreffer, een foto van één gelukkige seconde. Het is het tegendeel. Jeff Wall (1946) werkte met acteurs op een terrein buiten Vancouver, op dagen met veel wind, over een periode van vijf maanden. Daarna voegde hij delen van al die opnamen op de computer samen tot één beeld. Elk blad papier in de lucht is afzonderlijk geplaatst. In 1993 was dat een nieuwe techniek. Wall noemt deze manier van werken cinematografisch: hij maakt een foto zoals een regisseur een film maakt, of zoals een schilder een schilderij opbouwt.</p>
+<h4>Vergelijking met Hokusai</h4>
+<div class="tabel"><table><tr><th></th><th>Hokusai (ca. 1830-1832)</th><th>Jeff Wall (1993)</th></tr><tr><td>Techniek</td><td>Kleurenhoutsnede</td><td>Digitaal samengestelde foto in lichtbak</td></tr><tr><td>Formaat</td><td>25 x 37 cm</td><td>229 x 377 cm</td></tr><tr><td>Plaats</td><td>Een weg in Japan, met reizigers</td><td>De rand van de stad bij Vancouver, met mensen van vandaag</td></tr><tr><td>Achtergrond</td><td>De Fuji, heilig en onbeweeglijk</td><td>Een vlakke horizon, geen berg</td></tr><tr><td>Gemaakt door</td><td>Ontwerper, snijder, drukker en uitgever</td><td>Fotograaf, acteurs en computer</td></tr></table></div>
+<h4>Betekenis</h4>
+<p>Wall neemt van Hokusai de compositie over: de twee bomen, de vlucht van het papier, de vier houdingen. Wat hij weglaat, valt even hard op. Er is geen Fuji. Waar bij Hokusai de heilige berg staat, is hier een lege horizon boven een landschap dat nergens bijzonder is. De reizigers zijn mensen van vandaag geworden, op een plek waar stad en platteland in elkaar overlopen.</p>
+<p>Het werk stelt ook een vraag over fotografie. We geloven een foto omdat de camera er op dat ogenblik bij was. Wall gebruikt die geloofwaardigheid en ondermijnt ze tegelijk: dit ogenblik heeft nooit bestaan. In dat opzicht staat hij dichter bij Hokusai dan je zou denken. Ook de prent is geen momentopname, maar een zorgvuldig gebouwd beeld dat op een momentopname lijkt. En net als bij de houtsnede zit achter het ene beeld het werk van veel handen.</p>
+<h2 id="6-de-echo-vandaag">6 De echo vandaag</h2>
+<p>De twee tradities uit dit hoofdstuk, de leegte van de inktschilders en het vlakke, heldere beeld van de prenten, leven verder in het werk van Japanse kunstenaars van vandaag.</p>
+<p>De fotograaf Hiroshi Sugimoto (1948) maakt sinds 1980 zijn reeks <i>Seascapes</i>. Overal ter wereld fotografeert hij de zee, in zwart-wit, telkens op dezelfde manier: de horizon precies in het midden, water onderaan, lucht bovenaan, en verder niets. Geen schip, geen kust, geen mens. Soms is de horizon scherp, soms lost hij op in mist. Wie de <i>Pijnbomen</i> van Tohaku gezien heeft, herkent de vraag: hoe weinig heeft een beeld nodig?</p>
+<p>Takashi Murakami (1962) vertrekt van de andere traditie. In 2000 lanceerde hij het begrip superflat. Volgens hem loopt er een rechte lijn van de vlakke houtsneden uit de Edoperiode naar de manga en de anime van vandaag: beelden zonder diepte, met harde contouren en egale kleuren, waarin geen verschil bestaat tussen hoge kunst en massaproduct. In zijn schilderij <i>727</i> uit 1996 rijdt een stripfiguur op een golf die aan Hokusai doet denken. Net als de uitgevers van ukiyo-e laat Murakami zijn werk in een atelier met tientallen medewerkers maken en verkoopt hij het ook als speelgoed en als handtas.</p>
+
+<section id="woordenschat"><h2>Woordenschat</h2><div class="hulp"><label for="zoekwoord" style="position:absolute;left:-999rem">Zoek een woord</label><input type="search" id="zoekwoord" placeholder="Zoek een woord"><button type="button" id="oefenknop" aria-pressed="false">Definities verbergen om te oefenen</button></div><dl class="woorden" id="woordenlijst"></dl><p class="leeg" id="geenwoord" hidden>Geen woord gevonden. Probeer een ander zoekwoord.</p><script type="application/json" id="woorddata">[["Asymmetrie", "Compositie waarin het zwaartepunt niet in het midden ligt."], ["Blokkensnijder", "Ambachtsman die de tekening van de ontwerper in houten drukblokken snijdt."], ["Cinematografische fotografie", "Term van Jeff Wall voor een foto die met acteurs en regie wordt opgebouwd, zoals een film."], ["Edo", "Vroegere naam van Tokio. De Edoperiode loopt van 1615 tot 1868."], ["Gebroken inkt", "Inkttechniek zonder contouren, met natte vlekken waarin donkere accenten worden gezet."], ["Hangrol", "Schilderij op papier of zijde dat opgerold bewaard en voor een gelegenheid opgehangen wordt."], ["Japonisme", "De invloed van de Japanse kunst op de westerse kunst in de tweede helft van de negentiende eeuw."], ["Kamerscherm", "Opvouwbaar scherm van meerdere panelen, als ruimteverdeler en als drager van een schildering."], ["Kleurenhoutsnede", "Druktechniek waarbij voor elke kleur een apart houten blok wordt gesneden en afgedrukt."], ["Lichtbak", "Kast met lampen waarin een doorzichtige foto van achteren wordt verlicht."], ["Ma", "Japans woord voor de tussenruimte of de pauze tussen de dingen."], ["Pruisisch blauw", "Kunstmatige blauwe kleurstof uit Europa, in Japan gebruikt vanaf ongeveer 1830."], ["Superflat", "Begrip van Takashi Murakami voor de vlakke beeldtaal die de oude Japanse prentkunst met manga en anime verbindt."], ["Ukiyo-e", "Beelden van de vlietende wereld: Japanse prenten en schilderingen uit de Edoperiode."]]</script></section>
+<section id="vragen"><h2>Oefenvragen</h2><p class="teller" id="teller"></p><h3 class="sub">A. Kennis en inzicht</h3><ol class="vragen"><li><input type="checkbox" id="v0-0" data-vraag="0-0"><label for="v0-0">Noem vier kenmerken waarin de Japanse beeldtraditie verschilt van de Europese schilderkunst sinds de renaissance.</label></li><li><input type="checkbox" id="v0-1" data-vraag="0-1"><label for="v0-1">Leg uit wat de techniek van de gebroken inkt is. Waarom past ze bij het zenboeddhisme?</label></li><li><input type="checkbox" id="v0-2" data-vraag="0-2"><label for="v0-2">Voor wie en waarom schilderde Sesshu <i>Landschap in gebroken inkt</i>? Hoe weten we dat?</label></li><li><input type="checkbox" id="v0-3" data-vraag="0-3"><label for="v0-3">Wat is het eigenlijke onderwerp van <i>Pijnbomen</i> van Tohaku? Gebruik het begrip ma.</label></li><li><input type="checkbox" id="v0-4" data-vraag="0-4"><label for="v0-4">Wat betekent ukiyo-e? Voor welk publiek werden deze prenten gemaakt?</label></li><li><input type="checkbox" id="v0-5" data-vraag="0-5"><label for="v0-5">Welke vier mensen werkten samen aan een kleurenhoutsnede, en wat deed elk van hen?</label></li><li><input type="checkbox" id="v0-6" data-vraag="0-6"><label for="v0-6">Welke twee elementen in <i>De grote golf bij Kanagawa</i> komen uit Europa?</label></li><li><input type="checkbox" id="v0-7" data-vraag="0-7"><label for="v0-7">Hoe maakt Hiroshige de regen zichtbaar in <i>Plotse regenbui boven de Ohashi-brug en Atake</i>?</label></li><li><input type="checkbox" id="v0-8" data-vraag="0-8"><label for="v0-8">Wat is japonisme? Leg uit waarom de Japanse prenten voor de schilders in Parijs op het juiste moment kwamen.</label></li><li><input type="checkbox" id="v0-9" data-vraag="0-9"><label for="v0-9">Waarom staat er een rand met schrifttekens rond <i>Brug in de regen (naar Hiroshige)</i>?</label></li><li><input type="checkbox" id="v0-10" data-vraag="0-10"><label for="v0-10">Hoe maakte Jeff Wall <i>A Sudden Gust of Wind (after Hokusai)</i>? Waarom noemt hij dat cinematografisch?</label></li><li><input type="checkbox" id="v0-11" data-vraag="0-11"><label for="v0-11">Wat bedoelt Takashi Murakami met superflat?</label></li></ol><h3 class="sub">B. Toepassing en vergelijking</h3><ol class="vragen"><li><input type="checkbox" id="v1-0" data-vraag="1-0"><label for="v1-0">Vergelijk de prent van Hiroshige met het schilderij van Van Gogh. Wat blijft gelijk en wat verandert? Is het werk van Van Gogh een kopie?</label></li><li><input type="checkbox" id="v1-1" data-vraag="1-1"><label for="v1-1">Vergelijk <i>Ejiri in de provincie Suruga</i> met <i>A Sudden Gust of Wind (after Hokusai)</i>. Wat neemt Wall over en wat laat hij weg? Wat betekent die weglating?</label></li><li><input type="checkbox" id="v1-2" data-vraag="1-2"><label for="v1-2">Zowel de prent van Hokusai als de foto van Jeff Wall lijkt een momentopname. Leg uit waarom geen van beide dat is.</label></li><li><input type="checkbox" id="v1-3" data-vraag="1-3"><label for="v1-3">Vergelijk de leegte in <i>Pijnbomen</i> van Tohaku met de leegte in een <i>Seascape</i> van Hiroshi Sugimoto.</label></li><li><input type="checkbox" id="v1-4" data-vraag="1-4"><label for="v1-4">In <i>De grote golf bij Kanagawa</i> zit Europese invloed, in het werk van Van Gogh Japanse. Wat zegt dat over het idee van een zuiver eigen cultuur?</label></li><li><input type="checkbox" id="v1-5" data-vraag="1-5"><label for="v1-5">Kies een werk uit het hoofdstuk over het modernisme en toon aan welke kenmerken van de Japanse prent je erin terugvindt.</label></li><li><input type="checkbox" id="v1-6" data-vraag="1-6"><label for="v1-6">Maak met je telefoon een foto naar een Japanse prent uit dit hoofdstuk, op een plek in je eigen omgeving. Leg in tien regels uit wat je overnam en wat je veranderde.</label></li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><a href="../boeddhabeeld/"><span>Vorig onderwerp</span>&larr; Het Boeddhabeeld</a><a href="../caravaggio/" style="text-align:right"><span>Volgend onderwerp</span>Caravaggio en de barok &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. Titels van kunstwerken staan cursief. De kunstwerken bekijk je via de links naar de musea en archieven die ze bewaren. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var werken=document.getElementById("werken");
+document.querySelectorAll(".kijkfilter button").forEach(function(k){k.addEventListener("click",function(){var f=k.getAttribute("data-focus");if(f){werken.setAttribute("data-focus",f);}else{werken.removeAttribute("data-focus");}document.querySelectorAll(".kijkfilter button").forEach(function(b){b.setAttribute("aria-pressed",b===k?"true":"false");});});});
+var wd=document.getElementById("woorddata");
+if(wd){var W=JSON.parse(wd.textContent),lijst=document.getElementById("woordenlijst");
+W.forEach(function(w){var r=document.createElement("div"),dt=document.createElement("dt"),dd=document.createElement("dd");dt.textContent=w[0];dd.textContent=w[1];r.appendChild(dt);r.appendChild(dd);r.addEventListener("click",function(){if(lijst.classList.contains("verborgen"))r.classList.toggle("toon");});lijst.appendChild(r);});
+document.getElementById("zoekwoord").addEventListener("input",function(e){var q=e.target.value.trim().toLowerCase(),n=0;lijst.querySelectorAll("div").forEach(function(r){var p=!q||r.textContent.toLowerCase().indexOf(q)>-1;r.hidden=!p;if(p)n++;});document.getElementById("geenwoord").hidden=n>0;});
+var ok=document.getElementById("oefenknop");ok.addEventListener("click",function(){var a=lijst.classList.toggle("verborgen");lijst.querySelectorAll("div").forEach(function(r){r.classList.remove("toon");});ok.setAttribute("aria-pressed",a?"true":"false");ok.textContent=a?"Definities weer tonen":"Definities verbergen om te oefenen";});}
+var S="vragen-japanse-meesters",G={};try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};}
+var cb=document.querySelectorAll("ol.vragen input");
+function tel(){var t=document.getElementById("teller");if(!t)return;var n=0;cb.forEach(function(c){if(c.checked)n++;});t.textContent=n+" van "+cb.length+" vragen geoefend. Vink een vraag af als je ze hebt beantwoord.";}
+cb.forEach(function(c){c.checked=!!G[c.dataset.vraag];c.addEventListener("change",function(){G[c.dataset.vraag]=c.checked;try{localStorage.setItem(S,JSON.stringify(G));}catch(e){}tel();});});tel();
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>

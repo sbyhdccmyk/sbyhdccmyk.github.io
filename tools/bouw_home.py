@@ -31,7 +31,7 @@ pagina = f'''<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KIJK NU!</title>
-<meta name="description" content="Leren kijken naar kunst: methodes, kunstgeschiedenis van Caravaggio tot nu, kunstvormen en kunstfilosofie.">
+<meta name="description" content="Leren kijken naar kunst: methodes, kunstgeschiedenis van het eerste Boeddhabeeld tot nu, kunstvormen en kunstfilosofie.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -150,7 +150,7 @@ footer{{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-s
 
 <nav class="deuren" aria-label="Vier ingangen">
   <a class="deur" href="#kijken"><span class="nr">01</span><span class="d-titel">Leren kijken</span><span class="d-tekst">Methodes om elk kunstwerk te benaderen</span></a>
-  <a class="deur" href="#tijd"><span class="nr">02</span><span class="d-titel">Door de tijd</span><span class="d-tekst">Van de barok tot de kunst van vandaag</span></a>
+  <a class="deur" href="#tijd"><span class="nr">02</span><span class="d-titel">Door de tijd</span><span class="d-tekst">Van het eerste Boeddhabeeld tot de kunst van vandaag</span></a>
   <a class="deur" href="#vormen"><span class="nr">03</span><span class="d-titel">Kunstvormen</span><span class="d-tekst">Schilderkunst, foto, film, performance en meer</span></a>
   <a class="deur" href="#denken"><span class="nr">04</span><span class="d-titel">Denken over kunst</span><span class="d-tekst">Wat filosofen en schrijvers over kunst zeiden</span></a>
 </nav>
@@ -164,7 +164,7 @@ footer{{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-s
 
 <section id="tijd">
   <div class="kop"><div><span class="nr">02</span><h2>Door de tijd</h2></div>
-  <p>Stromingen en kunstenaars in de volgorde waarin ze verschenen, van de schilders van het licht rond 1600 tot een video-installatie van vandaag.</p></div>
+  <p>Stromingen en kunstenaars in de volgorde waarin ze verschenen, van de eerste Boeddhabeelden in India tot een video-installatie van vandaag.</p></div>
   <ol class="tijdlijn">{"".join(f'<li class="{"on" if o[7]=="online" else ""}"><span class="jaar">{e(o[5])}</span>{kaart(o).removeprefix("<li>").removesuffix("</li>")}</li>' for o in tijd)}</ol>
 </section>
 
