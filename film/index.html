@@ -348,5 +348,11 @@ if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inh
 var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
 Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
 </script>
+<script>/*kruis*/
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.kruis");if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;
+var b=Math.min(1100,screen.availWidth-60),h=Math.min(860,screen.availHeight-80),x=Math.max(0,Math.round((screen.availWidth-b)/2)),y=Math.max(0,Math.round((screen.availHeight-h)/2));
+var w=null;try{w=window.open(a.href,"kijknu-verwijzing","popup=yes,width="+b+",height="+h+",left="+x+",top="+y+",scrollbars=yes,resizable=yes");}catch(f){}
+if(w){e.preventDefault();try{w.focus();}catch(f){}}});
+/*/kruis*/</script>
 </body>
 </html>

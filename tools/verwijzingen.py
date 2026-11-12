@@ -75,6 +75,14 @@ a.kruis::after{content:"\\2197";font-family:var(--data);font-size:.62em;font-sty
 @media print{a.kruis{text-decoration:none}a.kruis::after{content:""}}
 /*/kruis*/"""
 
+# De link opent als apart venster bovenop de pagina. Blokkeert de browser dat, dan opent hij gewoon in een nieuw tabblad.
+JS = """<script>/*kruis*/
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.kruis");if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;
+var b=Math.min(1100,screen.availWidth-60),h=Math.min(860,screen.availHeight-80),x=Math.max(0,Math.round((screen.availWidth-b)/2)),y=Math.max(0,Math.round((screen.availHeight-h)/2));
+var w=null;try{w=window.open(a.href,"kijknu-verwijzing","popup=yes,width="+b+",height="+h+",left="+x+",top="+y+",scrollbars=yes,resizable=yes");}catch(f){}
+if(w){e.preventDefault();try{w.focus();}catch(f){}}});
+/*/kruis*/</script>"""
+
 def plat(t):
     return html.unescape(re.sub(r"<[^>]+>", "", t)).replace("’", "'").replace("‘", "'").strip()
 
@@ -96,6 +104,7 @@ def patroon(term):
 def schoon(s):
     s = re.sub(r'<a class="kruis"[^>]*>(.*?)</a>', r"\1", s, flags=re.S)
     s = re.sub(r'(<figure class="beeld") id="beeld-[^"]*"', r"\1", s)
+    s = re.sub(r"\n?<script>/\*kruis\*/.*?/\*/kruis\*/</script>", "", s, flags=re.S)
     return re.sub(r"\n?/\*kruis\*/.*?/\*/kruis\*/", "", s, flags=re.S)
 
 # ------------------------------------------------------------------ register opbouwen
@@ -216,7 +225,9 @@ def verwerk(slug, s, werken, tekst, fig_ids):
             gezien.add((dslug, ank)); n += 1
         uit.append(stuk)
     s = kop + "".join(uit) + staart
-    if n: s = s.replace("</style>", "\n" + CSS + "</style>", 1)
+    if n:
+        s = s.replace("</style>", "\n" + CSS + "</style>", 1)
+        k = s.rfind("</body>"); s = s[:k] + JS + "\n" + s[k:]
     return s, n
 
 def alles(toon=False):

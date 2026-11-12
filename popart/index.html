@@ -322,5 +322,11 @@ document.querySelectorAll(".media-start").forEach(function(b){b.addEventListener
   var f=document.createElement("iframe");f.src=src;f.title=b.dataset.titel;f.allow="autoplay; fullscreen; picture-in-picture; encrypted-media";f.allowFullscreen=true;
   s.replaceChildren(f);});});
 </script>
+<script>/*kruis*/
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.kruis");if(!a||e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;
+var b=Math.min(1100,screen.availWidth-60),h=Math.min(860,screen.availHeight-80),x=Math.max(0,Math.round((screen.availWidth-b)/2)),y=Math.max(0,Math.round((screen.availHeight-h)/2));
+var w=null;try{w=window.open(a.href,"kijknu-verwijzing","popup=yes,width="+b+",height="+h+",left="+x+",top="+y+",scrollbars=yes,resizable=yes");}catch(f){}
+if(w){e.preventDefault();try{w.focus();}catch(f){}}});
+/*/kruis*/</script>
 </body>
 </html>
