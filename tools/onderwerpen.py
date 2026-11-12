@@ -1,6 +1,7 @@
 # Alle onderwerpen van de site. status "online" = hoofdstuk staat op de site.
 ONDERWERPEN = [
  # slug, titel, ondertitel, deuren, jaar (voor de tijdlijn), periode-tekst, kunstvormen, status
+ ("kijkwijzer","Kijkwijzer","Acht stappen die je bij elk kunstwerk kan zetten, van de eerste indruk tot je eigen oordeel",["kijken"],None,"",[],"online"),
  ("de-vier-elementen","De vier elementen","Tijd, ruimte, lichaam en object: een manier van kijken die bij elk kunstwerk werkt",["kijken"],None,"",[],"online"),
  ("epoche","De epoché en de ekphrasis","Je eerste oordeel uitstellen en in woorden vatten wat je ziet",["kijken"],None,"",["schilderkunst"],"online"),
  ("iconografie","Iconografie en iconologie","Betekenis lezen in een kunstwerk met het stappenplan van Panofsky",["kijken"],None,"",["schilderkunst"],"online"),

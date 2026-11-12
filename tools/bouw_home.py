@@ -3,6 +3,7 @@ import html, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 from onderwerpen import ONDERWERPEN, KUNSTVORMEN
+from tijdlijnen import BANDEN, REGIOS, T
 
 e = html.escape
 def kaart(o, met_periode=False):
@@ -21,6 +22,30 @@ tijd = sorted([o for o in ONDERWERPEN if "tijd" in o[3]], key=lambda o:o[4])
 denken = [o for o in ONDERWERPEN if "denken" in o[3]]
 n_online = sum(o[7]=="online" for o in ONDERWERPEN)
 
+# Het referentiekader: elke periode een rij, met de hoofdstukken en de teksten die erin thuishoren.
+def vak(o):
+    t = T.get(o[0], {})
+    return t.get("vak", t["hoofd"][0] if t.get("hoofd") else None)
+
+def band_html(i, naam, jaren):
+    hfd = [o for o in tijd if vak(o) == i]
+    tekst = [(T[o[0]]["tekstjaar"][0], o) for o in ONDERWERPEN if o[0] in T and T[o[0]].get("tekstjaar", (None, None))[1] == i]
+    binnen = ""
+    if hfd: binnen += '<ul class="kaarten">' + "".join(kaart(o, True) for o in hfd) + "</ul>"
+    if tekst:
+        binnen += '<p class="b-tekst">Geschreven in deze tijd: ' + ", ".join(
+            f'<a href="{o[0]}/">{e(o[1])}</a> ({e(j)})' for j, o in sorted(tekst, key=lambda x: x[0])) + "</p>"
+    if not binnen: binnen = '<p class="b-leeg">Hier staat nog geen hoofdstuk.</p>'
+    return (f'<li class="band{"" if (hfd or tekst) else " leeg"}"><div class="b-kop"><span class="b-naam">{e(naam)}</span>'
+            f'<span class="b-jaar">{e(jaren)}</span></div><div class="b-inhoud">{binnen}</div></li>')
+
+kader_html = "".join(band_html(i, n, j) for i, (n, j) in enumerate(BANDEN))
+
+# Over de wereld: dezelfde hoofdstukken, gesorteerd volgens de plaats waar de kunst ontstond.
+wereld_html = "".join(
+  f'<div class="vorm"><h3>{e(naam)}</h3><ul>{"".join(lijn(o) for o in ONDERWERPEN if o[0] in T and code in T[o[0]]["regio"])}</ul></div>'
+  for code, naam in REGIOS if any(o[0] in T and code in T[o[0]]["regio"] for o in ONDERWERPEN))
+
 vormen_html = "".join(
   f'<div class="vorm"><h3>{e(naam)}</h3><ul>{"".join(lijn(o) for o in ONDERWERPEN if code in o[6])}</ul></div>'
   for code,naam in KUNSTVORMEN)
@@ -31,7 +56,7 @@ pagina = f'''<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KIJK NU!</title>
-<meta name="description" content="Leren kijken naar kunst: methodes, kunstgeschiedenis van het eerste Boeddhabeeld tot nu, kunstvormen en kunstfilosofie.">
+<meta name="description" content="Leren kijken en luisteren naar kunst: een kijkwijzer, een tijdlijn van de Oudheid tot vandaag, kunst uit verschillende samenlevingen, kunstvormen en kunstfilosofie.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -72,11 +97,11 @@ a:focus-visible{{outline:2px solid var(--vlam);outline-offset:3px}}
 .aanhef .bijschrift i{{color:var(--was)}}
 
 /* Vier deuren */
-.deuren{{width:calc(100% - 3rem);max-width:69rem;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--lijn);border:1px solid var(--lijn);transform:translateY(-1.5rem);position:relative;z-index:2}}
+.deuren{{width:calc(100% - 3rem);max-width:69rem;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--lijn);border:1px solid var(--lijn);transform:translateY(-1.5rem);position:relative;z-index:2}}
 .deur{{background:var(--wand);padding:1.3rem 1.2rem 1.4rem;text-decoration:none;display:flex;flex-direction:column;gap:.35rem}}
 .deur:hover{{background:#fbf6ec}}
 .deur .nr{{font-family:var(--data);font-size:.72rem;color:var(--rood)}}
-.deur .d-titel{{font-family:var(--display);font-weight:600;font-size:1.65rem;line-height:1.05}}
+.deur .d-titel{{font-family:var(--display);font-weight:600;font-size:1.5rem;line-height:1.05}}
 .deur .d-tekst{{font-size:.98rem;color:var(--zacht);line-height:1.4}}
 
 main{{max-width:72rem;margin:0 auto;padding:1.5rem 1.5rem 5rem}}
@@ -99,13 +124,21 @@ a.kaart .k-ga{{color:var(--rood)}}
 a.kaart .k-ga::after{{content:" \\2192"}}
 .periode{{font-family:var(--data);font-size:.72rem;color:var(--rood)}}
 
-/* Tijdlijn */
-ol.tijdlijn{{list-style:none;margin:0;padding:0;border-left:2px solid var(--inkt);margin-left:6.5rem}}
-ol.tijdlijn li{{position:relative;padding:0 0 .9rem 1.4rem}}
-ol.tijdlijn li::before{{content:"";position:absolute;left:-.42rem;top:1.15rem;width:.7rem;height:.7rem;border-radius:50%;background:var(--wand);border:2px solid var(--inkt)}}
-ol.tijdlijn li.on::before{{background:var(--vlam);border-color:var(--vlam)}}
-ol.tijdlijn .jaar{{position:absolute;left:-6.5rem;top:.9rem;width:5.6rem;text-align:right;font-family:var(--data);font-size:.8rem;font-variant-numeric:tabular-nums}}
-ol.tijdlijn .kaart{{max-width:40rem}}
+/* Referentiekader */
+ol.kader{{list-style:none;margin:0;padding:0}}
+.band{{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:1.5rem;padding:1rem 0 1.2rem;border-top:1px solid var(--lijn)}}
+.band:last-child{{border-bottom:1px solid var(--lijn)}}
+.b-kop{{display:flex;flex-direction:column;gap:.15rem;border-left:4px solid var(--vlam);padding-left:.8rem;align-self:start}}
+.band.leeg .b-kop{{border-left-color:var(--lijn)}}
+.b-naam{{font-family:var(--display);font-weight:600;font-size:1.45rem;line-height:1.05}}
+.b-jaar{{font-family:var(--data);font-size:.75rem;color:var(--rood);font-variant-numeric:tabular-nums}}
+.band.leeg{{padding:.6rem 0 .7rem}}
+.band.leeg .b-naam{{color:var(--zacht);font-size:1.2rem}}
+.band.leeg .b-jaar{{color:var(--zacht)}}
+.b-leeg{{margin:0;color:var(--zacht);font-size:.95rem;align-self:center}}
+.b-tekst{{margin:.7rem 0 0;font-size:1rem;color:var(--zacht)}}
+.b-inhoud > .b-tekst:first-child{{margin-top:.2rem}}
+.b-tekst a{{color:var(--inkt);font-weight:700;text-decoration-color:var(--vlam);text-underline-offset:3px}}
 
 /* Kunstvormen */
 .vormen{{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:1.5rem 2rem}}
@@ -122,13 +155,11 @@ footer{{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-s
   .aanhef-beeld::before{{background:linear-gradient(0deg,var(--nacht) 0%,rgba(13,10,7,0) 30%)}}
   .aanhef-tekst{{grid-row:2;padding:1rem 1.5rem 3rem}}
   .deuren{{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .band{{grid-template-columns:minmax(0,1fr);gap:.7rem}}
   .kop{{grid-template-columns:minmax(0,1fr);gap:.6rem}}
 }}
 @media (max-width:34rem){{
   .deuren{{grid-template-columns:minmax(0,1fr);transform:none;margin-top:1rem}}
-  ol.tijdlijn{{margin-left:.4rem}}
-  ol.tijdlijn .jaar{{position:static;display:block;width:auto;text-align:left;margin-bottom:.2rem}}
-  ol.tijdlijn li::before{{top:.35rem}}
 }}
 </style>
 </head>
@@ -143,40 +174,47 @@ footer{{border-top:1px solid var(--inkt);margin-top:5rem;padding-top:1rem;font-s
   <div class="aanhef-tekst">
     <p class="eyebrow">Leren kijken naar kunst</p>
     <h1>KIJK NU!</h1>
-    <p class="intro">Je kijkt nu, naar kunst van altijd en overal. Je leert hoe je kijkt, hoe je plaatst, hoe je leest. Je ziet wat het is om mens te zijn: de vrijheid, de weerstand, het voorstel van een kunstenaar.</p>
+    <p class="intro">Eerst kijk en luister je, lang genoeg om iets te ervaren. Dan leer je benoemen wat je ziet: hoe een werk gemaakt is, waarover het gaat, waarvoor het diende, in welke tijd en welke samenleving het ontstond. Zo merk je dat één werk meer dan één betekenis draagt, en vind je de woorden voor wat het voor jou betekent.</p>
     <p class="bijschrift">Gustave Courbet, <i>Le Désespéré</i> (1843-1845). Privécollectie. Publiek domein, afbeelding via <a href="https://commons.wikimedia.org/wiki/File:Gustave_Courbet_-_Le_D%C3%A9sesp%C3%A9r%C3%A9_(1843).jpg">Wikimedia Commons</a>.</p>
   </div>
 </header>
 
-<nav class="deuren" aria-label="Vier ingangen">
-  <a class="deur" href="#kijken"><span class="nr">01</span><span class="d-titel">Leren kijken</span><span class="d-tekst">Methodes om elk kunstwerk te benaderen</span></a>
-  <a class="deur" href="#tijd"><span class="nr">02</span><span class="d-titel">Door de tijd</span><span class="d-tekst">Van het eerste Boeddhabeeld tot de kunst van vandaag</span></a>
-  <a class="deur" href="#vormen"><span class="nr">03</span><span class="d-titel">Kunstvormen</span><span class="d-tekst">Schilderkunst, foto, film, performance en meer</span></a>
-  <a class="deur" href="#denken"><span class="nr">04</span><span class="d-titel">Denken over kunst</span><span class="d-tekst">Wat filosofen en schrijvers over kunst zeiden</span></a>
+<nav class="deuren" aria-label="Vijf ingangen">
+  <a class="deur" href="#kijken"><span class="nr">01</span><span class="d-titel">Leren kijken</span><span class="d-tekst">Vorm, inhoud, functie en context van elk kunstwerk</span></a>
+  <a class="deur" href="#tijd"><span class="nr">02</span><span class="d-titel">Door de tijd</span><span class="d-tekst">Elk onderwerp op zijn plaats in de tijdlijn</span></a>
+  <a class="deur" href="#wereld"><span class="nr">03</span><span class="d-titel">Over de wereld</span><span class="d-tekst">Kunst uit verschillende samenlevingen</span></a>
+  <a class="deur" href="#vormen"><span class="nr">04</span><span class="d-titel">Kunstvormen</span><span class="d-tekst">Beeld, gebouw, foto, film, performance en muziek</span></a>
+  <a class="deur" href="#denken"><span class="nr">05</span><span class="d-titel">Denken over kunst</span><span class="d-tekst">Meer dan één blik, en je eigen oordeel</span></a>
 </nav>
 
 <main>
 <section id="kijken">
   <div class="kop"><div><span class="nr">01</span><h2>Leren kijken</h2></div>
-  <p>Begin hier. Deze hoofdstukken geven je een manier van kijken die je bij elk kunstwerk kan gebruiken, oud of nieuw.</p></div>
+  <p>Begin hier. De kijkwijzer en deze hoofdstukken geven je de woorden om te zeggen hoe een werk gemaakt is, waarover het gaat en waarvoor het diende, bij elk kunstwerk, oud of nieuw.</p></div>
   <ul class="kaarten">{"".join(kaart(o) for o in kijken)}</ul>
 </section>
 
 <section id="tijd">
   <div class="kop"><div><span class="nr">02</span><h2>Door de tijd</h2></div>
-  <p>Stromingen en kunstenaars in de volgorde waarin ze verschenen, van de eerste Boeddhabeelden in India tot een video-installatie van vandaag.</p></div>
-  <ol class="tijdlijn">{"".join(f'<li class="{"on" if o[7]=="online" else ""}"><span class="jaar">{e(o[5])}</span>{kaart(o).removeprefix("<li>").removesuffix("</li>")}</li>' for o in tijd)}</ol>
+  <p>Elk hoofdstuk heeft zijn vak in de tijd. De periodes zijn die van de westerse kunstgeschiedenis; wat van elders komt, staat erbij op het moment waarop het ontstond. In elk hoofdstuk vind je bovenaan een tijdlijn met de werken en met wat er toen in de wereld gebeurde.</p></div>
+  <ol class="kader">{kader_html}</ol>
+</section>
+
+<section id="wereld">
+  <div class="kop"><div><span class="nr">03</span><h2>Over de wereld</h2></div>
+  <p>Kunst hangt vast aan de plaats en de samenleving waar ze ontstaat. Hier staan de onderwerpen volgens die plaats. De meeste vertrekken nog vanuit Europa; een hoofdstuk dat tussen twee plaatsen reist, staat bij allebei.</p></div>
+  <div class="vormen">{wereld_html}</div>
 </section>
 
 <section id="vormen">
-  <div class="kop"><div><span class="nr">03</span><h2>Kunstvormen</h2></div>
-  <p>Dezelfde onderwerpen, gesorteerd volgens het medium. Handig als je wil weten hoe fotografie, film of performance werkt.</p></div>
+  <div class="kop"><div><span class="nr">04</span><h2>Kunstvormen</h2></div>
+  <p>Dezelfde onderwerpen, gesorteerd volgens het medium. Elke kunstvorm heeft eigen bouwstenen, materialen en technieken: een foto lees je anders dan een gebouw of een muziekstuk.</p></div>
   <div class="vormen">{vormen_html}</div>
 </section>
 
 <section id="denken">
-  <div class="kop"><div><span class="nr">04</span><h2>Denken over kunst</h2></div>
-  <p>Korte inleidingen op een denker of een tekst, telkens toegepast op twee kunstwerken.</p></div>
+  <div class="kop"><div><span class="nr">05</span><h2>Denken over kunst</h2></div>
+  <p>Eén werk, meer dan één lezing. Elke denker geeft je een ander standpunt om naar hetzelfde te kijken, telkens toegepast op twee kunstwerken. Zo leer je ook je eigen oordeel onderbouwen.</p></div>
   <ul class="kaarten">{"".join(kaart(o) for o in denken)}</ul>
 </section>
 

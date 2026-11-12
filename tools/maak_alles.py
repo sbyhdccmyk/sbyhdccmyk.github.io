@@ -247,3 +247,5 @@ render_alles()
 buren_bijwerken()
 dijkstra_media()
 dijkstra_beelden()
+import situering
+situering.alles()  # blok "Waar en wanneer" bij elk hoofdstuk, kijkwijzer, vorig/volgend

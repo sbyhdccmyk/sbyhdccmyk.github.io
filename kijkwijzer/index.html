@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kijkwijzer</title>
+<meta name="description" content="Acht stappen die je bij elk kunstwerk kan zetten, van de eerste indruk tot je eigen oordeel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Witte museumzaal: een kolom tekst op ooghoogte, grijze kaders voor beeld, rood als enig accent. */
+  --wand:#ffffff;
+  --inkt:#141414;
+  --zacht:#5f5f5f;
+  --kader:#f2f2f2;
+  --lijn:#bfbfbf;
+  --rood:#c8102e;
+  --tekst:"Carlito","Calibri","Segoe UI",Arial,sans-serif;
+  --data:"IBM Plex Mono","Consolas","Courier New",monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--wand);color:var(--inkt);font-family:var(--tekst);font-size:1.125rem;line-height:1.55}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.pagina{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:3rem;max-width:72rem;margin:0 auto;padding:0 1.5rem}
+nav.inhoud{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:2.5rem 0 2rem;font-size:.95rem;line-height:1.3}
+nav.inhoud .vak{font-family:var(--data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1rem}
+nav.inhoud ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.45rem}
+nav.inhoud ol ol{margin:.45rem 0 .2rem;padding-left:.9rem;border-left:1px solid var(--lijn);gap:.35rem;font-size:.9rem}
+nav.inhoud a{text-decoration:none;color:var(--zacht)}
+nav.inhoud a:hover{color:var(--inkt);text-decoration:underline}
+nav.inhoud a.actief{color:var(--inkt);font-weight:700}
+main{max-width:42rem;padding:2.5rem 0 5rem;min-width:0}
+header.titel .vak{font-family:var(--data);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--zacht);margin:0 0 1.5rem}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.05;margin:0 0 .6rem;text-wrap:balance}
+header.titel .onder{font-style:italic;font-size:1.25rem;margin:0 0 2.5rem;color:var(--zacht)}
+h2{font-size:1.75rem;line-height:1.15;margin:4.5rem 0 1rem;padding-top:1rem;border-top:1px solid var(--inkt);text-wrap:balance}
+h3{font-size:1.35rem;line-height:1.2;margin:3.5rem 0 .8rem;text-wrap:balance}
+h3.sub{margin-top:2rem;font-size:1.2rem}
+h3.verwijzing{padding-left:.8rem;border-left:3px solid var(--rood)}
+h4{font-size:1.125rem;margin:1.8rem 0 .4rem}
+p{margin:0 0 .9rem}
+.datum{font-family:var(--data);font-size:.8rem;color:var(--zacht);display:block;margin:-.4rem 0 1rem}
+
+/* Tijdlijn */
+.tijdlijn{margin:0 0 1rem;padding:1.1rem 1.1rem 1.2rem;background:var(--kader);border:1px solid var(--lijn)}
+.tijdlijn h2{font-size:1rem;margin:0 0 .9rem;padding:0;border:0}
+.tl-rij{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.8rem;align-items:center;margin-bottom:.35rem}
+.tl-rij a{font-size:.95rem;line-height:1.2;text-decoration:none}
+.tl-rij a:hover{text-decoration:underline}
+.tl-spoor{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));height:1.4rem;border-bottom:1px solid var(--lijn)}
+.tl-balk{grid-row:1;align-self:center;height:.55rem;background:var(--inkt)}
+.tl-balk.keerpunt{background:var(--rood)}
+.tl-as{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));font-family:var(--data);font-size:.66rem;color:var(--zacht);text-align:center}
+.tl-noot{font-size:.9rem;color:var(--zacht);margin:.8rem 0 0}
+
+/* Beeldkaders */
+figure.beeld{margin:1.6rem 0;padding:.6rem;background:var(--kader);border:1px solid var(--lijn);text-align:center}
+figure.beeld figcaption{font-size:1rem;line-height:1.4}
+.werk-links{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.6rem}
+.werk-link{display:inline-block;font-size:.95rem;padding:.3rem .9rem;border:1px solid var(--inkt);background:var(--wand);text-decoration:none}
+.werk-link::after{content:" \2197";color:var(--rood)}
+.werk-link:hover{background:var(--inkt);color:var(--wand)}
+
+/* Feitenfiche */
+dl.fiche{display:grid;grid-template-columns:7rem minmax(0,1fr);margin:1.2rem 0 1.6rem;border:1px solid var(--lijn);font-size:1rem;line-height:1.4}
+dl.fiche dt{background:var(--kader);padding:.45rem .7rem;border-bottom:1px solid var(--lijn);font-family:var(--data);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);display:flex;align-items:center}
+dl.fiche dd{margin:0;padding:.45rem .7rem;border-bottom:1px solid var(--lijn)}
+dl.fiche dt:last-of-type,dl.fiche dd:last-of-type{border-bottom:0}
+
+/* Vier elementen */
+.kijkfilter{position:sticky;top:0;z-index:5;background:var(--wand);border-bottom:1px solid var(--lijn);padding:.7rem 0;margin:1.2rem 0 0;display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.kijkfilter span{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-right:.3rem}
+.kijkfilter button{font:inherit;font-size:.95rem;padding:.25rem .8rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:999px;cursor:pointer}
+.kijkfilter button:hover{background:var(--kader)}
+.kijkfilter button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+.el{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem;padding:.7rem 0;border-top:1px solid var(--kader);transition:opacity .2s}
+.el h5{margin:.2rem 0 0;font-family:var(--data);font-weight:500;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.el p{margin:0}
+#werken[data-focus="lichaam"] .el:not(.lichaam),
+#werken[data-focus="ruimte"] .el:not(.ruimte),
+#werken[data-focus="object"] .el:not(.object),
+#werken[data-focus="tijd"] .el:not(.tijd){opacity:.22}
+#werken[data-focus] .el h5{color:var(--rood)}
+#werken[data-focus="lichaam"] .el:not(.lichaam) h5,
+#werken[data-focus="ruimte"] .el:not(.ruimte) h5,
+#werken[data-focus="object"] .el:not(.object) h5,
+#werken[data-focus="tijd"] .el:not(.tijd) h5{color:inherit}
+@media (prefers-reduced-motion:reduce){.el{transition:none}}
+
+/* Kader */
+aside.kader{margin:2rem 0;padding:1rem 1.2rem;background:#f7f7f7;border-top:2px solid var(--lijn);border-bottom:2px solid var(--lijn)}
+aside.kader h4{margin-top:0}
+aside.kader p:last-child{margin-bottom:0}
+
+/* Woordenschat */
+.hulp{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.hulp input[type="search"]{font:inherit;font-size:1rem;padding:.4rem .7rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);min-width:0;flex:1 1 12rem;border-radius:0}
+.hulp button{font:inherit;font-size:.95rem;padding:.4rem .9rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.hulp button[aria-pressed="true"]{background:var(--inkt);color:var(--wand)}
+dl.woorden{margin:0;border-top:1px solid var(--lijn)}
+dl.woorden div{display:grid;grid-template-columns:11rem minmax(0,1fr);gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--lijn)}
+dl.woorden dt{font-weight:700}
+dl.woorden dd{margin:0}
+dl.woorden.verborgen dd{color:transparent;background:var(--kader);cursor:pointer;user-select:none}
+dl.woorden.verborgen div.toon dd{color:inherit;background:none;cursor:default;user-select:auto}
+.leeg{color:var(--zacht);font-style:italic}
+
+/* Vragen */
+.teller{font-family:var(--data);font-size:.8rem;color:var(--zacht);margin:0 0 1rem}
+ol.vragen{list-style:none;margin:0 0 1.5rem;padding:0;counter-reset:v}
+ol.vragen li{counter-increment:v;display:grid;grid-template-columns:1.6rem 2rem minmax(0,1fr);gap:.3rem;padding:.55rem 0;border-bottom:1px solid var(--kader);align-items:start}
+ol.vragen li::before{content:counter(v) ".";grid-column:2;grid-row:1;font-family:var(--data);font-size:.8rem;color:var(--zacht);padding-top:.25rem}
+ol.vragen input{grid-column:1;grid-row:1;width:1.1rem;height:1.1rem;margin:.35rem 0 0;accent-color:var(--rood)}
+ol.vragen label{grid-column:3;grid-row:1}
+ol.vragen input:checked ~ label{color:var(--zacht)}
+
+/* Links */
+ul.links{list-style:none;margin:1rem 0;padding:0;border-top:1px solid var(--lijn)}
+ul.links li{padding:.7rem 0;border-bottom:1px solid var(--lijn)}
+ul.links .soort{font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--rood);display:block}
+ul.links a{font-weight:700}
+ul.links p{margin:.15rem 0 0;font-size:1rem;color:var(--zacht)}
+footer{margin-top:5rem;padding-top:1rem;border-top:1px solid var(--inkt);font-size:.9rem;color:var(--zacht)}
+
+@media (max-width:60rem){
+  .pagina{grid-template-columns:minmax(0,1fr);gap:0;padding:0 1.1rem}
+  nav.inhoud{position:static;max-height:none;padding:1.2rem 0 .8rem;border-bottom:1px solid var(--lijn)}
+  nav.inhoud ol{flex-direction:row;flex-wrap:wrap;gap:.3rem 1rem}
+  nav.inhoud ol ol{display:none}
+  main{padding-top:1.8rem}
+}
+@media (max-width:34rem){
+  body{font-size:1.06rem}
+  .tl-rij{grid-template-columns:minmax(0,1fr);gap:.1rem;margin-bottom:.6rem}
+  .tl-as span:nth-child(even){visibility:hidden}
+  .el{grid-template-columns:minmax(0,1fr);gap:.2rem}
+  dl.woorden div{grid-template-columns:minmax(0,1fr);gap:.1rem}
+  dl.fiche{grid-template-columns:5.5rem minmax(0,1fr)}
+}
+
+.hoofdstuk-nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;margin-top:4rem;padding-top:1rem;border-top:1px solid var(--inkt)}
+.hoofdstuk-nav a{text-decoration:none;font-weight:700}
+.hoofdstuk-nav span{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);font-weight:400}
+.stap h2{display:flex;gap:.8rem;align-items:baseline;margin-top:3.2rem}
+.stap h2 .nr{font-family:var(--data);font-size:1rem;font-weight:500;color:var(--rood)}
+.lead{font-style:italic;color:var(--zacht);font-size:1.2rem}
+ul.vraaglijst{margin:0 0 1.1rem;padding-left:1.2rem}
+ul.vraaglijst li{margin-bottom:.35rem}
+.werkveld{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.8rem;margin:1.5rem 0 0;padding:1rem 1.1rem;background:var(--kader);border:1px solid var(--lijn)}
+label{display:block;font-family:var(--data);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--zacht);margin-bottom:.25rem}
+input[type="text"],textarea{font:inherit;font-size:1rem;width:100%;padding:.45rem .6rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);border-radius:0}
+textarea{resize:vertical;line-height:1.4}
+textarea:focus-visible{outline:2px solid var(--rood);outline-offset:2px}
+.meer{font-size:.95rem;color:var(--zacht);margin:.6rem 0 0}
+.knoppen{display:flex;flex-wrap:wrap;gap:.6rem;margin:2.5rem 0 0}
+.knoppen button{font:inherit;font-size:.95rem;padding:.45rem 1rem;border:1px solid var(--inkt);background:var(--wand);color:var(--inkt);cursor:pointer}
+.knoppen button:hover{background:var(--inkt);color:var(--wand)}
+.status{font-family:var(--data);font-size:.75rem;color:var(--zacht);margin:.6rem 0 0;min-height:1.2em}
+ol.onderzoek{padding-left:1.3rem}
+ol.onderzoek li{margin-bottom:.4rem}
+@media print{nav.inhoud,.knoppen,.status,.meer,.hoofdstuk-nav,footer{display:none}.pagina{display:block}main{max-width:none;padding:0}.stap{break-inside:avoid}h2{margin-top:1.5rem}textarea{border-color:var(--lijn)}}
+</style>
+</head>
+<body>
+<div class="pagina">
+<nav class="inhoud" aria-label="Inhoud">
+  <p class="vak"><a href="../" style="text-decoration:none;color:inherit">&larr; KIJK NU!</a></p>
+  <p class="vak">De acht stappen</p>
+  <ol><li><a href="#ervaren">1 Ervaren</a></li><li><a href="#vormgeving">2 Vormgeving</a></li><li><a href="#inhoud">3 Inhoud</a></li><li><a href="#functie">4 Functie</a></li><li><a href="#context">5 Context</a></li><li><a href="#samenhang">6 Samenhang</a></li><li><a href="#blikken">7 Andere blikken</a></li><li><a href="#oordeel">8 Jouw oordeel</a></li><li><a href="#onderzoek">Zelf op onderzoek</a></li></ol>
+</nav>
+<main>
+<header class="titel">
+  <p class="vak"><a href="../" style="color:inherit">KIJK NU!</a> / Leren kijken</p>
+  <h1>Kijkwijzer</h1>
+  <p class="onder">Acht stappen die je bij elk kunstwerk kan zetten, van de eerste indruk tot je eigen oordeel</p>
+</header>
+<p>Deze kijkwijzer werkt bij een schilderij, een beeld, een gebouw, een film, een dansvoorstelling of een muziekstuk. Bij muziek lees je luisteren waar kijken staat.</p>
+<p>Je hoeft niet elke vraag te beantwoorden. Kies per stap de vragen waar het werk om vraagt. Wat je invult, blijft bewaard op dit toestel en wordt nergens heen gestuurd. Onderaan kan je je blad afdrukken of leegmaken voor een volgend werk.</p>
+<div class="werkveld">
+  <div><label for="w-maker">Maker</label><input type="text" id="w-maker" data-veld="maker"></div>
+  <div><label for="w-titel">Titel en jaar</label><input type="text" id="w-titel" data-veld="titel"></div>
+  <div><label for="w-plek">Waar zag of hoorde je het?</label><input type="text" id="w-plek" data-veld="plek"></div>
+</div>
+<section id="ervaren" class="stap"><h2><span class="nr">1</span>Ervaren</h2><p class="lead">Neem de tijd. Kijk of luister minstens een minuut voor je iets opschrijft.</p><ul class="vraaglijst"><li>Wat valt je het eerst op?</li><li>Wat doet het werk met je: trekt het je aan, stoot het je af, laat het je koud?</li><li>Schrijf je eerste indruk op in één zin. In stap 8 kom je erop terug.</li></ul><label for="n-ervaren">Jouw notities bij stap 1</label><textarea id="n-ervaren" data-veld="ervaren" rows="4"></textarea><p class="meer">Lees verder: <a href="../epoche/">De epoché: je eerste oordeel uitstellen</a>.</p></section><section id="vormgeving" class="stap"><h2><span class="nr">2</span>Vormgeving</h2><p class="lead">Hoe is het gemaakt?</p><ul class="vraaglijst"><li>Welke kunstvorm is het, met welk materiaal en welke techniek?</li><li>Hoe groot is het, of hoe lang duurt het?</li><li>Welke bouwstenen gebruikt de maker? Bij beeld: lijn, kleur, licht, vorm, ruimte, compositie. Bij muziek: ritme, melodie, klankkleur, dynamiek. Bij film: kader, montage, geluid.</li><li>Wat is opvallend fijn of opvallend ruw gemaakt?</li></ul><label for="n-vormgeving">Jouw notities bij stap 2</label><textarea id="n-vormgeving" data-veld="vormgeving" rows="4"></textarea><p class="meer">Lees verder: <a href="../de-vier-elementen/">De vier elementen: tijd, ruimte, lichaam en object</a>, <a href="../film/">Filmtaal</a>, <a href="../muziek/">Luisteren naar muziek</a>.</p></section><section id="inhoud" class="stap"><h2><span class="nr">3</span>Inhoud</h2><p class="lead">Waarover gaat het?</p><ul class="vraaglijst"><li>Wat is er te zien of te horen: figuren, voorwerpen, een handeling?</li><li>Is er een verhaal, een thema of een idee?</li><li>Uit welke bron komt het: de Bijbel, een mythe, de geschiedenis, het dagelijks leven?</li><li>Welke tekens of symbolen herken je?</li></ul><label for="n-inhoud">Jouw notities bij stap 3</label><textarea id="n-inhoud" data-veld="inhoud" rows="4"></textarea><p class="meer">Lees verder: <a href="../iconografie/">Iconografie en iconologie: betekenis lezen</a>.</p></section><section id="functie" class="stap"><h2><span class="nr">4</span>Functie</h2><p class="lead">Waarvoor diende het?</p><ul class="vraaglijst"><li>Voor wie en voor welke plek is het gemaakt?</li><li>Wil het behagen, versieren, vertellen, herinneren, overtuigen, verkopen, aanklagen, schokken of doen nadenken?</li><li>Speelt het vandaag nog dezelfde rol als toen?</li></ul><label for="n-functie">Jouw notities bij stap 4</label><textarea id="n-functie" data-veld="functie" rows="4"></textarea></section><section id="context" class="stap"><h2><span class="nr">5</span>Context</h2><p class="lead">Waar en wanneer?</p><ul class="vraaglijst"><li>In welke periode of stroming hoort het thuis? Aan welke kenmerken zie je dat?</li><li>In welke samenleving ontstond het, en wat gebeurde daar toen?</li><li>Wie was de maker? Wie bestelde of betaalde het werk?</li><li>Welke techniek of uitvinding maakte het mogelijk?</li></ul><label for="n-context">Jouw notities bij stap 5</label><textarea id="n-context" data-veld="context" rows="4"></textarea><p class="meer">Lees verder: <a href="../#tijd">Het referentiekader: door de tijd</a>, <a href="../#wereld">Over de wereld</a>.</p></section><section id="samenhang" class="stap"><h2><span class="nr">6</span>Samenhang</h2><p class="lead">Leg de vorige stappen naast elkaar.</p><ul class="vraaglijst"><li>Hoe helpt de vormgeving de inhoud?</li><li>Hoe verklaart de context de vorm of de functie?</li><li>Welk kenmerk is zo belangrijk dat het werk zonder dat kenmerk een ander werk zou zijn?</li></ul><label for="n-samenhang">Jouw notities bij stap 6</label><textarea id="n-samenhang" data-veld="samenhang" rows="4"></textarea></section><section id="blikken" class="stap"><h2><span class="nr">7</span>Andere blikken</h2><p class="lead">Jij bent niet de enige die kijkt.</p><ul class="vraaglijst"><li>Hoe keek iemand uit de tijd van de maker naar dit werk?</li><li>Hoe kijkt de opdrachtgever, een gelovige, een criticus, iemand uit een andere cultuur of van een andere generatie?</li><li>Welke lezing van het werk botst met de jouwe?</li></ul><label for="n-blikken">Jouw notities bij stap 7</label><textarea id="n-blikken" data-veld="blikken" rows="4"></textarea><p class="meer">Lees verder: <a href="../#denken">Denken over kunst</a>.</p></section><section id="oordeel" class="stap"><h2><span class="nr">8</span>Jouw oordeel</h2><p class="lead">Een oordeel heeft drie lagen: gevoel, kennis en waarde.</p><ul class="vraaglijst"><li>Gevoel: wat deed het werk met jou?</li><li>Kennis: wat weet je nu dat je bij stap 1 nog niet wist?</li><li>Waarde: is je eerste indruk veranderd? Wat vind je er nu van, en met welke argumenten uit stap 2 tot 7 onderbouw je dat?</li></ul><label for="n-oordeel">Jouw notities bij stap 8</label><textarea id="n-oordeel" data-veld="oordeel" rows="4"></textarea><p class="meer">Lees verder: <a href="../kant/">Immanuel Kant: het schone en het aangename</a>.</p></section>
+<div class="knoppen"><button type="button" id="druk">Druk je blad af</button><button type="button" id="leeg">Maak leeg voor een nieuw werk</button></div>
+<p class="status" id="status" aria-live="polite"></p>
+
+<section id="onderzoek"><h2>Zelf op onderzoek</h2>
+<p>Blijft er na de acht stappen een vraag hangen? Dan heb je een onderzoeksvraag. Zo werk je ze uit.</p>
+<ol class="onderzoek"><li>Kies een werk en verken het met de kijkwijzer.</li><li>Schrijf één vraag op die je na de acht stappen nog niet kan beantwoorden.</li><li>Beslis hoe je het antwoord zoekt: in het werk zelf, op de pagina van het museum, in een boek, in een interview met de maker.</li><li>Verzamel wat je vindt en noteer telkens je bron.</li><li>Vergelijk wat de bronnen zeggen met wat je zelf zag of hoorde.</li><li>Formuleer je antwoord, en zeg ook wat je niet te weten kwam.</li><li>Toon het resultaat: een tekst, een presentatie, een poster of een playlist.</li></ol></section>
+<nav class="hoofdstuk-nav" aria-label="Vorig en volgend onderwerp"><span></span><a href="../de-vier-elementen/" style="text-align:right"><span>Volgend onderwerp</span>De vier elementen &rarr;</a></nav>
+<footer><p>Samengesteld door Sammy Ben Yakoub. <a href="../">Terug naar alle onderwerpen</a>.</p></footer>
+</main>
+</div>
+<script>
+var S="kijkwijzer",G={},kan=true;try{G=JSON.parse(localStorage.getItem(S)||"{}")||{};}catch(e){G={};kan=false;}
+var velden=document.querySelectorAll("[data-veld]"),st=document.getElementById("status"),t;
+function bewaar(){try{localStorage.setItem(S,JSON.stringify(G));st.textContent="Bewaard op dit toestel.";}catch(e){st.textContent="Bewaren lukt niet in deze browser. Druk je blad af voor je de pagina sluit.";}}
+velden.forEach(function(v){v.value=G[v.dataset.veld]||"";v.addEventListener("input",function(){G[v.dataset.veld]=v.value;clearTimeout(t);t=setTimeout(bewaar,400);});});
+if(!kan)st.textContent="Bewaren lukt niet in deze browser. Druk je blad af voor je de pagina sluit.";
+document.getElementById("druk").addEventListener("click",function(){window.print();});
+var leeg=document.getElementById("leeg"),zeker=false;
+leeg.addEventListener("click",function(){if(!zeker){zeker=true;leeg.textContent="Zeker? Klik nog eens om alles te wissen";setTimeout(function(){zeker=false;leeg.textContent="Maak leeg voor een nieuw werk";},4000);return;}G={};velden.forEach(function(v){v.value="";});bewaar();st.textContent="Leeggemaakt.";zeker=false;leeg.textContent="Maak leeg voor een nieuw werk";});
+if("IntersectionObserver" in window){var L={};document.querySelectorAll("nav.inhoud a[href^='#']").forEach(function(a){L[a.getAttribute("href").slice(1)]=a;});
+var io=new IntersectionObserver(function(it){it.forEach(function(x){if(x.isIntersecting&&L[x.target.id]){Object.keys(L).forEach(function(k){L[k].classList.remove("actief");});L[x.target.id].classList.add("actief");}});},{rootMargin:"-10% 0px -80% 0px"});
+Object.keys(L).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});}
+</script>
+</body>
+</html>
